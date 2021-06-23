@@ -12,6 +12,7 @@ class Vote extends StatefulWidget {
 
 class _VoteState extends State<Vote> {
   int _index = 0;
+  var positions = ["President", "Vice-President", "G-Sec Science", "G-Sec Cultural", "G-Sec Sports", "AG-Sec Science", "AG-Sec Cultural", "AG-Sec Sports",];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -37,10 +38,10 @@ class _VoteState extends State<Vote> {
               ),
               Center(
                 child: SizedBox(
-                  height: 700,
+                  height: MediaQuery.of(context).size.width * 1.4,
                   child: Container(
                     child: PageView.builder(
-                      itemCount: 10,
+                      itemCount: positions.length,
                       controller: PageController(viewportFraction: 0.85),
                       onPageChanged: (int index) => setState(() => _index = index),
                       itemBuilder: (_, i) {
@@ -65,7 +66,7 @@ class _VoteState extends State<Vote> {
                                   ),
                                   Center(
                                     child: Text(
-                                      "President",
+                                      positions[i],
                                       style: TextStyle(
                                         color: Colors.white,
                                         fontSize: 35,
