@@ -100,7 +100,7 @@ class _LoginPageState extends State<LoginPage> {
                       height: 35.0,
                     ),
                     Material(
-                      color: Colors.blueGrey,
+                      color: Colors.black,
                       borderRadius: BorderRadius.circular(_check?50:8),
                       child: InkWell(
                         onTap: () => moveHome(context),
@@ -125,46 +125,47 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                     ),
                     Container(
-                      padding: EdgeInsets.fromLTRB(15, 25, 15, 0),
-                      child: SizedBox(
-                        
-                        height: MediaQuery.of(context).size.width * 0.1,
-                        child: Text(
-                          "Don't have an account?\nCreate One!",
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            fontSize: 14,
-                          ),
-                        ),
-                      ),
-                    ),
-                    Material(
-                      color: Colors.green,
-                      borderRadius: BorderRadius.circular(8),
-                      child: InkWell(
-                        // onTap: () => moveHome(context),
-                        child: AnimatedContainer(
-                          duration: Duration(seconds: 1),
-                          width: 
-                          // _check?50: 
-                          120,
-                          height: 50,
-                          alignment: Alignment.center,
-                          child: 
-                          // _check?
-                          // Icon(
-                          //   Icons.done, color: Colors.white,
-                          // ) :
-                          Text(
-                            "Register",
-                            style: TextStyle(
-                              color: Colors.white, 
-                              fontWeight: FontWeight.bold,
-                              fontSize: 16
+                      padding: EdgeInsets.fromLTRB(15, 30, 15, 0),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          SizedBox(
+                            child: Text(
+                              "Don't have an account?\nCreate One!",
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                fontSize: 16,
+                              ),
                             ),
                           ),
-                        ),
-                      ),
+                          SizedBox(
+                            height: 10,
+                          ),
+                          Material(
+                            color: Colors.black,
+                            borderRadius: BorderRadius.circular(8),
+                            child: InkWell(
+                              // onTap: () => moveHome(context),
+                              child: AnimatedContainer(
+                                duration: Duration(seconds: 1),
+                                width: 
+                                90,
+                                height: 40,
+                                alignment: Alignment.center,
+                                child: Text(
+                                  "Register",
+                                  style: TextStyle(
+                                    color: Colors.white, 
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 15
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      )
                     )
                   ],
                 ),
