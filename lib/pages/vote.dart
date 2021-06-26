@@ -214,21 +214,7 @@ class _VoteState extends State<Vote> {
                                               ],
                                             ),
                                               ),
-                                            // SizedBox(
-                                            //   width: MediaQuery.of(context).size.width*0.08,
-                                            //   child: Icon(
-                                            //     Icons.arrow_forward_ios,
-                                            //     // Icons.chevron_right_rounded,
-                                            //     // Icons.double_arrow_rounded,
-                                            //     // Icons.recommend_outlined,
-                                            //     // Icons.star_outline_rounded,
-                                            //     // Icons.stars_sharp,
-                                            //     // Icons.task_alt_rounded,
-                                            //     // Icons.thumb_up_off_alt,
-                                            //     size: 35,
-                                            //     color: Colors.white,
-                                            //   ),
-                                            // ),
+                                            
                                             IconButton(
                                               icon: Icon(
                                                 Icons.arrow_forward_ios,
@@ -301,21 +287,7 @@ class _VoteState extends State<Vote> {
                                               ],
                                             ),
                                               ),
-                                            // SizedBox(
-                                            //   width: MediaQuery.of(context).size.width*0.08,
-                                            //   child: Icon(
-                                            //     Icons.arrow_forward_ios,
-                                            //     // Icons.chevron_right_rounded,
-                                            //     // Icons.double_arrow_rounded,
-                                            //     // Icons.recommend_outlined,
-                                            //     // Icons.star_outline_rounded,
-                                            //     // Icons.stars_sharp,
-                                            //     // Icons.task_alt_rounded,
-                                            //     // Icons.thumb_up_off_alt,
-                                            //     size: 35,
-                                            //     color: Colors.white,
-                                            //   ),
-                                            // ),
+                                            
                                             IconButton(
                                               icon: Icon(
                                                 Icons.arrow_forward_ios,
@@ -388,21 +360,7 @@ class _VoteState extends State<Vote> {
                                                 ],
                                               ),
                                             ),
-                                            // SizedBox(
-                                            //   width: MediaQuery.of(context).size.width*0.08,
-                                            //   child: Icon(
-                                            //     Icons.arrow_forward_ios,
-                                            //     // Icons.chevron_right_rounded,
-                                            //     // Icons.double_arrow_rounded,
-                                            //     // Icons.recommend_outlined,
-                                            //     // Icons.star_outline_rounded,
-                                            //     // Icons.stars_sharp,
-                                            //     // Icons.task_alt_rounded,
-                                            //     // Icons.thumb_up_off_alt,
-                                            //     size: 35,
-                                            //     color: Colors.white,
-                                            //   ),
-                                            // ),
+                                            
                                             IconButton(
                                               icon: Icon(
                                                 Icons.arrow_forward_ios,
@@ -431,7 +389,7 @@ class _VoteState extends State<Vote> {
                                 ],
                               ),
                             ),
-                            // elevation: 10,
+                            elevation: 5,
                           ),
                         );
                       },
@@ -440,6 +398,8 @@ class _VoteState extends State<Vote> {
                 ),
               ),
               Container(
+                margin: EdgeInsets.all(0),
+                padding: EdgeInsets.all(0),
                 child: Column(
                   children: [
                     SizedBox(
