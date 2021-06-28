@@ -27,9 +27,9 @@ class _RegisterState extends State<Register> {
 
   @override
   Widget build(BuildContext context) {
-    var iconButton = IconButton(
+    var elevatedbutton = ElevatedButton(
         onPressed: () => _selectDate(context),
-        icon: Icon(Icons.date_range_rounded));
+        child: Icon(Icons.date_range_outlined));
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -46,7 +46,10 @@ class _RegisterState extends State<Register> {
             padding: const EdgeInsets.only(right: 50.0),
             child: TextField(
               decoration: InputDecoration(
-                icon: Icon(Icons.person_pin),
+                icon: Icon(
+                  Icons.person_pin,
+                  color: Colors.red,
+                ),
                 hintText: "enter your Roll Number",
               ),
             ),
@@ -55,7 +58,10 @@ class _RegisterState extends State<Register> {
             padding: EdgeInsets.only(top: 8.0, right: 50.0),
             child: TextField(
               decoration: InputDecoration(
-                icon: Icon(Icons.person_outline_sharp),
+                icon: Icon(
+                  Icons.person_outline_sharp,
+                  color: Colors.red,
+                ),
                 hintText: "enter your name",
               ),
             ),
@@ -63,14 +69,10 @@ class _RegisterState extends State<Register> {
           Row(
             children: <Widget>[
               Padding(
-                padding: EdgeInsets.only(top: 20.0, left: 15.0),
-                child: Text("DOB :",
+                padding: EdgeInsets.only(top: 16.0, left: 15.0),
+                child: Text("DOB : ",
                     textDirection: TextDirection.ltr,
                     style: TextStyle(fontSize: 20.0)),
-              ),
-              Padding(
-                padding: EdgeInsets.only(top: 18.0),
-                child: SizedBox(child: iconButton),
               ),
               Padding(
                 padding: const EdgeInsets.only(top: 17.0),
@@ -91,10 +93,13 @@ class _RegisterState extends State<Register> {
               Padding(
                 padding: const EdgeInsets.only(top: 17.0),
                 child: Text(selectedDate.year.toString()),
-              )
+              ),
+              Padding(
+                padding: EdgeInsets.only(top: 18.0, left: 10.0),
+                child: SizedBox(child: elevatedbutton),
+              ),
             ],
           ),
-          // ElevatedButton(onPressed: onPressed, child: child)
         ],
       ),
     );
