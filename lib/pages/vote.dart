@@ -156,6 +156,9 @@ class _VoteState extends State<Vote> {
                                   ),
                                   Divider(
                                     color: Colors.white,
+                                    thickness: 1,
+                                    indent: 8,
+                                    endIndent: 8,
                                   ),
                                   Container(
                                     height: MediaQuery.of(context).size.height*0.45,
