@@ -146,7 +146,7 @@ class _LoginPageState extends State<LoginPage> {
                             color: Colors.black,
                             borderRadius: BorderRadius.circular(8),
                             child: InkWell(
-                              // onTap: () => moveHome(context),
+                              onTap:(){ Navigator.pushNamed(context, MyRoutes.registerRoute);},
                               child: AnimatedContainer(
                                 duration: Duration(seconds: 1),
                                 width: 
