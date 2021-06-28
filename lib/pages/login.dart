@@ -40,7 +40,7 @@ class _LoginPageState extends State<LoginPage> {
           child: Column(
             children: [
               SizedBox(
-                height: 30.0,
+                height: 20.0,
               ),
               Image.asset(
                 "assets/images/hey.png",
@@ -67,8 +67,8 @@ class _LoginPageState extends State<LoginPage> {
                   children: [
                     TextFormField(
                       decoration: InputDecoration(
-                        hintText: "Enter your Username",
-                        labelText: "Username"
+                        hintText: "Enter your Roll No. (eg. 19UCS053)",
+                        labelText: "Roll Number"
                       ),
                       validator: (value){
                         if(value!.isEmpty){

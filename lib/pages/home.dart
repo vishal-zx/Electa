@@ -17,6 +17,7 @@ class   Home extends StatelessWidget {
             style: TextStyle(
               fontSize: 24,
             ),
+            textAlign: TextAlign.center,
           ),
         ),
       ),
