@@ -3,6 +3,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'dart:core';
 
+import 'package:scanbot_sdk/scanbot_sdk.dart';
+
 class Register extends StatefulWidget {
   const Register({Key? key}) : super(key: key);
 
@@ -23,6 +25,29 @@ class _RegisterState extends State<Register> {
       setState(() {
         selectedDate = picked;
       });
+  }
+
+  bool isInitialized = false;
+  @override
+  void initState() {
+    FlutterMobileVision.start().then((value) {
+      isInitialized = true;
+    });
+    super.initState();
+  }
+
+  _startscan() async {
+    List<OcrText> list = [];
+    try {
+      FlutterMobileVision.read(
+        waitTap: true,
+        fps: 5,
+      );
+      for (OcrText in list) {
+        var text;
+        print('value is ${text.value}');
+      }
+    } catch (e) {}
   }
 
   @override
