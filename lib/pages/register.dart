@@ -3,7 +3,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'dart:core';
 
-import 'package:scanbot_sdk/scanbot_sdk.dart';
+import 'package:flutter_mobile_vision/flutter_mobile_vision.dart';
+
+// import 'package:scanbot_sdk/scanbot_sdk.dart';
 
 class Register extends StatefulWidget {
   const Register({Key? key}) : super(key: key);
@@ -43,8 +45,8 @@ class _RegisterState extends State<Register> {
         waitTap: true,
         fps: 5,
       );
-      for (OcrText in list) {
-        var text;
+      var text;
+      for (text in list) {
         print('value is ${text.value}');
       }
     } catch (e) {}
