@@ -13,8 +13,7 @@ class Vote extends StatefulWidget {
   _VoteState createState() => _VoteState();
 }
 
-Widget _buildCandidateRow(BuildContext context)
-{
+Widget _buildCandidateRow(BuildContext context, String name, String roll, String position){
   return Row(
     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
     children: [
@@ -24,8 +23,8 @@ Widget _buildCandidateRow(BuildContext context)
         decoration: BoxDecoration(
           shape: BoxShape.circle,
           image: DecorationImage(
-            image: NetworkImage("https://www.mantruckandbus.com/fileadmin/media/bilder/02_19/219_05_busbusiness_interviewHeader_1485x1254.jpg"),
-            fit: BoxFit.fill
+            image: NetworkImage("https://vishal-zx.github.io/assets/img/profile.jpg"),
+            fit: BoxFit.fill,
           ),
         ),
       ),
@@ -36,7 +35,7 @@ Widget _buildCandidateRow(BuildContext context)
           children: [
             FittedBox(
                 fit: BoxFit.fitWidth,
-                child: Text("Vishal Gupta",
+                child: Text("$name",
                   style: TextStyle(
                     fontSize: 25,
                     color: Colors.white,
@@ -48,7 +47,7 @@ Widget _buildCandidateRow(BuildContext context)
             ),
             FittedBox(
               fit: BoxFit.fitWidth,
-              child: Text("19UCS053",
+              child: Text("$roll",
                 style: TextStyle(
                   fontSize: 16,
                   color: Colors.white,
@@ -67,7 +66,7 @@ Widget _buildCandidateRow(BuildContext context)
         onPressed: (){
           showDialog(
             context: context,
-            builder: (BuildContext context) => _buildPopupDialog(context),
+            builder: (BuildContext context) => _buildPopupDialog(context, position, name),
           );
         },
       ),
@@ -75,7 +74,7 @@ Widget _buildCandidateRow(BuildContext context)
   );
 }
 
-Widget _buildPopupDialog(BuildContext context) {
+Widget _buildPopupDialog(BuildContext context, String position, String name) {
   return BackdropFilter(
     filter: ImageFilter.blur(sigmaX: 3, sigmaY: 3),
       child: new AlertDialog(
@@ -94,18 +93,34 @@ Widget _buildPopupDialog(BuildContext context) {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
-              Image.asset(
-                "assets/images/gi.gif",
-                height: 80,
-                width: 80,
+              Column(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                crossAxisAlignment: CrossAxisAlignment.center,          
+                children: [
+                  Image.asset(
+                    "assets/images/gi.gif",
+                    height: 80,
+                    width: 80,
+                  ),
+                ],
               ),
-              FittedBox(
-                fit: BoxFit.fitHeight,
-                child: Text("Position : President"),
-              ),
-              FittedBox(
-                fit: BoxFit.fitHeight,
-                child: Text("Candidate : Vishal Gupta"),
+              Column(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [  
+                  FittedBox(
+                    fit: BoxFit.fitHeight,
+                    child: Text("Position : $position",
+                      textAlign: TextAlign.start,
+                    ),
+                  ),
+                  FittedBox(
+                    fit: BoxFit.fitHeight,
+                    child: Text("Candidate : $name",
+                      textAlign: TextAlign.start,
+                    ),
+                  ),
+                ],
               ),
             ],
           ),
@@ -224,9 +239,9 @@ class _VoteState extends State<Vote> {
                                 child: Column(
                                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                                   children: [
-                                    _buildCandidateRow(context),
-                                    _buildCandidateRow(context),
-                                    _buildCandidateRow(context),
+                                    _buildCandidateRow(context, "vishal", "19ucs053", positions[i]),
+                                    _buildCandidateRow(context, "vishal", "19ucs053", positions[i]),
+                                    _buildCandidateRow(context, "vishal", "19ucs053", positions[i]),
                                   ],
                                 ),
                               ),

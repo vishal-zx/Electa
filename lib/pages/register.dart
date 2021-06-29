@@ -52,7 +52,10 @@ class _RegisterState extends State<Register> {
         ),
         elevation: 0,
         leading: IconButton(
-            onPressed: () => {}, icon: Icon(Icons.arrow_back_rounded)),
+            onPressed: () => {
+              Navigator.pop(context),
+            }, 
+            icon: Icon(Icons.arrow_back_rounded)),
       ),
       body: Column(
         children: <Widget>[
