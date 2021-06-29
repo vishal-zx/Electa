@@ -239,9 +239,9 @@ class _VoteState extends State<Vote> {
                                 child: Column(
                                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                                   children: [
-                                    _buildCandidateRow(context, "vishal", "19ucs053", positions[i]),
-                                    _buildCandidateRow(context, "vishal", "19ucs053", positions[i]),
-                                    _buildCandidateRow(context, "vishal", "19ucs053", positions[i]),
+                                    _buildCandidateRow(context, "Vishal Gupta", "19UCS053", positions[i]),
+                                    _buildCandidateRow(context, "Vishal Gupta", "19UCS053", positions[i]),
+                                    _buildCandidateRow(context, "Vishal Gupta", "19UCS053", positions[i]),
                                   ],
                                 ),
                               ),
