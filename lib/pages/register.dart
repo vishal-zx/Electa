@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'dart:core';
 
+// ignore: import_of_legacy_library_into_null_safe
 import 'package:flutter_mobile_vision/flutter_mobile_vision.dart';
 
 // import 'package:scanbot_sdk/scanbot_sdk.dart';
@@ -37,21 +38,7 @@ class _RegisterState extends State<Register> {
     });
     super.initState();
   }
-
-  _startscan() async {
-    List<OcrText> list = [];
-    try {
-      FlutterMobileVision.read(
-        waitTap: true,
-        fps: 5,
-      );
-      var text;
-      for (text in list) {
-        print('value is ${text.value}');
-      }
-    } catch (e) {}
-  }
-
+  
   @override
   Widget build(BuildContext context) {
     var elevatedbutton = ElevatedButton(
