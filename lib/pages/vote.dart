@@ -13,9 +13,69 @@ class Vote extends StatefulWidget {
   _VoteState createState() => _VoteState();
 }
 
-Widget _buildPopupDialog(BuildContext context,
-// , String candidate, String position
-) {
+Widget _buildCandidateRow(BuildContext context)
+{
+  return Row(
+    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+    children: [
+      Container(
+        width: MediaQuery.of(context).size.height*0.09,
+        height: MediaQuery.of(context).size.height*0.09,
+        decoration: BoxDecoration(
+          shape: BoxShape.circle,
+          image: DecorationImage(
+            image: NetworkImage("https://www.mantruckandbus.com/fileadmin/media/bilder/02_19/219_05_busbusiness_interviewHeader_1485x1254.jpg"),
+            fit: BoxFit.fill
+          ),
+        ),
+      ),
+      SizedBox(
+        width: MediaQuery.of(context).size.width*0.35,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            FittedBox(
+                fit: BoxFit.fitWidth,
+                child: Text("Vishal Gupta",
+                  style: TextStyle(
+                    fontSize: 25,
+                    color: Colors.white,
+                  ),
+                ),
+              ),
+            SizedBox(
+              height: 5,
+            ),
+            FittedBox(
+              fit: BoxFit.fitWidth,
+              child: Text("19UCS053",
+                style: TextStyle(
+                  fontSize: 16,
+                  color: Colors.white,
+                ),
+              ),
+            ), 
+          ],
+        ),
+      ),
+      IconButton(
+        icon: Icon(
+          Icons.arrow_forward_ios,
+          size: 25,
+          color: Colors.white,
+        ),
+        onPressed: (){
+          showDialog(
+            context: context,
+            builder: (BuildContext context) => _buildPopupDialog(context),
+          );
+        },
+      ),
+    ],
+  );
+}
+
+Widget _buildPopupDialog(BuildContext context) {
   return BackdropFilter(
     filter: ImageFilter.blur(sigmaX: 3, sigmaY: 3),
       child: new AlertDialog(
@@ -164,182 +224,9 @@ class _VoteState extends State<Vote> {
                                 child: Column(
                                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                                   children: [
-                                    Row(
-                                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                      children: [
-                                        Container(
-                                          width: MediaQuery.of(context).size.height*0.09,
-                                          height: MediaQuery.of(context).size.height*0.09,
-                                          decoration: BoxDecoration(
-                                            shape: BoxShape.circle,
-                                            image: DecorationImage(
-                                              image: NetworkImage("https://www.mantruckandbus.com/fileadmin/media/bilder/02_19/219_05_busbusiness_interviewHeader_1485x1254.jpg"),
-                                              fit: BoxFit.fill
-                                            ),
-                                            ),
-                                        ),
-                                        SizedBox(
-                                        width: MediaQuery.of(context).size.width*0.35,
-                                        child: Column(
-                                          crossAxisAlignment: CrossAxisAlignment.start,
-                                          children: [
-                                            FittedBox(
-                                                fit: BoxFit.fitWidth,
-                                                child: Text("Vishal Gupta",
-                                                  style: TextStyle(
-                                                    fontSize: 25,
-                                                    color: Colors.white,
-                                                  ),                                                
-                                                ),
-                                              ),
-                                            SizedBox(
-                                              height: 5,
-                                            ),
-                                            FittedBox(
-                                                fit: BoxFit.fitWidth,
-                                                child: Text("19UCS053",
-                                                  style: TextStyle(
-                                                    fontSize: 16,
-                                                    color: Colors.white,
-                                                  ),                                                
-                                                ),
-                                              ), 
-                                          ],
-                                        ),
-                                          ),
-                                        
-                                        IconButton(
-                                          icon: Icon(
-                                            Icons.arrow_forward_ios,
-                                            size: 25,
-                                            color: Colors.white,
-                                          ),
-                                          onPressed: (){
-                                            showDialog(
-                                              context: context,
-                                              builder: (BuildContext context) => _buildPopupDialog(context),
-                                            );
-                                          },
-                                        ),
-                                      ],
-                                    ),
-                                    Row(
-                                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                      children: [
-                                        Container(
-                                          width: MediaQuery.of(context).size.height*0.09,
-                                          height: MediaQuery.of(context).size.height*0.09,
-                                          decoration: BoxDecoration(
-                                            shape: BoxShape.circle,
-                                            image: DecorationImage(
-                                              image: NetworkImage("https://www.mantruckandbus.com/fileadmin/media/bilder/02_19/219_05_busbusiness_interviewHeader_1485x1254.jpg"),
-                                              fit: BoxFit.fill
-                                            ),
-                                            ),
-                                        ),
-                                        SizedBox(
-                                        width: MediaQuery.of(context).size.width*0.35,
-                                        child: Column(
-                                          crossAxisAlignment: CrossAxisAlignment.start,
-                                          children: [
-                                            FittedBox(
-                                                fit: BoxFit.fitWidth,
-                                                child: Text("Vishal Gupta",
-                                                  style: TextStyle(
-                                                    fontSize: 25,
-                                                    color: Colors.white,
-                                                  ),                                                
-                                                ),
-                                              ),
-                                            SizedBox(
-                                              height: 5,
-                                            ),
-                                            FittedBox(
-                                                fit: BoxFit.fitWidth,
-                                                child: Text("19UCS053",
-                                                  style: TextStyle(
-                                                    fontSize: 16,
-                                                    color: Colors.white,
-                                                  ),                                                
-                                                ),
-                                              ),
-                                          ],
-                                        ),
-                                          ),
-                                        
-                                        IconButton(
-                                          icon: Icon(
-                                            Icons.arrow_forward_ios,
-                                            size: 25,
-                                            color: Colors.white,
-                                          ),
-                                          onPressed: (){
-                                            showDialog(
-                                              context: context,
-                                              builder: (BuildContext context) => _buildPopupDialog(context),
-                                            );
-                                          },
-                                        ),
-                                      ],
-                                    ),
-                                    Row(
-                                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                      children: [
-                                        Container(
-                                          width: MediaQuery.of(context).size.height*0.09,
-                                          height: MediaQuery.of(context).size.height*0.09,
-                                          decoration: BoxDecoration(
-                                            shape: BoxShape.circle,
-                                            image: DecorationImage(
-                                              image: NetworkImage("https://www.mantruckandbus.com/fileadmin/media/bilder/02_19/219_05_busbusiness_interviewHeader_1485x1254.jpg"),
-                                              fit: BoxFit.fill
-                                            ),
-                                          ),
-                                        ),
-                                        SizedBox(
-                                        width: MediaQuery.of(context).size.width*0.35,
-                                        child: Column(
-                                          crossAxisAlignment: CrossAxisAlignment.start,
-                                            children: [
-                                              FittedBox(
-                                                fit: BoxFit.fitWidth,
-                                                child: Text("Vishal Gupta",
-                                                  style: TextStyle(
-                                                    fontSize: 25,
-                                                    color: Colors.white,
-                                                  ),                                                
-                                                ),
-                                              ),
-                                              SizedBox(
-                                                height: 5,
-                                              ),
-                                              FittedBox(
-                                                fit: BoxFit.fitWidth,
-                                                child: Text("19UCS053",
-                                                  style: TextStyle(
-                                                    fontSize: 16,
-                                                    color: Colors.white,
-                                                  ),                                                
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                        IconButton(
-                                          icon: Icon(
-                                            Icons.arrow_forward_ios,
-                                            size: 25,
-                                            color: Colors.white,
-                                          ),
-                                          onPressed: (){
-                                            showDialog(
-                                              context: context,
-                                              builder: (BuildContext context) => _buildPopupDialog(context),
-                                            );
-                                          },
-                                        ),
-                                      ],
-                                    ),
+                                    _buildCandidateRow(context),
+                                    _buildCandidateRow(context),
+                                    _buildCandidateRow(context),
                                   ],
                                 ),
                               ),

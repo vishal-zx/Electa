@@ -57,26 +57,26 @@ class _RegisterState extends State<Register> {
       body: Column(
         children: <Widget>[
           Padding(
-            padding: const EdgeInsets.only(right: 50.0),
+            padding: const EdgeInsets.fromLTRB(10, 8, 40, 0),
             child: TextField(
               decoration: InputDecoration(
                 icon: Icon(
                   Icons.person_pin,
                   color: Colors.red,
                 ),
-                hintText: "enter your Roll Number",
+                hintText: "Enter Your Roll Number",
               ),
             ),
           ),
           Padding(
-            padding: EdgeInsets.only(top: 8.0, right: 50.0),
+            padding: EdgeInsets.fromLTRB(10, 8, 40, 0),
             child: TextField(
               decoration: InputDecoration(
                 icon: Icon(
                   Icons.person_outline_sharp,
                   color: Colors.red,
                 ),
-                hintText: "enter your name",
+                hintText: "Enter Your Name",
               ),
             ),
           ),
