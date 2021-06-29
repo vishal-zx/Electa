@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
 
-class resultscreen extends StatefulWidget {
+class ResultScreen extends StatefulWidget {
   @override
-  _resultscreenState createState() => _resultscreenState();
+  _ResultScreenState createState() => _ResultScreenState();
 }
 
 // ignore: camel_case_types
-class _resultscreenState extends State<resultscreen> {
+class _ResultScreenState extends State<ResultScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
