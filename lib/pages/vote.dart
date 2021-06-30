@@ -2,6 +2,7 @@
 import 'dart:ui';
 
 // import 'package:electa/utils/routes.dart';
+
 import 'package:electa/widgets/drawer.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -13,18 +14,23 @@ class Vote extends StatefulWidget {
   _VoteState createState() => _VoteState();
 }
 
-Widget _buildCandidateRow(BuildContext context, String name, String roll, String position){
+Widget _buildCandidateRow(BuildContext context, String name, String roll, String image, String position){
+  
+  var _loadImage = "assets/images/u1.png";
+  var _profileImage = image;
   return Row(
     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
     children: [
       Container(
         width: MediaQuery.of(context).size.height*0.09,
         height: MediaQuery.of(context).size.height*0.09,
-        decoration: BoxDecoration(
-          shape: BoxShape.circle,
-          image: DecorationImage(
-            image: NetworkImage("https://vishal-zx.github.io/assets/img/profile.jpg"),
-            fit: BoxFit.fill,
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(50),
+          child: FadeInImage.assetNetwork(
+            placeholder: _loadImage,
+            image: _profileImage,
+            fit: BoxFit.cover,
+            fadeInDuration: Duration(milliseconds: 1),
           ),
         ),
       ),
@@ -37,7 +43,7 @@ Widget _buildCandidateRow(BuildContext context, String name, String roll, String
                 fit: BoxFit.fitWidth,
                 child: Text("$name",
                   style: TextStyle(
-                    fontSize: 25,
+                    fontSize: 20,
                     color: Colors.white,
                   ),
                 ),
@@ -75,6 +81,7 @@ Widget _buildCandidateRow(BuildContext context, String name, String roll, String
 }
 
 Widget _buildPopupDialog(BuildContext context, String position, String name) {
+  
   return BackdropFilter(
     filter: ImageFilter.blur(sigmaX: 3, sigmaY: 3),
       child: new AlertDialog(
@@ -153,9 +160,55 @@ Widget _buildPopupDialog(BuildContext context, String position, String name) {
   );
 }
 
+class Candidate{
+  final name;
+  final rollNo;
+  final imageUrl;
+
+  Candidate(this.name, this.rollNo, this.imageUrl);
+}
+
 class _VoteState extends State<Vote> {
-  int _index = 0;
+  int _index = 0, cpos=0;
   var positions = ["President", "Vice-President", "G-Sec Science", "G-Sec Cultural", "G-Sec Sports", "AG-Sec Science", "AG-Sec Cultural", "AG-Sec Sports",];
+
+  final List<List<Candidate>> cn = [
+    [
+      new Candidate("Saumitra Vyas", "19UCS252", "https://imgshare.io/images/2021/06/30/saumitra.png"), 
+      new Candidate("Manya Sharma", "19UCC066", "https://imgshare.io/images/2021/06/30/manya.png")
+    ], 
+    [
+      new Candidate("Vishal Gupta", "19UCS053", "https://imgshare.io/images/2021/06/30/vishal1.png"), 
+      new Candidate("Poojan Gadhiya", "19UCS245", "https://imgshare.io/images/2021/06/30/poojan.png"),
+    ], 
+    [
+      new Candidate("Gunit Varshney", "19UCS188", "https://imgshare.io/images/2021/06/30/gunit.png"), 
+      new Candidate("Mayank Vyas", "19UEC065", "https://imgshare.io/images/2021/06/30/mayank.png")
+    ], 
+    [
+      new Candidate("Ketan Jakhar", "19UCC020", "https://imgshare.io/images/2021/06/30/ketan.png"), 
+      new Candidate("Saumitra Vyas", "19UCS252", "https://imgshare.io/images/2021/06/30/saumitra.png")
+    ], 
+    [
+      new Candidate("Dhananjay Sharma", "19UME041", "https://imgshare.io/images/2021/06/30/dj.md.png"), 
+      new Candidate("Vishal Gupta", "19UCS053", "https://imgshare.io/images/2021/06/30/vishal1.png"),
+      new Candidate("Karan Aditte Singh", "19UCC025", "https://imgshare.io/images/2021/06/30/karan.png")
+    ], 
+    [
+      new Candidate("Shubham Jain", "18UEC022", "https://imgshare.io/images/2021/06/30/shubham.png"), 
+      new Candidate("Daksh Bindal", "18UCS176", "https://imgshare.io/images/2021/06/30/daksh.png")
+    ], 
+    [
+      new Candidate("Ketan Jakhar", "19UCC020", "https://imgshare.io/images/2021/06/30/ketan.png"), 
+      new Candidate("Vishal Gupta", "19UCS053", "https://imgshare.io/images/2021/06/30/vishal1.png")
+    ], 
+    [
+      new Candidate("Poojan Gadhiya", "19UCS245", "https://imgshare.io/images/2021/06/30/poojan.png"),
+      new Candidate("Dhananjay Sharma", "19UME041", "https://imgshare.io/images/2021/06/30/dj.md.png"), 
+      new Candidate("Karan Aditte Singh", "19UCC025", "https://imgshare.io/images/2021/06/30/karan.png")
+    ],
+  ];
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -239,9 +292,8 @@ class _VoteState extends State<Vote> {
                                 child: Column(
                                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                                   children: [
-                                    _buildCandidateRow(context, "Vishal Gupta", "19UCS053", positions[i]),
-                                    _buildCandidateRow(context, "Vishal Gupta", "19UCS053", positions[i]),
-                                    _buildCandidateRow(context, "Vishal Gupta", "19UCS053", positions[i]),
+                                    for (var j = 0; j < cn[i].length; j++)
+                                      _buildCandidateRow(context, cn[i][j].name, cn[i][j].rollNo, cn[i][j].imageUrl, positions[i]),
                                   ],
                                 ),
                               ),
@@ -261,7 +313,7 @@ class _VoteState extends State<Vote> {
               child: Column(
                 children: [
                   SizedBox(
-                    height: MediaQuery.of(context).size.height*0.02,
+                    height: MediaQuery.of(context).size.height*0.01,
                   ),
                   Icon(
                     Icons.lightbulb_outline,

@@ -106,18 +106,24 @@ class MyDrawer extends StatelessWidget {
               ListTile(
                 leading: Icon(CupertinoIcons.star_circle, color: Colors.white,),
                 title: Text("Results", 
-                textScaleFactor: 1.3,
-                style: TextStyle(
-                  color: Colors.white,
-                ),),
+                  textScaleFactor: 1.3,
+                  style: TextStyle(
+                    color: Colors.white,
+                  ),
+                ),
+                onTap: (){
+                  Navigator.pop(context);
+                  Navigator.pushNamed(context, MyRoutes.resultRoute);
+                },
               ),
               ListTile(
                 leading: Icon(CupertinoIcons.profile_circled, color: Colors.white,),
                 title: Text("My Account", 
-                textScaleFactor: 1.3,
-                style: TextStyle(
-                  color: Colors.white,
-                ),),
+                  textScaleFactor: 1.3,
+                  style: TextStyle(
+                    color: Colors.white,
+                  ),
+                ),
               ),
             ],
           ),
