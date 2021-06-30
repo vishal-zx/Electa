@@ -8,5 +8,4 @@
          to allow setting breakpoints, to provide hot reload, etc.
     -->
     <uses-permission android:name="android.permission.INTERNET"/>
-    <activity android:name="io.github.edufolly.fluttermobilevision.ocr.OcrCaptureActivity" />
 </manifest>

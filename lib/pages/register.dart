@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'dart:core';
 
+// ignore: import_of_legacy_library_into_null_safe
 import 'package:flutter_mobile_vision/flutter_mobile_vision.dart';
 
 // import 'package:scanbot_sdk/scanbot_sdk.dart';
@@ -37,21 +38,7 @@ class _RegisterState extends State<Register> {
     });
     super.initState();
   }
-
-  _startscan() async {
-    List<OcrText> list = [];
-    try {
-      FlutterMobileVision.read(
-        waitTap: true,
-        fps: 5,
-      );
-      var text;
-      for (text in list) {
-        print('value is ${text.value}');
-      }
-    } catch (e) {}
-  }
-
+  
   @override
   Widget build(BuildContext context) {
     var elevatedbutton = ElevatedButton(
@@ -65,31 +52,34 @@ class _RegisterState extends State<Register> {
         ),
         elevation: 0,
         leading: IconButton(
-            onPressed: () => {}, icon: Icon(Icons.arrow_back_rounded)),
+            onPressed: () => {
+              Navigator.pop(context),
+            }, 
+            icon: Icon(Icons.arrow_back_rounded)),
       ),
       body: Column(
         children: <Widget>[
           Padding(
-            padding: const EdgeInsets.only(right: 50.0),
+            padding: const EdgeInsets.fromLTRB(10, 8, 40, 0),
             child: TextField(
               decoration: InputDecoration(
                 icon: Icon(
                   Icons.person_pin,
                   color: Colors.red,
                 ),
-                hintText: "enter your Roll Number",
+                hintText: "Enter Your Roll Number",
               ),
             ),
           ),
           Padding(
-            padding: EdgeInsets.only(top: 8.0, right: 50.0),
+            padding: EdgeInsets.fromLTRB(10, 8, 40, 0),
             child: TextField(
               decoration: InputDecoration(
                 icon: Icon(
                   Icons.person_outline_sharp,
                   color: Colors.red,
                 ),
-                hintText: "enter your name",
+                hintText: "Enter Your Name",
               ),
             ),
           ),

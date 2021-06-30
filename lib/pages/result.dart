@@ -3,13 +3,13 @@ import 'package:slimy_card/slimy_card.dart';
 import 'package:pie_chart/pie_chart.dart';
 
 
-class resultscreen extends StatefulWidget {
+class ResultScreen extends StatefulWidget {
   @override
-  _resultscreenState createState() => _resultscreenState();
+  _ResultScreenState createState() => _ResultScreenState();
 }
 
 // ignore: camel_case_types
-class _resultscreenState extends State<resultscreen> {
+class _ResultScreenState extends State<ResultScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
