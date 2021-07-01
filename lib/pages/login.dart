@@ -14,6 +14,7 @@ class _LoginPageState extends State<LoginPage> {
   String _name = "";
   bool _check = false;
   final formKey = GlobalKey<FormState>();
+  bool _showPass = true;
 
   // ignore: non_constant_identifier_names
   moveHome(BuildContext) async{
@@ -28,6 +29,12 @@ class _LoginPageState extends State<LoginPage> {
         _check = false;
       });
     }
+  }
+
+  void _togglePass(){
+    setState(() {
+      _showPass = !_showPass;
+    });
   }
 
   @override
@@ -84,17 +91,25 @@ class _LoginPageState extends State<LoginPage> {
                         if(value == "") _name = "";
                       },
                     ),
-                    TextFormField(
-                      obscureText: true,
-                      decoration: InputDecoration(
-                        hintText: "Enter your Password",
-                        labelText: "Password"
-                      ),
-                      validator: (value){
-                        if(value!.isEmpty){return "Password can't be Empty!";}
-                        else if(value.length < 6){return "Password lenght should be greater than 6!";}
-                        else  return null;
-                      },
+                    Column(
+                      children: [
+                        TextFormField(
+                          obscureText: _showPass,
+                          decoration: InputDecoration(
+                            hintText: "Enter your Password",
+                            labelText: "Password",
+                            suffix: InkWell(
+                              onTap: _togglePass,
+                              child: Icon(this._showPass?Icons.visibility:Icons.visibility_off),
+                            )
+                          ),
+                          validator: (value){
+                            if(value!.isEmpty){return "Password can't be Empty!";}
+                            else if(value.length < 6){return "Password lenght should be greater than 6!";}
+                            else  return null;
+                          },
+                        ),
+                      ],
                     ),
                     SizedBox(
                       height: 35.0,

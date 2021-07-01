@@ -31,6 +31,7 @@ Widget _buildCandidateRow(BuildContext context, String name, String roll, String
             image: _profileImage,
             fit: BoxFit.cover,
             fadeInDuration: Duration(milliseconds: 1),
+            fadeOutDuration: Duration(milliseconds: 1),
           ),
         ),
       ),

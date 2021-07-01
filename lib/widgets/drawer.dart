@@ -17,6 +17,7 @@ class MyDrawer extends StatelessWidget {
   Widget build(BuildContext context) {
     final userName = "Vishal Gupta";
     final userEmail = "19ucs053@lnmiit.ac.in";
+    final assetImage = "assets/images/u1.png";
     final userImageUrl = "https://vishal-zx.github.io/assets/img/profile.jpg";
 
     return SafeArea(
@@ -38,13 +39,16 @@ class MyDrawer extends StatelessWidget {
                       Container(
                         width: MediaQuery.of(context).size.height*0.15,
                         height: MediaQuery.of(context).size.height*0.15,
-                        decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          image: DecorationImage(
-                            image: NetworkImage(userImageUrl),
-                            fit: BoxFit.fill
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(70),
+                          child: FadeInImage.assetNetwork(
+                            placeholder: assetImage,
+                            image: userImageUrl,
+                            fit: BoxFit.cover,
+                            fadeInDuration: Duration(milliseconds: 1),
+                            fadeOutDuration: Duration(milliseconds: 1),
                           ),
-                          ),
+                        ),
                       ),
                       SizedBox(
                         height: 10,
