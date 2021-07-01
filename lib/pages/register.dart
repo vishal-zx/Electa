@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'dart:core';
+import 'package:animated_text_kit/animated_text_kit.dart';
 
 // ignore: import_of_legacy_library_into_null_safe
 import 'package:flutter_mobile_vision/flutter_mobile_vision.dart';
@@ -38,7 +39,7 @@ class _RegisterState extends State<Register> {
     });
     super.initState();
   }
-  
+
   @override
   Widget build(BuildContext context) {
     var elevatedbutton = ElevatedButton(
@@ -53,8 +54,8 @@ class _RegisterState extends State<Register> {
         elevation: 0,
         leading: IconButton(
             onPressed: () => {
-              Navigator.pop(context),
-            }, 
+                  Navigator.pop(context),
+                },
             icon: Icon(Icons.arrow_back_rounded)),
       ),
       body: Column(
@@ -117,6 +118,84 @@ class _RegisterState extends State<Register> {
               ),
             ],
           ),
+          Row(
+            children: <Widget>[
+              Padding(
+                padding: const EdgeInsets.only(top: 10.0, left: 50.0),
+                child: ElevatedButton(
+                    onPressed: () => {},
+                    child: Text('scan your college id card')),
+              ),
+              // Padding(
+              //   padding: const EdgeInsets.only(left: 25.0),
+              //   child: buildcheckbox(),
+              // ),
+            ],
+          ),
+          Row(
+            children: <Widget>[
+              Padding(
+                padding: const EdgeInsets.only(top: 10.0, left: 32.0),
+                child: ElevatedButton(
+                    onPressed: () => {},
+                    child: Text('------Face Authentication------')),
+              ),
+              // Padding(
+              //   padding: const EdgeInsets.only(left: 28.0),
+              //   child: buildCheckbox(),
+              // ),
+            ],
+          ),
+          Center(
+            child: Padding(
+              padding: const EdgeInsets.only(top: 50.0),
+              child: Text(
+                'you want to register yourself as:',
+                style: TextStyle(
+                  fontSize: 22.0,
+                  foreground: Paint()
+                    ..style = PaintingStyle.stroke
+                    ..strokeWidth = 1
+                    ..color = Colors.black87,
+                ),
+              ),
+            ),
+          ),
+          Row(
+            children: <Widget>[
+              Padding(
+                padding: const EdgeInsets.only(left: 80.0, top: 32.0),
+                child:
+                    ElevatedButton(onPressed: () => {}, child: Text('VOTER')),
+              ),
+              Padding(
+                padding: EdgeInsets.only(left: 30.0, top: 32.0),
+                child: ElevatedButton(
+                    onPressed: () => {}, child: Text('CANDIDATE')),
+              ),
+            ],
+          ),
+          // ignore: deprecated_member_use
+          Padding(
+            padding: const EdgeInsets.only(top: 20.0),
+            child: ColorizeAnimatedTextKit(
+              text: ['you have succesfully registered as VOTER/CANDIDATE'],
+              colors: [
+                Colors.black,
+                Colors.brown,
+                Colors.purple,
+                Colors.red,
+                Colors.yellow,
+                Colors.orange,
+                Colors.lightBlue
+              ],
+              textStyle: TextStyle(fontWeight: FontWeight.bold, fontSize: 25.0),
+              textAlign: TextAlign.center,
+              isRepeatingAnimation: true,
+              speed: Duration(milliseconds: 300),
+              totalRepeatCount: 5,
+            ),
+          )
         ],
       ),
     );
