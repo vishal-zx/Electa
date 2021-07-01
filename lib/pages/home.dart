@@ -1,8 +1,8 @@
 import 'package:electa/widgets/drawer.dart';
 import 'package:flutter/material.dart';
 
-class   Home extends StatelessWidget {
-  const Home({ Key? key }) : super(key: key);
+class Home extends StatelessWidget {
+  const Home({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -13,9 +13,10 @@ class   Home extends StatelessWidget {
       ),
       body: Center(
         child: Container(
-          child: Text("This will be the feed area by default!",
+          child: Text(
+            "This will be the feed area by default!",
             style: TextStyle(
-              fontSize: 24,
+              fontSize: 30,
             ),
             textAlign: TextAlign.center,
           ),
