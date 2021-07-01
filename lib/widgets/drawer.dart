@@ -29,15 +29,6 @@ class MyDrawer extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      // ClipRRect(
-                      //   borderRadius: BorderRadius.circular(20),
-                      //   child: Image(
-                      //     image: NetworkImage(userImageUrl),
-                      //     // width: 140,
-                      //     height: MediaQuery.of(context).size.height*0.185,
-                      //     fit: BoxFit.cover,
-                      //   ),
-                      // ),
                       Container(
                         width: MediaQuery.of(context).size.height*0.15,
                         height: MediaQuery.of(context).size.height*0.15,
@@ -124,6 +115,10 @@ class MyDrawer extends StatelessWidget {
                     color: Colors.white,
                   ),
                 ),
+                onTap: (){
+                  Navigator.pop(context);
+                  Navigator.pushNamed(context, MyRoutes.myAccountRoute);
+                },
               ),
             ],
           ),

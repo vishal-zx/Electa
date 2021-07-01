@@ -4,4 +4,5 @@ class MyRoutes{
   static String voteRoute = "/vote";
   static String registerRoute = "/register";
   static String resultRoute = "/result";
+  static String myAccountRoute = "/MyAccount";
 }

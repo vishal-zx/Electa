@@ -1,4 +1,5 @@
 import 'package:electa/pages/login.dart';
+import 'package:electa/pages/myAccount.dart';
 import 'package:electa/pages/register.dart';
 import 'package:electa/pages/result.dart';
 import 'package:electa/pages/vote.dart';
@@ -38,6 +39,7 @@ class MyApp extends StatelessWidget {
         MyRoutes.homeRoute : (context) => Home(),
         MyRoutes.voteRoute : (context) => Vote(),
         MyRoutes.resultRoute : (context) => ResultScreen(),
+        MyRoutes.myAccountRoute : (context) => MyAccount(),
       },
     );
   }
