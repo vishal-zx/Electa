@@ -4,6 +4,12 @@ import 'package:electa/utils/routes.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+void doRoute(BuildContext context, String nextRoute)
+{
+  if(ModalRoute.of(context)!.settings.name != nextRoute) 
+    Navigator.pushNamed(context, nextRoute);
+}
+
 class MyDrawer extends StatelessWidget {
   const MyDrawer({ Key? key }) : super(key: key);
 
@@ -78,7 +84,7 @@ class MyDrawer extends StatelessWidget {
                 ),),
                 onTap: (){
                   Navigator.pop(context);
-                  Navigator.pushNamed(context, MyRoutes.homeRoute);
+                  doRoute(context, MyRoutes.homeRoute);
                 },
               ),
               ListTile(
@@ -91,7 +97,7 @@ class MyDrawer extends StatelessWidget {
                 ),
                 onTap: (){
                   Navigator.pop(context);
-                  Navigator.pushNamed(context, MyRoutes.voteRoute);
+                  doRoute(context, MyRoutes.voteRoute);
                 },
               ),
               ListTile(
@@ -104,7 +110,7 @@ class MyDrawer extends StatelessWidget {
                 ),
                 onTap: (){
                   Navigator.pop(context);
-                  Navigator.pushNamed(context, MyRoutes.resultRoute);
+                  doRoute(context, MyRoutes.resultRoute);
                 },
               ),
               ListTile(
@@ -116,8 +122,9 @@ class MyDrawer extends StatelessWidget {
                   ),
                 ),
                 onTap: (){
+                  print(ModalRoute.of(context)!.settings.name);
                   Navigator.pop(context);
-                  Navigator.pushNamed(context, MyRoutes.myAccountRoute);
+                  doRoute(context, MyRoutes.myAccountRoute);
                 },
               ),
             ],
