@@ -25,6 +25,8 @@ dependencies:
     sdk: flutter
 
   transparent_image: ^2.0.0
+  slimy_card: ^1.0.4
+  pie_chart: ^5.0.0
 
 
   # The following adds the Cupertino Icons font to your application.
