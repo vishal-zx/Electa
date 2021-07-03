@@ -82,11 +82,13 @@ Widget _buildCandidateRow(BuildContext context, String name, String roll, String
 }
 
 Widget _buildPopupDialog(BuildContext context, String position, String name) {
+  var _cBE = false;
   
   return BackdropFilter(
     filter: ImageFilter.blur(sigmaX: 3, sigmaY: 3),
       child: new AlertDialog(
         // scrollable: true,
+        titlePadding: EdgeInsets.only(top: 20, bottom: 10),
         elevation: 5,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(20),
@@ -97,53 +99,82 @@ Widget _buildPopupDialog(BuildContext context, String position, String name) {
           style: TextStyle(fontWeight: FontWeight.bold),
         ),
         content: Container(
-          height: MediaQuery.of(context).size.height*0.28,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              Column(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                crossAxisAlignment: CrossAxisAlignment.center,          
-                children: [
-                  Image.asset(
-                    "assets/images/gi.gif",
-                    height: 80,
-                    width: 80,
+          padding: EdgeInsets.zero,
+          height: MediaQuery.of(context).size.height*0.45,
+          width: MediaQuery.of(context).size.width*0.8,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.end,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                
+                SizedBox(
+                  height: MediaQuery.of(context).size.height*.01,
+                ),
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [  
+                    FittedBox(
+                      fit: BoxFit.fitHeight,
+                      child: Text("Position : $position",
+                        textAlign: TextAlign.start,
+                      ),
+                    ),
+                    FittedBox(
+                      fit: BoxFit.fitHeight,
+                      child: Text("Candidate : $name",
+                        textAlign: TextAlign.start,
+                      ),
+                    ),
+                  ],
+                ),
+                Draggable(
+                  feedback: Image(image: AssetImage("assets/images/card1.png"),
+                    width:MediaQuery.of(context).size.width*0.14,
+                    height:MediaQuery.of(context).size.height*0.14,
+                    ),
+                  child: Image.asset("assets/images/card1.png",
+                    width:MediaQuery.of(context).size.width*0.14,
+                    height:MediaQuery.of(context).size.height*0.14,
                   ),
-                ],
-              ),
-              Column(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [  
-                  FittedBox(
-                    fit: BoxFit.fitHeight,
-                    child: Text("Position : $position",
-                      textAlign: TextAlign.start,
+                  childWhenDragging: Image.asset("assets/images/card1.png",
+                    width:MediaQuery.of(context).size.width*0.14,
+                    height:MediaQuery.of(context).size.height*0.14,
+                    color: Colors.blueGrey[100],
+                  ),
+                  onDragCompleted: ()=>{print("ho gya")},
+                  onDragEnd: (img)=>{print("ho gya")},
+                  onDragStarted: ()=>{print("ho gyyyya")},
+                ),
+                SizedBox(
+                  height: MediaQuery.of(context).size.height*.04,
+                ),
+                DragTarget(
+                  onAccept: (img){
+                    _cBE = true;
+                  },
+                  onWillAccept: (img) => true,
+                  builder: (context, acc, rej)=>Container(
+                    child: Image.asset("assets/images/box1.png",
+                      width:MediaQuery.of(context).size.width*0.30,
+                      height:MediaQuery.of(context).size.height*0.20,
                     ),
                   ),
-                  FittedBox(
-                    fit: BoxFit.fitHeight,
-                    child: Text("Candidate : $name",
-                      textAlign: TextAlign.start,
-                    ),
-                  ),
-                ],
-              ),
-            ],
+                )
+              ],
+            ),
           ),
-        ),
         actions: <Widget>[
           new TextButton(
             onPressed: () {
               Navigator.of(context).pop();
             },
-            child: const Text('Confirm',
+            child: (_cBE==true)?Text('Confirm',
               style: TextStyle(
                 color: Colors.black,
                 fontSize: 16,
               ),
-            ),
+            ):Text(""),
           ),
           new TextButton(
             onPressed: () {
@@ -157,6 +188,8 @@ Widget _buildPopupDialog(BuildContext context, String position, String name) {
             ),
           ),
         ],
+        actionsPadding: EdgeInsets.all(0),
+        contentPadding: EdgeInsets.all(0),
       ),
   );
 }
