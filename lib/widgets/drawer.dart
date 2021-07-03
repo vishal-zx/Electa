@@ -126,7 +126,6 @@ class MyDrawer extends StatelessWidget {
                   ),
                 ),
                 onTap: (){
-                  print(ModalRoute.of(context)!.settings.name);
                   Navigator.pop(context);
                   doRoute(context, MyRoutes.myAccountRoute);
                 },
