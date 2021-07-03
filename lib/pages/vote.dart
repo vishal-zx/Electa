@@ -311,10 +311,24 @@ class _VoteState extends State<Vote> {
             Container(
               margin: EdgeInsets.all(0),
               padding: EdgeInsets.all(0),
+              width: MediaQuery.of(context).size.width,
+              height: MediaQuery.of(context).size.height*0.15156,
+              decoration: BoxDecoration(
+                color: Colors.blueGrey[300],
+                shape: BoxShape.rectangle,
+                borderRadius: BorderRadius.only(topRight: Radius.circular(60), topLeft: Radius.circular(60)),
+                boxShadow: <BoxShadow>[
+                  BoxShadow(  
+                    color: Colors.black26,
+                    blurRadius: 15.0,
+                    offset: Offset(0.0, 15.0),
+                  ),
+                ],
+              ),
               child: Column(
                 children: [
                   SizedBox(
-                    height: MediaQuery.of(context).size.height*0.01,
+                    height: MediaQuery.of(context).size.height*0.015,
                   ),
                   Icon(
                     Icons.lightbulb_outline,
