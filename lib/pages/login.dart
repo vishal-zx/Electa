@@ -91,25 +91,21 @@ class _LoginPageState extends State<LoginPage> {
                         if(value == "") _name = "";
                       },
                     ),
-                    Column(
-                      children: [
-                        TextFormField(
-                          obscureText: _showPass,
-                          decoration: InputDecoration(
-                            hintText: "Enter your Password",
-                            labelText: "Password",
-                            suffix: InkWell(
-                              onTap: _togglePass,
-                              child: Icon(this._showPass?Icons.visibility:Icons.visibility_off),
-                            )
-                          ),
-                          validator: (value){
-                            if(value!.isEmpty){return "Password can't be Empty!";}
-                            else if(value.length < 6){return "Password lenght should be greater than 6!";}
-                            else  return null;
-                          },
-                        ),
-                      ],
+                    TextFormField(
+                      obscureText: _showPass,
+                      decoration: InputDecoration(
+                        hintText: "Enter your Password",
+                        labelText: "Password",
+                        suffix: InkWell(
+                          onTap: _togglePass,
+                          child: Icon(this._showPass?Icons.visibility:Icons.visibility_off),
+                        )
+                      ),
+                      validator: (value){
+                        if(value!.isEmpty){return "Password can't be Empty!";}
+                        else if(value.length < 6){return "Password lenght should be greater than 6!";}
+                        else  return null;
+                      },
                     ),
                     SizedBox(
                       height: 35.0,

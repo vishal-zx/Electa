@@ -1,3 +1,4 @@
+import 'package:electa/utils/routes.dart';
 import 'package:electa/widgets/drawer.dart';
 import 'package:flutter/material.dart';
 
@@ -23,8 +24,8 @@ class  MyAccount extends StatelessWidget {
           child: Column(
             children: [
               Container(
-                height: MediaQuery.of(context).size.height*0.4,
-                margin: EdgeInsets.fromLTRB(0,MediaQuery.of(context).size.height*0.035,MediaQuery.of(context).size.width*0.1,0),
+                height: MediaQuery.of(context).size.height*0.32,
+                margin: EdgeInsets.fromLTRB(0,MediaQuery.of(context).size.height*0.031,MediaQuery.of(context).size.width*0.1,0),
                 decoration: BoxDecoration(
                   color: Color(0xFF333366),
                   shape: BoxShape.rectangle,
@@ -64,7 +65,7 @@ class  MyAccount extends StatelessWidget {
                             children: [
                               Container(
                                 height: MediaQuery.of(context).size.height*(((userName.length)/16).ceil()*0.038),
-                                width: MediaQuery.of(context).size.height*0.3,
+                                width: MediaQuery.of(context).size.height*0.28,
                                 child: Align(
                                   alignment: Alignment.bottomCenter,
                                   child: FittedBox(
@@ -193,29 +194,34 @@ class  MyAccount extends StatelessWidget {
                           ),
                         ],
                       ),
-                      child: Container(
-                        margin: EdgeInsets.fromLTRB(MediaQuery.of(context).size.width*0.04,MediaQuery.of(context).size.height*0.002,MediaQuery.of(context).size.width*0.05,MediaQuery.of(context).size.height*0.002),
-                        child: FittedBox(
-                          child: Row(
-                            children: [
-                              Icon(
-                                Icons.lock,
-                                color: Colors.white,
-                                size: 24,
-                              ),
-                              SizedBox(
-                                width: MediaQuery.of(context).size.width*0.03,
-                              ),
-                              Text(
-                                "Change Password",
-                                style: TextStyle(
+                      child: GestureDetector(
+                        child: Container(
+                          margin: EdgeInsets.fromLTRB(MediaQuery.of(context).size.width*0.04,MediaQuery.of(context).size.height*0.002,MediaQuery.of(context).size.width*0.05,MediaQuery.of(context).size.height*0.002),
+                          child: FittedBox(
+                            child: Row(
+                              children: [
+                                Icon(
+                                  Icons.lock,
                                   color: Colors.white,
-                                  fontSize: 19
+                                  size: 24,
                                 ),
-                              ),
-                            ],
+                                SizedBox(
+                                  width: MediaQuery.of(context).size.width*0.03,
+                                ),
+                                Text(
+                                  "Change Password",
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 19
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
                         ),
+                        onTap: () {
+                          Navigator.pushNamed(context, MyRoutes.changePswdRoute);
+                        },
                       ),
                     ),
                     Container(
@@ -233,29 +239,34 @@ class  MyAccount extends StatelessWidget {
                           ),
                         ],
                       ),
-                      child: Container(
-                        margin: EdgeInsets.fromLTRB(MediaQuery.of(context).size.width*0.04,MediaQuery.of(context).size.height*0.002,MediaQuery.of(context).size.width*0.05,MediaQuery.of(context).size.height*0.002),
-                        child: FittedBox(
-                          child: Row(
-                            children: [
-                              Icon(
-                                Icons.support,
-                                color: Colors.white,
-                                size: 24,
-                              ),
-                              SizedBox(
-                                width: MediaQuery.of(context).size.width*0.03,
-                              ),
-                              Text(
-                                "Help & Support",
-                                style: TextStyle(
+                      child: GestureDetector(
+                        child: Container(
+                          margin: EdgeInsets.fromLTRB(MediaQuery.of(context).size.width*0.04,MediaQuery.of(context).size.height*0.002,MediaQuery.of(context).size.width*0.05,MediaQuery.of(context).size.height*0.002),
+                          child: FittedBox(
+                            child: Row(
+                              children: [
+                                Icon(
+                                  Icons.support,
                                   color: Colors.white,
-                                  fontSize: 19
+                                  size: 24,
                                 ),
-                              ),
-                            ],
+                                SizedBox(
+                                  width: MediaQuery.of(context).size.width*0.03,
+                                ),
+                                Text(
+                                  "Help & Support",
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 19
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
                         ),
+                        onTap: () {
+                          Navigator.pushNamed(context, MyRoutes.hNSRoute);
+                        },
                       ),
                     ),
                     Container(
