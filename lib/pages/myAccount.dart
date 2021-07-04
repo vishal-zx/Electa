@@ -23,6 +23,7 @@ class  MyAccount extends StatelessWidget {
           child: Column(
             children: [
               Container(
+                height: MediaQuery.of(context).size.height*0.4,
                 margin: EdgeInsets.fromLTRB(0,MediaQuery.of(context).size.height*0.035,MediaQuery.of(context).size.width*0.1,0),
                 decoration: BoxDecoration(
                   color: Color(0xFF333366),
@@ -63,17 +64,20 @@ class  MyAccount extends StatelessWidget {
                             children: [
                               Container(
                                 height: MediaQuery.of(context).size.height*(((userName.length)/16).ceil()*0.038),
-                                width: MediaQuery.of(context).size.height*0.28,
+                                width: MediaQuery.of(context).size.height*0.3,
                                 child: Align(
                                   alignment: Alignment.bottomCenter,
-                                  child: Text(
-                                    "$userName",
-                                    style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 26,
-                                      fontWeight: FontWeight.bold,
+                                  child: FittedBox(
+                                    fit: BoxFit.fitWidth,
+                                    child: Text(
+                                      "$userName",
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 27,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                      textAlign: TextAlign.center,
                                     ),
-                                    textAlign: TextAlign.center,
                                   ),
                                 ),
                               ),
@@ -82,14 +86,17 @@ class  MyAccount extends StatelessWidget {
                               ),
                               Container(
                                 height: MediaQuery.of(context).size.height*0.022,
-                                child: Text(
-                                  "$userEmail",
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.w500,
+                                child: FittedBox(
+                                  fit: BoxFit.fitWidth,
+                                  child: Text(
+                                    "$userEmail",
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                                    textAlign: TextAlign.left,
                                   ),
-                                  textAlign: TextAlign.left,
                                 ),
                               ),
                             ],
@@ -125,7 +132,7 @@ class  MyAccount extends StatelessWidget {
                   image: DecorationImage(
                     image: AssetImage("assets/images/mypbg.png"),
                     fit: BoxFit.contain,
-                    alignment: Alignment(-1.2, 0),
+                    alignment: Alignment(MediaQuery.of(context).size.width*(-0.003), 0),
                     
                   )
                 ),
@@ -148,24 +155,26 @@ class  MyAccount extends StatelessWidget {
                       ),
                       child: Container(
                         margin: EdgeInsets.fromLTRB(MediaQuery.of(context).size.width*0.04,MediaQuery.of(context).size.height*0.002,MediaQuery.of(context).size.width*0.05,MediaQuery.of(context).size.height*0.002),
-                        child: Row(
-                          children: [
-                            Icon(
-                              Icons.person,
-                              color: Colors.white,
-                              size: 24,
-                            ),
-                            SizedBox(
-                              width: MediaQuery.of(context).size.width*0.03,
-                            ),
-                            Text(
-                              "Edit Profile",
-                              style: TextStyle(
+                        child: FittedBox(
+                          child: Row(
+                            children: [
+                              Icon(
+                                Icons.person,
                                 color: Colors.white,
-                                fontSize: 19
+                                size: 24,
                               ),
-                            ),
-                          ],
+                              SizedBox(
+                                width: MediaQuery.of(context).size.width*0.03,
+                              ),
+                              Text(
+                                "Edit Profile",
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 19
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                     ),
@@ -186,24 +195,26 @@ class  MyAccount extends StatelessWidget {
                       ),
                       child: Container(
                         margin: EdgeInsets.fromLTRB(MediaQuery.of(context).size.width*0.04,MediaQuery.of(context).size.height*0.002,MediaQuery.of(context).size.width*0.05,MediaQuery.of(context).size.height*0.002),
-                        child: Row(
-                          children: [
-                            Icon(
-                              Icons.lock,
-                              color: Colors.white,
-                              size: 24,
-                            ),
-                            SizedBox(
-                              width: MediaQuery.of(context).size.width*0.03,
-                            ),
-                            Text(
-                              "Change Password",
-                              style: TextStyle(
+                        child: FittedBox(
+                          child: Row(
+                            children: [
+                              Icon(
+                                Icons.lock,
                                 color: Colors.white,
-                                fontSize: 19
+                                size: 24,
                               ),
-                            ),
-                          ],
+                              SizedBox(
+                                width: MediaQuery.of(context).size.width*0.03,
+                              ),
+                              Text(
+                                "Change Password",
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 19
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                     ),
@@ -224,24 +235,26 @@ class  MyAccount extends StatelessWidget {
                       ),
                       child: Container(
                         margin: EdgeInsets.fromLTRB(MediaQuery.of(context).size.width*0.04,MediaQuery.of(context).size.height*0.002,MediaQuery.of(context).size.width*0.05,MediaQuery.of(context).size.height*0.002),
-                        child: Row(
-                          children: [
-                            Icon(
-                              Icons.support,
-                              color: Colors.white,
-                              size: 24,
-                            ),
-                            SizedBox(
-                              width: MediaQuery.of(context).size.width*0.03,
-                            ),
-                            Text(
-                              "Help & Support",
-                              style: TextStyle(
+                        child: FittedBox(
+                          child: Row(
+                            children: [
+                              Icon(
+                                Icons.support,
                                 color: Colors.white,
-                                fontSize: 19
+                                size: 24,
                               ),
-                            ),
-                          ],
+                              SizedBox(
+                                width: MediaQuery.of(context).size.width*0.03,
+                              ),
+                              Text(
+                                "Help & Support",
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 19
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                     ),
@@ -262,24 +275,26 @@ class  MyAccount extends StatelessWidget {
                       ),
                       child: Container(
                         margin: EdgeInsets.fromLTRB(MediaQuery.of(context).size.width*0.04,MediaQuery.of(context).size.height*0.002,MediaQuery.of(context).size.width*0.05,MediaQuery.of(context).size.height*0.002),
-                        child: Row(
-                          children: [
-                            Icon(
-                              Icons.logout,
-                              color: Colors.white,
-                              size: 24,
-                            ),
-                            SizedBox(
-                              width: MediaQuery.of(context).size.width*0.03,
-                            ),
-                            Text(
-                              "Logout",
-                              style: TextStyle(
+                        child: FittedBox(
+                          child: Row(
+                            children: [
+                              Icon(
+                                Icons.logout,
                                 color: Colors.white,
-                                fontSize: 19
+                                size: 24,
                               ),
-                            ),
-                          ],
+                              SizedBox(
+                                width: MediaQuery.of(context).size.width*0.03,
+                              ),
+                              Text(
+                                "Logout",
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 19
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                     ),
