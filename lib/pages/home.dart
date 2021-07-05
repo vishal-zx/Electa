@@ -1,4 +1,6 @@
+import 'package:circular_profile_avatar/circular_profile_avatar.dart';
 import 'package:electa/widgets/drawer.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 
@@ -51,15 +53,30 @@ class Home extends StatelessWidget {
       child: Column(
         children: <Widget>[
           Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              TextButton(
-                  onPressed: () => print("You Are on the Profile"),
-                  child: Text("Poojan Gadhiya")),
-              FlatButton.icon(
-                  onPressed: () => print("You Opened Edit"),
-                  icon: Icon(Icons.brightness_5_outlined),
-                  label: Text("."))
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  CircularProfileAvatar(
+                      'https://imgshare.io/images/2021/06/30/poojan.png',
+                      radius: 15,
+                      backgroundColor: Colors.transparent,
+                      onTap: () => print("You Clicked his Profile Image")),
+                ],
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  TextButton(
+                      onPressed: () => print("You Are on the Profile"),
+                      child: Text("Poojan Gadhiya")),
+                  //FlatButton.icon(
+                  //  onPressed: () => print("You Opened Edit"),
+                  //icon: Icon(Icons.brightness_5_outlined),
+                  //label: Text("."))
+                ],
+              ),
             ],
           ),
           Container(
