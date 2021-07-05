@@ -8,11 +8,23 @@ class  ChangePswd extends StatefulWidget {
 }
 
 class _ChangePswdState extends State<ChangePswd> {
-  bool _showPass = true;
+  bool _showPass1 = true;
+  bool _showPass2 = true;
+  bool _showPass3 = true;
 
-  void _togglePass(){
+  void _togglePass1(){
     setState(() {
-      _showPass = !_showPass;
+      _showPass1 = !_showPass1;
+    });
+  }
+  void _togglePass2(){
+    setState(() {
+      _showPass2 = !_showPass2;
+    });
+  }
+  void _togglePass3(){
+    setState(() {
+      _showPass3 = !_showPass3;
     });
   }
 
@@ -46,13 +58,13 @@ class _ChangePswdState extends State<ChangePswd> {
                       Padding(
                         padding: const EdgeInsets.fromLTRB(20, 20, 20, 5),
                         child: TextFormField(
-                          obscureText: _showPass,
+                          obscureText: _showPass1,
                           decoration: InputDecoration(
                             hintText: "Enter your current password",
                             labelText: "Curent Password",
                             suffix: InkWell(
-                              onTap: _togglePass,
-                              child: Icon(this._showPass?Icons.visibility:Icons.visibility_off),
+                              onTap: _togglePass1,
+                              child: Icon(this._showPass1?Icons.visibility:Icons.visibility_off),
                             )
                           ),
                           validator: (value){
@@ -65,13 +77,13 @@ class _ChangePswdState extends State<ChangePswd> {
                       Padding(
                         padding: const EdgeInsets.fromLTRB(20, 0, 20, 5),
                         child: TextFormField(
-                          obscureText: _showPass,
+                          obscureText: _showPass2,
                           decoration: InputDecoration(
                             hintText: "Enter your new password",
                             labelText: "New Password",
                             suffix: InkWell(
-                              onTap: _togglePass,
-                              child: Icon(this._showPass?Icons.visibility:Icons.visibility_off),
+                              onTap: _togglePass2,
+                              child: Icon(this._showPass2?Icons.visibility:Icons.visibility_off),
                             )
                           ),
                           validator: (value){
@@ -84,13 +96,13 @@ class _ChangePswdState extends State<ChangePswd> {
                       Padding(
                         padding: const EdgeInsets.fromLTRB(20, 0, 20, 40),
                         child: TextFormField(
-                          obscureText: _showPass,
+                          obscureText: _showPass3,
                           decoration: InputDecoration(
                             hintText: "Re-enter your new password",
                             labelText: "Confirm New Password",
                             suffix: InkWell(
-                              onTap: _togglePass,
-                              child: Icon(this._showPass?Icons.visibility:Icons.visibility_off),
+                              onTap: _togglePass3,
+                              child: Icon(this._showPass3?Icons.visibility:Icons.visibility_off),
                             )
                           ),
                           validator: (value){

@@ -1,5 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:url_launcher/url_launcher.dart';
+
 
 class  HelpNSupport extends StatefulWidget {
   HelpNSupport({ Key? key }) : super(key: key);
@@ -26,12 +29,112 @@ class Member{
 
 Widget _buildTeamRow(BuildContext context, Member person)
 {
+  final assetImage = "assets/images/u1.png";
   return Row(
+    crossAxisAlignment: CrossAxisAlignment.center,
     children: [
       Container(
-        height: MediaQuery.of(context).size.height*0.04,
-        width: MediaQuery.of(context).size.height*0.04,
-        child: Image.asset(person.image),
+        margin: EdgeInsets.only(bottom: MediaQuery.of(context).size.height*0.025, left: 0, right: 0, top: 0),
+        child: Stack(
+          children: [
+            Container(
+              width: MediaQuery.of(context).size.width*0.79,
+              height: MediaQuery.of(context).size.height*0.12,
+              margin: EdgeInsets.fromLTRB(20,0,0,0),
+              decoration: BoxDecoration(
+                color: Color(0xFF333366),
+                shape: BoxShape.rectangle,
+                borderRadius: BorderRadius.only(topRight: Radius.circular(20), bottomRight: Radius.circular(20), topLeft: Radius.circular(40), bottomLeft: Radius.circular(40)),
+                boxShadow: <BoxShadow>[
+                  BoxShadow(  
+                    color: Colors.black26,
+                    blurRadius: 15.0,
+                    offset: Offset(0.0, 15.0),
+                  ),
+                ],
+              ),
+              child:Row(
+                children: [
+                  Container(
+                    padding: EdgeInsets.fromLTRB(MediaQuery.of(context).size.height*0.11,10,0,10),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        Text(
+                          person.name,
+                          style: TextStyle(
+                            fontSize: 20,
+                            color: Colors.white,
+                          ),
+                        ),
+                        Text(
+                          person.email,
+                          style: TextStyle(
+                            fontSize: 16,
+                            color: Colors.grey[400],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Container(
+                    padding: EdgeInsets.only(left: MediaQuery.of(context).size.height*0.025),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        IconButton(
+                          icon: Icon(
+                            FontAwesomeIcons.linkedin,
+                            color: Colors.white,
+                          ),
+                          padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
+                          onPressed: () async {
+                            var url = person.sn.linkedin;
+                            if (await canLaunch(url)) {
+                              await launch(url);
+                            } else {
+                              throw 'Could not launch $url';
+                            }
+                          },
+                        ),
+                        IconButton(
+                          icon: Icon(
+                            FontAwesomeIcons.instagram,
+                            color: Colors.white,
+                          ),
+                          padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
+                          onPressed: () async {
+                            var url = person.sn.insta;
+                            if (await canLaunch(url)) {
+                              await launch(url);
+                            } else {
+                              throw 'Could not launch $url';
+                            }
+                          },
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Container(
+              width: MediaQuery.of(context).size.height*0.12,
+              height: MediaQuery.of(context).size.height*0.12,
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(100),
+                child: FadeInImage.assetNetwork(
+                  placeholder: assetImage,
+                  image: person.image,
+                  fit: BoxFit.cover,
+                  fadeInDuration: Duration(milliseconds: 1),
+                  fadeOutDuration: Duration(milliseconds: 1),
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     ],
   );
@@ -131,15 +234,15 @@ class _HelpNSupportState extends State<HelpNSupport> {
                 ],
               ),
               SizedBox(
-                height:MediaQuery.of(context).size.height*0.04,
+                height:MediaQuery.of(context).size.height*0.008,
               ),
               Stack(
                 children: <Widget>[
                   Container(
                     width: double.infinity,
-                    height: MediaQuery.of(context).size.height*0.585,
-                    margin: EdgeInsets.fromLTRB(20, 24, 20, 10),
-                    padding: EdgeInsets.only(bottom: 10),
+                    height: MediaQuery.of(context).size.height*0.628,
+                    margin: EdgeInsets.fromLTRB(20, 24, 20, 0),
+                    // padding: EdgeInsets.only(bottom: 10),
                     decoration: BoxDecoration(
                       border: Border.all(
                           color: Color.fromARGB(255, 0, 0, 0), width: 2),
@@ -149,7 +252,7 @@ class _HelpNSupportState extends State<HelpNSupport> {
                     child: Column(
                       children: [
                         Container(
-                          padding: EdgeInsets.fromLTRB(50, 32, 0, 0),
+                          padding: EdgeInsets.fromLTRB(15, 30, 5, 0),
                           child: Column(
                             children: [
                               for (var i = 0; i < mem.length; i++)

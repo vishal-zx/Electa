@@ -125,10 +125,10 @@ class  MyAccount extends StatelessWidget {
                 ),
               ),
               SizedBox(
-                height: MediaQuery.of(context).size.height*0.03,
+                height: MediaQuery.of(context).size.height*0.04,
               ),
               Container(
-                padding: EdgeInsets.only(bottom: MediaQuery.of(context).size.height*0.05),
+                padding: EdgeInsets.only(bottom: MediaQuery.of(context).size.height*0.07),
                 decoration: BoxDecoration(
                   image: DecorationImage(
                     image: AssetImage("assets/images/mypbg.png"),
