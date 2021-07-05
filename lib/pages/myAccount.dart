@@ -1,6 +1,65 @@
+import 'dart:ui';
 import 'package:electa/utils/routes.dart';
 import 'package:electa/widgets/drawer.dart';
 import 'package:flutter/material.dart';
+
+Widget _logoutPopup(BuildContext context) { 
+  return BackdropFilter(
+    filter: ImageFilter.blur(sigmaX: 3, sigmaY: 3),
+    child: AlertDialog(
+      elevation: 5,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(20),
+      ),
+      backgroundColor: Colors.blueGrey[100],
+      title: const Text('Are you sure you want to logout?',
+        textAlign: TextAlign.center,
+        style: TextStyle(fontWeight: FontWeight.bold),
+      ),
+      content: Container(
+        height: MediaQuery.of(context).size.height*0.05,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            TextButton(
+              child: Text(
+                "Logout",
+                style: TextStyle(
+                  fontSize: 20,
+                  color: Colors.black
+                ),
+              ),
+              onPressed: (){
+                Navigator.pushNamedAndRemoveUntil(context, MyRoutes.loginRoute, (route) => false);
+              },
+            ),
+            // VerticalDivider(
+            //   color: Colors.black,
+            // ),
+            Container(
+              width: 1,
+              height: 40,
+              color: Colors.black,
+            ),
+            TextButton(
+              child: Text(
+                "Cancel",
+                style: TextStyle(
+                  fontSize: 20,
+                  color: Colors.black
+                ),
+              ),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            )
+          ],
+        ),
+      ),
+    )
+  );
+}
 
 class  MyAccount extends StatelessWidget {
   MyAccount({ Key? key }) : super(key: key);
@@ -284,29 +343,37 @@ class  MyAccount extends StatelessWidget {
                           ),
                         ],
                       ),
-                      child: Container(
-                        margin: EdgeInsets.fromLTRB(MediaQuery.of(context).size.width*0.04,MediaQuery.of(context).size.height*0.002,MediaQuery.of(context).size.width*0.05,MediaQuery.of(context).size.height*0.002),
-                        child: FittedBox(
-                          child: Row(
-                            children: [
-                              Icon(
-                                Icons.logout,
-                                color: Colors.white,
-                                size: 24,
-                              ),
-                              SizedBox(
-                                width: MediaQuery.of(context).size.width*0.03,
-                              ),
-                              Text(
-                                "Logout",
-                                style: TextStyle(
+                      child: GestureDetector(
+                        child: Container(
+                          margin: EdgeInsets.fromLTRB(MediaQuery.of(context).size.width*0.04,MediaQuery.of(context).size.height*0.002,MediaQuery.of(context).size.width*0.05,MediaQuery.of(context).size.height*0.002),
+                          child: FittedBox(
+                            child: Row(
+                              children: [
+                                Icon(
+                                  Icons.logout,
                                   color: Colors.white,
-                                  fontSize: 19
+                                  size: 24,
                                 ),
-                              ),
-                            ],
+                                SizedBox(
+                                  width: MediaQuery.of(context).size.width*0.03,
+                                ),
+                                Text(
+                                  "Logout",
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 19
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
                         ),
+                        onTap: () {
+                          showDialog(
+                            context: context,
+                            builder: (BuildContext context) => _logoutPopup(context),
+                          );
+                        },
                       ),
                     ),
                   ],
