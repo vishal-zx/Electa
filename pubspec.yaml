@@ -36,6 +36,7 @@ dependencies:
   google_fonts: ^2.1.0
   flutter_mobile_vision: ^0.1.4+1
   animated_text_kit: ^4.2.1
+  font_awesome_flutter: ^9.1.0
 
 dev_dependencies:
   flutter_test:

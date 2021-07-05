@@ -1,3 +1,5 @@
+import 'package:electa/pages/changePassword.dart';
+import 'package:electa/pages/hns.dart';
 import 'package:electa/pages/login.dart';
 import 'package:electa/pages/myAccount.dart';
 import 'package:electa/pages/register.dart';
@@ -40,6 +42,8 @@ class MyApp extends StatelessWidget {
         MyRoutes.voteRoute : (context) => Vote(),
         MyRoutes.resultRoute : (context) => ResultScreen(),
         MyRoutes.myAccountRoute : (context) => MyAccount(),
+        MyRoutes.changePswdRoute : (context) => ChangePswd(),
+        MyRoutes.hNSRoute : (context) => HelpNSupport(),
       },
     );
   }
