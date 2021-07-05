@@ -120,17 +120,25 @@ Widget _buildTeamRow(BuildContext context, Member person)
               ),
             ),
             Container(
-              width: MediaQuery.of(context).size.height*0.12,
               height: MediaQuery.of(context).size.height*0.12,
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(100),
-                child: FadeInImage.assetNetwork(
-                  placeholder: assetImage,
-                  image: person.image,
-                  fit: BoxFit.cover,
-                  fadeInDuration: Duration(milliseconds: 1),
-                  fadeOutDuration: Duration(milliseconds: 1),
-                ),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Container(
+                    width: MediaQuery.of(context).size.height*0.1,
+                    height: MediaQuery.of(context).size.height*0.1,
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(100),
+                      child: FadeInImage.assetNetwork(
+                        placeholder: assetImage,
+                        image: person.image,
+                        fit: BoxFit.cover,
+                        fadeInDuration: Duration(milliseconds: 1),
+                        fadeOutDuration: Duration(milliseconds: 1),
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ),
           ],
@@ -198,6 +206,9 @@ class _HelpNSupportState extends State<HelpNSupport> {
                                   )
                                 ],
                               ),
+                              SizedBox(
+                                height: MediaQuery.of(context).size.height*0.015,
+                              ),
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 children: [
@@ -220,7 +231,7 @@ class _HelpNSupportState extends State<HelpNSupport> {
                     ),
                   ),
                   Positioned(
-                    left: MediaQuery.of(context).size.width*0.11,
+                    left: MediaQuery.of(context).size.width*0.1,
                     top: 14,
                     child: Container(
                       padding: EdgeInsets.only(bottom: 10, left: 5, right: 5),
@@ -264,7 +275,7 @@ class _HelpNSupportState extends State<HelpNSupport> {
                     ),
                   ),
                   Positioned(
-                    left: MediaQuery.of(context).size.width*0.67,
+                    left: MediaQuery.of(context).size.width*0.1,
                     top: 14,
                     child: Container(
                       padding: EdgeInsets.only(bottom: 10, left: 5, right: 5),

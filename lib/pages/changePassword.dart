@@ -137,7 +137,7 @@ class _ChangePswdState extends State<ChangePswd> {
                   ),
                 ),
                 Positioned(
-                  left: MediaQuery.of(context).size.width*0.251,
+                  left: MediaQuery.of(context).size.width*0.1,
                   top: 12,
                   child: Container(
                     padding: EdgeInsets.only(bottom: 10, left: 10, right: 10),

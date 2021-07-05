@@ -83,7 +83,8 @@ class _LoginPageState extends State<LoginPage> {
                         labelText: "Roll Number"
                       ),
                       validator: (value){
-                        _validPas = regExp.hasMatch(value!).toString();
+                        value = value!.replaceAll(' ', '');
+                        _validPas = regExp.hasMatch(value).toString();
                         if(value.isEmpty){
                           return "Username can't be Empty!";
                         }
@@ -93,6 +94,7 @@ class _LoginPageState extends State<LoginPage> {
                         return null;
                       },
                       onChanged: (value){
+                        value = value.replaceAll(' ', '');
                         _name = ', ' + value;
                         setState(() {
                           
