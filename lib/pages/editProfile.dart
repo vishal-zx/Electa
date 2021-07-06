@@ -13,6 +13,9 @@ class _EditProfileState extends State<EditProfile> {
   var userBio = "Bio Here! Bio Here! Bio Here! Bio Here! Bio Here! Bio Here! Bio Here! Bio Here! Bio Here! Bio Here!."; //max 100 limit on bio
   var assetImage = "assets/images/u1.png";
   var userImageUrl = "https://vishal-zx.github.io/assets/img/profile.jpg";
+  String newUserName = "";
+  String newUserBio = "";
+  final formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -20,6 +23,12 @@ class _EditProfileState extends State<EditProfile> {
       backgroundColor: Colors.blueGrey[100],
       appBar: AppBar(
         title: Text("Electa"),
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back, color: Colors.white),
+          onPressed: () {
+            
+            Navigator.of(context).pop();},
+        ),
         elevation: 10,
       ),
       body: SingleChildScrollView(
@@ -78,35 +87,58 @@ class _EditProfileState extends State<EditProfile> {
                             ),
                           ],
                         ),
-                        Container(
-                          padding: const EdgeInsets.symmetric(vertical: 20.0, horizontal: 32.0),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              TextFormField(
-                                decoration: InputDecoration(
-                                  hintText: "Enter Your Name",
-                                  labelText: "Full Name"
-                                ),
-                                initialValue: userName,
-                              ),
-                              SizedBox(
-                                height: MediaQuery.of(context).size.height*0.02,
-                              ),
-                              Container(
-                                height: MediaQuery.of(context).size.height*0.15,
-                                child: TextFormField(
+                        Form(
+                          key: formKey,
+                          child: Container(
+                            padding: const EdgeInsets.symmetric(vertical: 20.0, horizontal: 32.0),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                TextFormField(
                                   decoration: InputDecoration(
-                                    hintText: "Enter Your Bio",
-                                    labelText: "About You"
+                                    hintText: "Enter Your Name",
+                                    labelText: "Full Name"
                                   ),
-                                  initialValue: userBio,
-                                  keyboardType: TextInputType. multiline,
-                                  maxLines: null,
-                                  maxLength: 100,
+                                  initialValue: userName,
+                                  validator: (value){
+                                    if(value!.isEmpty){
+                                      return "Name can't be Empty!";
+                                    }
+                                  },
+                                  onChanged: (value){
+                                    newUserName = value;
+                                    setState(() {
+                                      
+                                    });
+                                    if(value == "") newUserName = "";
+                                  },
                                 ),
-                              ),
-                            ],
+                                SizedBox(
+                                  height: MediaQuery.of(context).size.height*0.02,
+                                ),
+                                Container(
+                                  height: MediaQuery.of(context).size.height*0.15,
+                                  child: TextFormField(
+                                    decoration: InputDecoration(
+                                      hintText: "Enter Your Bio",
+                                      labelText: "About You"
+                                    ),
+                                    initialValue: userBio,
+                                    keyboardType: TextInputType. multiline,
+                                    maxLines: null,
+                                    maxLength: 100,
+                                    onChanged: (value)
+                                    {
+                                      newUserBio = value;
+                                      setState(() {
+                                        
+                                      });
+                                      if(value == "") newUserBio = "";
+                                    },
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
                         ),
                         SizedBox(

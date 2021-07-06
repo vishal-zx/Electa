@@ -15,7 +15,7 @@ class _LoginPageState extends State<LoginPage> {
   bool _check = false;
   final formKey = GlobalKey<FormState>();
   bool _showPass = true;
-  String _validPas = "false";
+  String _validRoll = "false";
 
   RegExp regExp = new RegExp(r"^\d{2}[a-z]{3}\d{3}$",
     caseSensitive: false,
@@ -25,6 +25,7 @@ class _LoginPageState extends State<LoginPage> {
   moveHome(BuildContext) async{
     if(formKey.currentState!.validate()){
       setState(() {
+        print(_name);
         _check = true;
       });
 
@@ -84,11 +85,11 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                       validator: (value){
                         value = value!.replaceAll(' ', '');
-                        _validPas = regExp.hasMatch(value).toString();
+                        _validRoll = regExp.hasMatch(value).toString();
                         if(value.isEmpty){
-                          return "Username can't be Empty!";
+                          return "Roll Number can't be Empty!";
                         }
-                        else if(_validPas == "false"){
+                        else if(_validRoll == "false"){
                           return "Invalid Roll Number";
                         }
                         return null;
