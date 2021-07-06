@@ -86,7 +86,12 @@ class  MyAccount extends StatelessWidget {
                 height: MediaQuery.of(context).size.height*0.32,
                 margin: EdgeInsets.fromLTRB(0,MediaQuery.of(context).size.height*0.031,MediaQuery.of(context).size.width*0.1,0),
                 decoration: BoxDecoration(
-                  color: Color(0xFF333366),
+                   gradient: LinearGradient(
+                      begin: Alignment.topLeft,
+                      end: Alignment.bottomRight,
+                      stops: [0.1, 0.3, 0.7, 1],
+                      colors: [Colors.blueGrey, Colors.blue, Colors.orange, Colors.pink]
+                    ),
                   shape: BoxShape.rectangle,
                   borderRadius: BorderRadius.only(topRight: Radius.circular(20), bottomRight: Radius.circular(20)),
                   boxShadow: <BoxShadow>[
