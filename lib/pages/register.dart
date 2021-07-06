@@ -31,6 +31,45 @@ class _RegisterState extends State<Register> {
       });
   }
 
+  bool isInitialized = false;
+
+  bool? value = false;
+
+  bool? value2 = false;
+
+  Widget buildcheckbox() => Checkbox(
+      value: value,
+      onChanged: (value) {
+        setState(() {
+          this.value = value;
+        });
+      });
+
+  Widget buildcheckbox2() => Checkbox(
+      value: value2,
+      onChanged: (value2) {
+        setState(() {
+          this.value2 = value2;
+        });
+      });
+  @override
+  void initState() {
+    FlutterMobileVision.start().then((value) {
+      isInitialized = true;
+    });
+    super.initState();
+  }
+
+  _startScan() async {
+    List<OcrText> list = [];
+    try {
+      list = await FlutterMobileVision.read(waitTap: true, fps: 5.0);
+      for (OcrText text in list) {
+        print('value is ${text.value}');
+      }
+    } catch (e) {}
+  }
+
   @override
   Widget build(BuildContext context) {
     var elevatedbutton = ElevatedButton(
@@ -117,22 +156,36 @@ class _RegisterState extends State<Register> {
               ),
             ],
           ),
-          Padding(
-            padding: EdgeInsets.only(right: 200.0),
-            child: ElevatedButton(
-                onPressed: () => {}, child: Text('scan your college id card')),
-          ),
+          Row(children: <Widget>[
+            Padding(
+              padding: const EdgeInsets.only(left: 7.0),
+              child: ElevatedButton(
+                  onPressed: _startScan,
+                  child: Text('scan your college id card')),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(left: 140.0),
+              child: buildcheckbox(),
+            ),
+          ]),
 
           // Padding(
           //   padding: const EdgeInsets.only(left: 25.0),
           //   child: buildcheckbox(),
           // ),
+          Row(children: <Widget>[
+            Padding(
+              padding: EdgeInsets.only(left: 7.0),
+              child: ElevatedButton(
+                  onPressed: () => {}, child: Text('Face Authentication')),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(left: 165),
+              child: buildcheckbox2(),
+            ),
+          ]),
 
-          Padding(
-            padding: EdgeInsets.only(right: 225.0),
-            child: ElevatedButton(
-                onPressed: () => {}, child: Text('Face Authentication')),
-          ),
+          Center(child: Text('You want to register yourself as:'))
 
           // Padding(
           //   padding: const EdgeInsets.only(left: 28.0),
