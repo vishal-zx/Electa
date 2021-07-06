@@ -213,29 +213,34 @@ class  MyAccount extends StatelessWidget {
                           ),
                         ],
                       ),
-                      child: Container(
-                        margin: EdgeInsets.fromLTRB(MediaQuery.of(context).size.width*0.04,MediaQuery.of(context).size.height*0.002,MediaQuery.of(context).size.width*0.05,MediaQuery.of(context).size.height*0.002),
-                        child: FittedBox(
-                          child: Row(
-                            children: [
-                              Icon(
-                                Icons.person,
-                                color: Colors.white,
-                                size: 24,
-                              ),
-                              SizedBox(
-                                width: MediaQuery.of(context).size.width*0.03,
-                              ),
-                              Text(
-                                "Edit Profile",
-                                style: TextStyle(
+                      child: GestureDetector(
+                        child: Container(
+                          margin: EdgeInsets.fromLTRB(MediaQuery.of(context).size.width*0.04,MediaQuery.of(context).size.height*0.002,MediaQuery.of(context).size.width*0.05,MediaQuery.of(context).size.height*0.002),
+                          child: FittedBox(
+                            child: Row(
+                              children: [
+                                Icon(
+                                  Icons.person,
                                   color: Colors.white,
-                                  fontSize: 19
+                                  size: 24,
                                 ),
-                              ),
-                            ],
+                                SizedBox(
+                                  width: MediaQuery.of(context).size.width*0.03,
+                                ),
+                                Text(
+                                  "Edit Profile",
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 19
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
                         ),
+                        onTap: () {
+                          Navigator.pushNamed(context, MyRoutes.editProfileRoute);
+                        },
                       ),
                     ),
                     Container(
