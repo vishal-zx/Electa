@@ -82,13 +82,11 @@ Widget _buildCandidateRow(BuildContext context, String name, String roll, String
 }
 
 Widget _buildPopupDialog(BuildContext context, String position, String name) {
-  var _cBE = false;
   
   return BackdropFilter(
     filter: ImageFilter.blur(sigmaX: 3, sigmaY: 3),
       child: new AlertDialog(
         // scrollable: true,
-        titlePadding: EdgeInsets.only(top: 20, bottom: 10),
         elevation: 5,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(20),
@@ -99,82 +97,53 @@ Widget _buildPopupDialog(BuildContext context, String position, String name) {
           style: TextStyle(fontWeight: FontWeight.bold),
         ),
         content: Container(
-          padding: EdgeInsets.zero,
-          height: MediaQuery.of(context).size.height*0.45,
-          width: MediaQuery.of(context).size.width*0.8,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.end,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                
-                SizedBox(
-                  height: MediaQuery.of(context).size.height*.01,
-                ),
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [  
-                    FittedBox(
-                      fit: BoxFit.fitHeight,
-                      child: Text("Position : $position",
-                        textAlign: TextAlign.start,
-                      ),
-                    ),
-                    FittedBox(
-                      fit: BoxFit.fitHeight,
-                      child: Text("Candidate : $name",
-                        textAlign: TextAlign.start,
-                      ),
-                    ),
-                  ],
-                ),
-                Draggable(
-                  feedback: Image(image: AssetImage("assets/images/card1.png"),
-                    width:MediaQuery.of(context).size.width*0.14,
-                    height:MediaQuery.of(context).size.height*0.14,
-                    ),
-                  child: Image.asset("assets/images/card1.png",
-                    width:MediaQuery.of(context).size.width*0.14,
-                    height:MediaQuery.of(context).size.height*0.14,
+          height: MediaQuery.of(context).size.height*0.28,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              Column(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                crossAxisAlignment: CrossAxisAlignment.center,          
+                children: [
+                  Image.asset(
+                    "assets/images/gi.gif",
+                    height: 80,
+                    width: 80,
                   ),
-                  childWhenDragging: Image.asset("assets/images/card1.png",
-                    width:MediaQuery.of(context).size.width*0.14,
-                    height:MediaQuery.of(context).size.height*0.14,
-                    color: Colors.blueGrey[100],
-                  ),
-                  onDragCompleted: ()=>{print("ho gya")},
-                  onDragEnd: (img)=>{print("ho gya")},
-                  onDragStarted: ()=>{print("ho gyyyya")},
-                ),
-                SizedBox(
-                  height: MediaQuery.of(context).size.height*.04,
-                ),
-                DragTarget(
-                  onAccept: (img){
-                    _cBE = true;
-                  },
-                  onWillAccept: (img) => true,
-                  builder: (context, acc, rej)=>Container(
-                    child: Image.asset("assets/images/box1.png",
-                      width:MediaQuery.of(context).size.width*0.30,
-                      height:MediaQuery.of(context).size.height*0.20,
+                ],
+              ),
+              Column(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [  
+                  FittedBox(
+                    fit: BoxFit.fitHeight,
+                    child: Text("Position : $position",
+                      textAlign: TextAlign.start,
                     ),
                   ),
-                )
-              ],
-            ),
+                  FittedBox(
+                    fit: BoxFit.fitHeight,
+                    child: Text("Candidate : $name",
+                      textAlign: TextAlign.start,
+                    ),
+                  ),
+                ],
+              ),
+            ],
           ),
+        ),
         actions: <Widget>[
           new TextButton(
             onPressed: () {
               Navigator.of(context).pop();
             },
-            child: (_cBE==true)?Text('Confirm',
+            child: const Text('Confirm',
               style: TextStyle(
                 color: Colors.black,
                 fontSize: 16,
               ),
-            ):Text(""),
+            ),
           ),
           new TextButton(
             onPressed: () {
@@ -188,8 +157,6 @@ Widget _buildPopupDialog(BuildContext context, String position, String name) {
             ),
           ),
         ],
-        actionsPadding: EdgeInsets.all(0),
-        contentPadding: EdgeInsets.all(0),
       ),
   );
 }
@@ -345,7 +312,7 @@ class _VoteState extends State<Vote> {
               margin: EdgeInsets.all(0),
               padding: EdgeInsets.all(0),
               width: MediaQuery.of(context).size.width,
-              height: MediaQuery.of(context).size.height*0.15156,
+              height: MediaQuery.of(context).size.height*0.175,
               decoration: BoxDecoration(
                 color: Colors.blueGrey[300],
                 shape: BoxShape.rectangle,

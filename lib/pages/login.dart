@@ -1,5 +1,5 @@
 import 'dart:async';
-
+import 'dart:core';
 import 'package:electa/utils/routes.dart';
 import 'package:flutter/material.dart';
 
@@ -15,11 +15,17 @@ class _LoginPageState extends State<LoginPage> {
   bool _check = false;
   final formKey = GlobalKey<FormState>();
   bool _showPass = true;
+  String _validRoll = "false";
+
+  RegExp regExp = new RegExp(r"^\d{2}[a-z]{3}\d{3}$",
+    caseSensitive: false,
+  );
 
   // ignore: non_constant_identifier_names
   moveHome(BuildContext) async{
     if(formKey.currentState!.validate()){
       setState(() {
+        print(_name);
         _check = true;
       });
 
@@ -78,12 +84,18 @@ class _LoginPageState extends State<LoginPage> {
                         labelText: "Roll Number"
                       ),
                       validator: (value){
-                        if(value!.isEmpty){
-                          return "Username can't be Empty!";
+                        value = value!.replaceAll(' ', '');
+                        _validRoll = regExp.hasMatch(value).toString();
+                        if(value.isEmpty){
+                          return "Roll Number can't be Empty!";
+                        }
+                        else if(_validRoll == "false"){
+                          return "Invalid Roll Number";
                         }
                         return null;
                       },
                       onChanged: (value){
+                        value = value.replaceAll(' ', '');
                         _name = ', ' + value;
                         setState(() {
                           
@@ -91,25 +103,21 @@ class _LoginPageState extends State<LoginPage> {
                         if(value == "") _name = "";
                       },
                     ),
-                    Column(
-                      children: [
-                        TextFormField(
-                          obscureText: _showPass,
-                          decoration: InputDecoration(
-                            hintText: "Enter your Password",
-                            labelText: "Password",
-                            suffix: InkWell(
-                              onTap: _togglePass,
-                              child: Icon(this._showPass?Icons.visibility:Icons.visibility_off),
-                            )
-                          ),
-                          validator: (value){
-                            if(value!.isEmpty){return "Password can't be Empty!";}
-                            else if(value.length < 6){return "Password lenght should be greater than 6!";}
-                            else  return null;
-                          },
-                        ),
-                      ],
+                    TextFormField(
+                      obscureText: _showPass,
+                      decoration: InputDecoration(
+                        hintText: "Enter your Password",
+                        labelText: "Password",
+                        suffix: InkWell(
+                          onTap: _togglePass,
+                          child: Icon(this._showPass?Icons.visibility:Icons.visibility_off),
+                        )
+                      ),
+                      validator: (value){
+                        if(value!.isEmpty){return "Password can't be Empty!";}
+                        else if(value.length < 6){return "Password lenght should be greater than 6!";}
+                        else  return null;
+                      },
                     ),
                     SizedBox(
                       height: 35.0,
