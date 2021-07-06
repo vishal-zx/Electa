@@ -45,25 +45,38 @@ class _EditProfileState extends State<EditProfile> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Container(
-                              margin: EdgeInsets.only(top: 45),
-                              width: MediaQuery.of(context).size.height*0.16,
-                              height: MediaQuery.of(context).size.height*0.16,
-                              child: ClipRRect(
-                                borderRadius: BorderRadius.circular(100),
-                                child: FadeInImage.assetNetwork(
-                                  placeholder: assetImage,
-                                  image: userImageUrl,
-                                  fit: BoxFit.cover,
-                                  fadeInDuration: Duration(milliseconds: 1),
-                                  fadeOutDuration: Duration(milliseconds: 1),
+                            Stack(
+                              children: <Widget>[
+                                Container(
+                                  margin: EdgeInsets.only(top: 45, bottom: 10),
+                                  width: MediaQuery.of(context).size.height*0.165,
+                                  height: MediaQuery.of(context).size.height*0.165,
+                                  child: ClipRRect(
+                                    borderRadius: BorderRadius.circular(100),
+                                    child: FadeInImage.assetNetwork(
+                                      placeholder: assetImage,
+                                      image: userImageUrl,
+                                      fit: BoxFit.cover,
+                                      fadeInDuration: Duration(milliseconds: 1),
+                                      fadeOutDuration: Duration(milliseconds: 1),
+                                    ),
+                                  ),
                                 ),
-                              ),
+                                Positioned(
+                                  left: MediaQuery.of(context).size.width*0.24,
+                                  top: MediaQuery.of(context).size.height*0.184,
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                      color: Colors.grey,
+                                      borderRadius: BorderRadius.all(Radius.circular(20))
+                                    ),
+                                    padding: EdgeInsets.all(4),
+                                    child: Icon(Icons.edit)
+                                  )
+                                ),
+                              ],
                             ),
                           ],
-                        ),
-                        SizedBox(
-                          height: MediaQuery.of(context).size.height*0.005,
                         ),
                         Container(
                           padding: const EdgeInsets.symmetric(vertical: 20.0, horizontal: 32.0),
