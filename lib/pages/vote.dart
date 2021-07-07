@@ -259,10 +259,10 @@ class _VoteState extends State<Vote> {
                         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
                         child: Container(
                           decoration: BoxDecoration(
-                            image: DecorationImage(
-                              image: AssetImage("assets/images/v4.jpg"),
-                              fit: BoxFit.fill,
-                              alignment: Alignment.center,
+                            gradient: LinearGradient(
+                              begin: Alignment.topRight,
+                              end: Alignment.bottomLeft,
+                              colors: [Color(0xff63717e), Color(0xff4d6277), Color(0xff2d5173), Color(0xff003f6b), Color(0xff003b6d)]
                             ),
                             borderRadius: BorderRadius.circular(20),
                           ),
