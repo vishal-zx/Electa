@@ -151,7 +151,7 @@ Widget _buildTeamRow(BuildContext context, Member person)
 class _HelpNSupportState extends State<HelpNSupport> {
 
   List<Member> mem = [
-    Member("Manya Sharma", "https://imgshare.io/images/2021/06/30/manya.png", "19ucc066@lnmiit.ac.in", Socials("https://www.linkedin.com/in/manya-sharma-b449671b8/", "")),
+    Member("Manya Sharma", "https://imgshare.io/images/2021/06/30/manya.png", "19ucc066@lnmiit.ac.in", Socials("https://www.linkedin.com/in/manya-sharma-b449671b8/", "https://www.instagram.com/_manya.sharma/")),
 
     Member("Poojan Gadhiya", "https://imgshare.io/images/2021/06/30/poojan.png", "19ucs245@lnmiit.ac.in", Socials("https://www.linkedin.com/in/poojan-gadhiya/", "https://www.instagram.com/enjoying___alwayss/")),
 
