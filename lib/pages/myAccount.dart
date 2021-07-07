@@ -1,4 +1,5 @@
 import 'dart:ui';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:electa/utils/routes.dart';
 import 'package:electa/widgets/drawer.dart';
 import 'package:flutter/material.dart';
@@ -64,11 +65,10 @@ Widget _logoutPopup(BuildContext context) {
 class  MyAccount extends StatelessWidget {
   MyAccount({ Key? key }) : super(key: key);
 
-  final userName = "Vishal Gupta";
-  final userEmail = "19ucs053@lnmiit.ac.in";
+  String userName = MyDrawer().userName;
+  String userEmail = MyDrawer().userEmail;
   final userBio = "Bio Here! Bio Here! Bio Here! Bio Here! Bio Here! Bio Here! Bio Here! Bio Here! Bio Here! Bio Here!."; //max 100 limit on bio
-  final assetImage = "assets/images/u1.png";
-  final userImageUrl = "https://vishal-zx.github.io/assets/img/profile.jpg";
+  String userImageUrl = MyDrawer().userImageUrl;
 
   @override
   Widget build(BuildContext context) {
@@ -87,11 +87,15 @@ class  MyAccount extends StatelessWidget {
                 margin: EdgeInsets.fromLTRB(0,MediaQuery.of(context).size.height*0.031,MediaQuery.of(context).size.width*0.1,0),
                 decoration: BoxDecoration(
                    gradient: LinearGradient(
-                      begin: Alignment.topLeft,
-                      end: Alignment.bottomRight,
-                      stops: [0.1, 0.3, 0.7, 1],
-                      colors: [Colors.blueGrey, Colors.blue, Colors.orange, Colors.pink]
-                    ),
+                    begin: Alignment.topRight,
+                    end: Alignment.bottomLeft,
+                    colors: [
+                      Color(0xff546e7a),
+                      Colors.blueGrey,
+                      Color(0xff616161),
+                      Color(0xff757575),
+                    ],
+                  ),
                   shape: BoxShape.rectangle,
                   borderRadius: BorderRadius.only(topRight: Radius.circular(20), bottomRight: Radius.circular(20)),
                   boxShadow: <BoxShadow>[
@@ -113,12 +117,19 @@ class  MyAccount extends StatelessWidget {
                             height: MediaQuery.of(context).size.height*0.14,
                             child: ClipRRect(
                               borderRadius: BorderRadius.circular(100),
-                              child: FadeInImage.assetNetwork(
-                                placeholder: assetImage,
-                                image: userImageUrl,
-                                fit: BoxFit.cover,
-                                fadeInDuration: Duration(milliseconds: 1),
-                                fadeOutDuration: Duration(milliseconds: 1),
+                              // child: FadeInImage.assetNetwork(
+                              //   placeholder: assetImage,
+                              //   image: userImageUrl,
+                              //   fit: BoxFit.cover,
+                              //   fadeInDuration: Duration(milliseconds: 1),
+                              //   fadeOutDuration: Duration(milliseconds: 1),
+                              // ),
+                              child: CachedNetworkImage(
+                                fit: BoxFit.fill,
+                                imageUrl: userImageUrl,
+                                progressIndicatorBuilder: (context, url, downloadProgress) => 
+                                        CircularProgressIndicator(value: downloadProgress.progress),
+                                errorWidget: (context, url, error) => Icon(Icons.error),
                               ),
                             ),
                           ),

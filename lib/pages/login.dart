@@ -25,7 +25,6 @@ class _LoginPageState extends State<LoginPage> {
   moveHome(BuildContext) async{
     if(formKey.currentState!.validate()){
       setState(() {
-        print(_name);
         _check = true;
       });
 

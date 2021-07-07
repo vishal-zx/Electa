@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
 class  EditProfile extends StatefulWidget {
@@ -129,12 +130,19 @@ class _EditProfileState extends State<EditProfile> {
                                     height: MediaQuery.of(context).size.height*0.165,
                                     child: ClipRRect(
                                       borderRadius: BorderRadius.circular(100),
-                                      child: FadeInImage.assetNetwork(
-                                        placeholder: assetImage,
-                                        image: userImageUrl,
-                                        fit: BoxFit.cover,
-                                        fadeInDuration: Duration(milliseconds: 1),
-                                        fadeOutDuration: Duration(milliseconds: 1),
+                                      // child: FadeInImage.assetNetwork(
+                                      //   placeholder: assetImage,
+                                      //   image: userImageUrl,
+                                      //   fit: BoxFit.cover,
+                                      //   fadeInDuration: Duration(milliseconds: 1),
+                                      //   fadeOutDuration: Duration(milliseconds: 1),
+                                      // ),
+                                      child: CachedNetworkImage(
+                                        fit: BoxFit.fill,
+                                        imageUrl: userImageUrl,
+                                        progressIndicatorBuilder: (context, url, downloadProgress) => 
+                                                CircularProgressIndicator(value: downloadProgress.progress),
+                                        errorWidget: (context, url, error) => Icon(Icons.error),
                                       ),
                                     ),
                                   ),

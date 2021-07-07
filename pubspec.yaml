@@ -38,6 +38,7 @@ dependencies:
   animated_text_kit: ^4.2.1
   font_awesome_flutter: ^9.1.0
   url_launcher: ^6.0.9
+  cached_network_image: ^2.3.3
 
 dev_dependencies:
   flutter_test:
