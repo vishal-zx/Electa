@@ -151,7 +151,7 @@ Widget _buildTeamRow(BuildContext context, Member person)
 class _HelpNSupportState extends State<HelpNSupport> {
 
   List<Member> mem = [
-    Member("Manya Sharma", "https://imgshare.io/images/2021/06/30/manya.png", "19ucc066@lnmiit.ac.in", Socials("https://www.linkedin.com/in/manya-sharma-b449671b8/", "")),
+    Member("Manya Sharma", "https://imgshare.io/images/2021/06/30/manya.png", "19ucc066@lnmiit.ac.in", Socials("https://www.linkedin.com/in/manya-sharma-b449671b8/", "https://www.instagram.com/_manya.sharma/")),
 
     Member("Poojan Gadhiya", "https://imgshare.io/images/2021/06/30/poojan.png", "19ucs245@lnmiit.ac.in", Socials("https://www.linkedin.com/in/poojan-gadhiya/", "https://www.instagram.com/enjoying___alwayss/")),
 
@@ -188,7 +188,7 @@ class _HelpNSupportState extends State<HelpNSupport> {
                     child: Column(
                       children: [
                         Container(
-                          padding: EdgeInsets.fromLTRB(50, 32, 0, 0),
+                          padding: EdgeInsets.fromLTRB(50, 12, 0, 0),
                           child: Column(
                             children: [
                               Row(
@@ -198,16 +198,24 @@ class _HelpNSupportState extends State<HelpNSupport> {
                                     Icons.mail,
                                     size: 24,
                                   ),
-                                  Text(
-                                    " : info.electa@gmail.com",
-                                    style: TextStyle(
-                                      fontSize: 20
+                                  TextButton(
+                                    child: Text(
+                                      " :  info.electa@gmail.com",
+                                      style: TextStyle(
+                                        fontSize: 20,
+                                        color: Colors.black
+                                      ),
                                     ),
+                                    onPressed: () async {
+                                      var url = "mailto:info.electa@gmail.com";
+                                      if (await canLaunch(url)) {
+                                        await launch(url);
+                                      } else {
+                                        throw 'Could not launch $url';
+                                      }
+                                    },
                                   )
                                 ],
-                              ),
-                              SizedBox(
-                                height: MediaQuery.of(context).size.height*0.015,
                               ),
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.start,
