@@ -17,6 +17,8 @@ class Register extends StatefulWidget {
 }
 
 class _RegisterState extends State<Register> {
+  int _cameraOcr = FlutterMobileVision.CAMERA_BACK;
+  String _textValue = "sample";
   DateTime selectedDate = DateTime.now();
 
   Future<Null> _selectDate(BuildContext context) async {
@@ -52,23 +54,41 @@ class _RegisterState extends State<Register> {
           this.value2 = value2;
         });
       });
-  @override
-  void initState() {
-    FlutterMobileVision.start().then((value) {
-      isInitialized = true;
-    });
-    super.initState();
+
+  Future<Null> _read() async {
+    List<OcrText> texts = [];
+    try {
+      texts = await FlutterMobileVision.read(
+        camera: _cameraOcr,
+        waitTap: true,
+      );
+
+      setState(() {
+        _textValue = texts[0].value;
+        texts.add(new OcrText('Failed to recognize text.'));
+      });
+    } on Exception {
+      texts.add(new OcrText('Failed to recognise text.'));
+    }
   }
 
-  _startScan() async {
-    List<OcrText> list = [];
-    try {
-      list = await FlutterMobileVision.read(waitTap: true, fps: 5.0);
-      for (OcrText text in list) {
-        print('value is ${text.value}');
-      }
-    } catch (e) {}
-  }
+  // @override
+  // void initState() {
+  //   FlutterMobileVision.start().then((value) {
+  //     isInitialized = true;
+  //   });
+  //   super.initState();
+  // }
+
+  // _startScan() async {
+  //   List<OcrText> list = [];
+  //   try {
+  //     list = await FlutterMobileVision.read(waitTap: true, fps: 5.0);
+  //     for (OcrText text in list) {
+  //       print('value is ${text.value}');
+  //     }
+  //   } catch (e) {}
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -160,11 +180,11 @@ class _RegisterState extends State<Register> {
             Padding(
               padding: const EdgeInsets.only(left: 7.0),
               child: ElevatedButton(
-                  onPressed: _startScan,
-                  child: Text('scan your college id card')),
+                  onPressed: _read, child: Text('scan your college id card')),
             ),
+            new Text(_textValue),
             Padding(
-              padding: const EdgeInsets.only(left: 140.0),
+              padding: const EdgeInsets.only(left: 100.0),
               child: buildcheckbox(),
             ),
           ]),
