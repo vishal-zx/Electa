@@ -188,7 +188,7 @@ class _HelpNSupportState extends State<HelpNSupport> {
                     child: Column(
                       children: [
                         Container(
-                          padding: EdgeInsets.fromLTRB(50, 32, 0, 0),
+                          padding: EdgeInsets.fromLTRB(50, 12, 0, 0),
                           child: Column(
                             children: [
                               Row(
@@ -198,16 +198,24 @@ class _HelpNSupportState extends State<HelpNSupport> {
                                     Icons.mail,
                                     size: 24,
                                   ),
-                                  Text(
-                                    " : info.electa@gmail.com",
-                                    style: TextStyle(
-                                      fontSize: 20
+                                  TextButton(
+                                    child: Text(
+                                      " :  info.electa@gmail.com",
+                                      style: TextStyle(
+                                        fontSize: 20,
+                                        color: Colors.black
+                                      ),
                                     ),
+                                    onPressed: () async {
+                                      var url = "mailto:info.electa@gmail.com";
+                                      if (await canLaunch(url)) {
+                                        await launch(url);
+                                      } else {
+                                        throw 'Could not launch $url';
+                                      }
+                                    },
                                   )
                                 ],
-                              ),
-                              SizedBox(
-                                height: MediaQuery.of(context).size.height*0.015,
                               ),
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.start,
