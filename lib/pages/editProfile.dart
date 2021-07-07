@@ -70,7 +70,6 @@ class _EditProfileState extends State<EditProfile> {
 
   var userName = "Vishal Gupta";
   var userBio = "Bio Here! Bio Here! Bio Here! Bio Here! Bio Here! Bio Here! Bio Here! Bio Here! Bio Here! Bio Here!."; //max 100 limit on bio
-  var assetImage = "assets/images/u1.png";
   var userImageUrl = "https://vishal-zx.github.io/assets/img/profile.jpg";
   String newUserName = "";
   String newUserBio = "";
@@ -130,13 +129,6 @@ class _EditProfileState extends State<EditProfile> {
                                     height: MediaQuery.of(context).size.height*0.165,
                                     child: ClipRRect(
                                       borderRadius: BorderRadius.circular(100),
-                                      // child: FadeInImage.assetNetwork(
-                                      //   placeholder: assetImage,
-                                      //   image: userImageUrl,
-                                      //   fit: BoxFit.cover,
-                                      //   fadeInDuration: Duration(milliseconds: 1),
-                                      //   fadeOutDuration: Duration(milliseconds: 1),
-                                      // ),
                                       child: CachedNetworkImage(
                                         fit: BoxFit.fill,
                                         imageUrl: userImageUrl,

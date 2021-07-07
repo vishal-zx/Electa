@@ -30,7 +30,6 @@ class Member{
 
 Widget _buildTeamRow(BuildContext context, Member person)
 {
-  // final assetImage = "assets/images/u1.png";
   return Row(
     crossAxisAlignment: CrossAxisAlignment.center,
     children: [
@@ -130,13 +129,6 @@ Widget _buildTeamRow(BuildContext context, Member person)
                     height: MediaQuery.of(context).size.height*0.1,
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(100),
-                      // child: FadeInImage.assetNetwork(
-                      //   placeholder: assetImage,
-                      //   image: person.image,
-                      //   fit: BoxFit.cover,
-                      //   fadeInDuration: Duration(milliseconds: 1),
-                      //   fadeOutDuration: Duration(milliseconds: 1),
-                      // ),
                       child: CachedNetworkImage(
                         fit: BoxFit.fill,
                         imageUrl: person.image,

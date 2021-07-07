@@ -1,8 +1,6 @@
-// import 'dart:ffi';
 import 'dart:ui';
 
-// import 'package:electa/utils/routes.dart';
-
+// ignore: import_of_legacy_library_into_null_safe
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:electa/widgets/drawer.dart';
 import 'package:flutter/cupertino.dart';
@@ -16,9 +14,6 @@ class Vote extends StatefulWidget {
 }
 
 Widget _buildCandidateRow(BuildContext context, String name, String roll, String image, String position){
-  
-  // var _loadImage = "assets/images/u1.png";
-  var _profileImage = image;
   return Row(
     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
     children: [
@@ -27,16 +22,9 @@ Widget _buildCandidateRow(BuildContext context, String name, String roll, String
         height: MediaQuery.of(context).size.height*0.09,
         child: ClipRRect(
           borderRadius: BorderRadius.circular(50),
-          // child: FadeInImage.assetNetwork(
-          //   placeholder: _loadImage,
-          //   image: _profileImage,
-          //   fit: BoxFit.cover,
-          //   fadeInDuration: Duration(milliseconds: 1),
-          //   fadeOutDuration: Duration(milliseconds: 1),
-          // ),
           child: CachedNetworkImage(
             fit: BoxFit.fill,
-            imageUrl: _profileImage,
+            imageUrl: image,
             progressIndicatorBuilder: (context, url, downloadProgress) => 
                     CircularProgressIndicator(value: downloadProgress.progress),
             errorWidget: (context, url, error) => Icon(Icons.error),
