@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+// ignore: import_of_legacy_library_into_null_safe
 import 'package:slimy_card/slimy_card.dart';
 import 'package:pie_chart/pie_chart.dart';
+// ignore: import_of_legacy_library_into_null_safe
+import 'package:cached_network_image/cached_network_image.dart';
 
 class Result extends StatefulWidget {
   const Result({ key }) : super(key: key);
@@ -11,23 +14,23 @@ class Result extends StatefulWidget {
 }
 
 Widget _buildResultRow(BuildContext context, String winner, String roll, String image, String position){
-  var _profileImage = image;
   return Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
   Container(
-       width: MediaQuery.of(context).size.height*0.09,
-       height: MediaQuery.of(context).size.height*0.09,
-       child: ClipRRect(
-         borderRadius: BorderRadius.circular(50),
-         child: FadeInImage.assetNetwork(
-           image: _profileImage,
-           fit: BoxFit.cover,
-           fadeInDuration: Duration(milliseconds: 1),
-           fadeOutDuration: Duration(milliseconds: 1),
-         ),
-       ),
-     ),
+    width: MediaQuery.of(context).size.height*0.09,
+    height: MediaQuery.of(context).size.height*0.09,
+    child: ClipRRect(
+      borderRadius: BorderRadius.circular(50),
+      child: CachedNetworkImage(
+        fit: BoxFit.fill,
+        imageUrl: image,
+        progressIndicatorBuilder: (context, url, downloadProgress) => 
+                CircularProgressIndicator(value: downloadProgress.progress),
+        errorWidget: (context, url, error) => Icon(Icons.error),
+      ),
+    ),
+  ),
   SizedBox(
        width: MediaQuery.of(context).size.width*0.35,
        child: Column(
