@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "537279796286",
+    "project_id": "electa-2ed16",
+    "storage_bucket": "electa-2ed16.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:537279796286:android:447b306913ff82cd26ed6f",
+        "android_client_info": {
+          "package_name": "com.example.electa"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "537279796286-jl525i3u079etjfmugoe13s8bls6g2hn.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDn_rjr63_t7n-yJc_1785S5zLHVolEkQk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "537279796286-jl525i3u079etjfmugoe13s8bls6g2hn.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

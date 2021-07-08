@@ -1,8 +1,7 @@
-// import 'dart:ffi';
 import 'dart:ui';
 
-// import 'package:electa/utils/routes.dart';
-
+// ignore: import_of_legacy_library_into_null_safe
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:electa/widgets/drawer.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -15,9 +14,6 @@ class Vote extends StatefulWidget {
 }
 
 Widget _buildCandidateRow(BuildContext context, String name, String roll, String image, String position){
-  
-  var _loadImage = "assets/images/u1.png";
-  var _profileImage = image;
   return Row(
     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
     children: [
@@ -26,11 +22,12 @@ Widget _buildCandidateRow(BuildContext context, String name, String roll, String
         height: MediaQuery.of(context).size.height*0.09,
         child: ClipRRect(
           borderRadius: BorderRadius.circular(50),
-          child: FadeInImage.assetNetwork(
-            placeholder: _loadImage,
-            image: _profileImage,
-            fit: BoxFit.cover,
-            fadeInDuration: Duration(milliseconds: 1),
+          child: CachedNetworkImage(
+            fit: BoxFit.fill,
+            imageUrl: image,
+            progressIndicatorBuilder: (context, url, downloadProgress) => 
+                    CircularProgressIndicator(value: downloadProgress.progress),
+            errorWidget: (context, url, error) => Icon(Icons.error),
           ),
         ),
       ),
@@ -190,7 +187,7 @@ class _VoteState extends State<Vote> {
       new Candidate("Saumitra Vyas", "19UCS252", "https://imgshare.io/images/2021/06/30/saumitra.png")
     ], 
     [
-      new Candidate("Dhananjay Sharma", "19UME041", "https://imgshare.io/images/2021/06/30/dj.md.png"), 
+      new Candidate("Abhinav Maheshwari", "19UCS169", "https://imgshare.io/images/2021/07/01/avhinav.jpg"), 
       new Candidate("Vishal Gupta", "19UCS053", "https://imgshare.io/images/2021/06/30/vishal1.png"),
       new Candidate("Karan Aditte Singh", "19UCC025", "https://imgshare.io/images/2021/06/30/karan.png")
     ], 
@@ -250,10 +247,10 @@ class _VoteState extends State<Vote> {
                         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
                         child: Container(
                           decoration: BoxDecoration(
-                            image: DecorationImage(
-                              image: AssetImage("assets/images/v4.jpg"),
-                              fit: BoxFit.fill,
-                              alignment: Alignment.center,
+                            gradient: LinearGradient(
+                              begin: Alignment.topRight,
+                              end: Alignment.bottomLeft,
+                              colors: [Color(0xff63717e), Color(0xff4d6277), Color(0xff2d5173), Color(0xff003f6b), Color(0xff003b6d)]
                             ),
                             borderRadius: BorderRadius.circular(20),
                           ),
@@ -310,10 +307,24 @@ class _VoteState extends State<Vote> {
             Container(
               margin: EdgeInsets.all(0),
               padding: EdgeInsets.all(0),
+              width: MediaQuery.of(context).size.width,
+              height: MediaQuery.of(context).size.height*0.175,
+              decoration: BoxDecoration(
+                color: Colors.blueGrey[300],
+                shape: BoxShape.rectangle,
+                borderRadius: BorderRadius.only(topRight: Radius.circular(60), topLeft: Radius.circular(60)),
+                boxShadow: <BoxShadow>[
+                  BoxShadow(  
+                    color: Colors.black26,
+                    blurRadius: 15.0,
+                    offset: Offset(0.0, 15.0),
+                  ),
+                ],
+              ),
               child: Column(
                 children: [
                   SizedBox(
-                    height: MediaQuery.of(context).size.height*0.01,
+                    height: MediaQuery.of(context).size.height*0.015,
                   ),
                   Icon(
                     Icons.lightbulb_outline,
