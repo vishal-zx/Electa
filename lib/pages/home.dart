@@ -105,7 +105,7 @@ class _HomeState extends State<Home> {
                 },
                 reactions: <Reaction>[
                   Reaction(
-                      previewIcon: Icon(AnimatedIcons.a),
+                      previewIcon: Icon(Icons.favorite),
                       icon: Icon(Icons.favorite_outline)),
                   Reaction(
                     previewIcon:
