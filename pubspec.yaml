@@ -25,6 +25,8 @@ dependencies:
     sdk: flutter
   flutter_reaction_button: ^1.0.8
   firebase_core: ^1.3.0
+  cloud_firestore: ^2.3.0
+
 
   transparent_image: ^2.0.0
   slimy_card: ^1.0.4
