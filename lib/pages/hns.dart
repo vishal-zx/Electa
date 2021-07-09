@@ -40,9 +40,9 @@ Widget _buildTeamRow(BuildContext context, Member person) {
         child: Stack(
           children: [
             Container(
-              width: MediaQuery.of(context).size.width * 0.79,
-              height: MediaQuery.of(context).size.height * 0.12,
-              margin: EdgeInsets.fromLTRB(20, 0, 0, 0),
+              width: MediaQuery.of(context).size.width * 0.77,
+              height: MediaQuery.of(context).size.height * 0.123,
+              margin: EdgeInsets.fromLTRB(17, 0, 0, 0),
               decoration: BoxDecoration(
                 color: Color(0xFF333366),
                 shape: BoxShape.rectangle,
@@ -87,7 +87,7 @@ Widget _buildTeamRow(BuildContext context, Member person) {
                   ),
                   Container(
                     padding: EdgeInsets.only(
-                        left: MediaQuery.of(context).size.height * 0.025),
+                        left: MediaQuery.of(context).size.height * 0.005),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
@@ -128,7 +128,7 @@ Widget _buildTeamRow(BuildContext context, Member person) {
               ),
             ),
             Container(
-              height: MediaQuery.of(context).size.height * 0.12,
+              height: MediaQuery.of(context).size.height * 0.124,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -280,8 +280,8 @@ class _HelpNSupportState extends State<HelpNSupport> {
                 children: <Widget>[
                   Container(
                     width: double.infinity,
-                    height: MediaQuery.of(context).size.height * 0.628,
-                    margin: EdgeInsets.fromLTRB(20, 24, 20, 0),
+                    height: MediaQuery.of(context).size.height * 0.645,
+                    margin: EdgeInsets.fromLTRB(20, 24, 20, 20),
                     // padding: EdgeInsets.only(bottom: 10),
                     decoration: BoxDecoration(
                       border: Border.all(
