@@ -160,7 +160,7 @@ class _RegisterState extends State<Register> {
           ),
           Row(children: <Widget>[
             Padding(
-              padding: const EdgeInsets.only(left: 7.0),
+              padding: const EdgeInsets.only(top: 5.0, left: 7.0),
               child: ElevatedButton(
                   onPressed: _read, child: Text('scan your college id card')),
             ),
@@ -177,75 +177,55 @@ class _RegisterState extends State<Register> {
           // ),
           Row(children: <Widget>[
             Padding(
-              padding: EdgeInsets.only(left: 7.0),
+              padding: EdgeInsets.only(top: 5.0, left: 7.0),
               child: ElevatedButton(
                   onPressed: () => {}, child: Text('Face Authentication')),
             ),
             Padding(
-              padding: const EdgeInsets.only(left: 165),
+              padding: const EdgeInsets.only(left: 170),
               child: buildcheckbox2(),
             ),
           ]),
 
           Center(
+              child: Padding(
+            padding: EdgeInsets.only(top: 8.0),
             child: Text('You want to register yourself as:',
                 style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold)),
-
-            // Padding(
-            //   padding: const EdgeInsets.only(left: 28.0),
-            //   child: buildCheckbox(),
-            // ),
-
-            // Center(
-            //   child: Padding(
-            //     padding: const EdgeInsets.only(top: 10.0),
-            //     child: Text(
-            //       'you want to register yourself as:',
-            //       style: TextStyle(
-            //         fontSize: 22.0,
-            //         foreground: Paint()
-            //           ..style = PaintingStyle.stroke
-            //           ..strokeWidth = 1
-            //           ..color = Colors.black87,
-            //       ),
-            //     ),
-            //   ),
-            // ),
-            // Row(
-            //   children: <Widget>[
-            //     Padding(
-            //       padding: const EdgeInsets.only(left: 80.0, top: 20.0),
-            //       child:
-            //           ElevatedButton(onPressed: () => {}, child: Text('VOTER')),
-            //     ),
-            //     Padding(
-            //       padding: EdgeInsets.only(left: 30.0, top: 20.0),
-            //       child: ElevatedButton(
-            //           onPressed: () => {}, child: Text('CANDIDATE')),
-            //     ),
-            //   ],
-            // ),
-            // // ignore: deprecated_member_use
-            // Padding(
-            //   padding: const EdgeInsets.only(top: 20.0),
-            //   child: ColorizeAnimatedTextKit(
-            //     text: ['you have succesfully registered as VOTER/CANDIDATE'],
-            //     colors: [
-            //       Colors.black,
-            //       Colors.brown,
-            //       Colors.purple,
-            //       Colors.red,
-            //       Colors.yellow,
-            //       Colors.orange,
-            //       Colors.lightBlue
-            //     ],
-            //     textStyle: TextStyle(fontWeight: FontWeight.bold, fontSize: 25.0),
-            //     textAlign: TextAlign.center,
-            //     isRepeatingAnimation: true,
-            //     speed: Duration(milliseconds: 300),
-            //     totalRepeatCount: 5,
-            //   ),
-            // )
+          )),
+          Padding(
+            padding: EdgeInsets.only(top: 10.0),
+            child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  RaisedButton(
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(16),
+                        side: BorderSide(color: Colors.black, width: 2.0)),
+                    color: Colors.red[600],
+                    onPressed: () {},
+                    child: Text(
+                      'VOTER',
+                      textDirection: TextDirection.ltr,
+                      style: TextStyle(color: Colors.white),
+                    ),
+                  ),
+                  SizedBox(
+                    width: 12.0,
+                  ),
+                  RaisedButton(
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(16),
+                        side: BorderSide(color: Colors.black, width: 2.0)),
+                    color: Colors.green[600],
+                    onPressed: () {},
+                    child: Text(
+                      'CANDIDATE',
+                      textDirection: TextDirection.ltr,
+                      style: TextStyle(color: Colors.white),
+                    ),
+                  ),
+                ]),
           )
         ],
       ),
