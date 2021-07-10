@@ -106,7 +106,7 @@ class _EditProfileState extends State<EditProfile> {
                   children: <Widget>[
                     Container(
                       width: double.infinity,
-                      height: MediaQuery.of(context).size.height*0.62,
+                      height: MediaQuery.of(context).size.height*0.65,
                       margin: EdgeInsets.fromLTRB(20, 24, 20, 10),
                       padding: EdgeInsets.only(bottom: 10),
                       decoration: BoxDecoration(

@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:core';
 import 'package:electa/utils/routes.dart';
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({ Key? key }) : super(key: key);
@@ -11,6 +12,11 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+
+  final _auth = FirebaseAuth.instance;
+  String email = "";
+  String password = "";
+
   String _name = "";
   bool _check = false;
   final formKey = GlobalKey<FormState>();
@@ -21,6 +27,16 @@ class _LoginPageState extends State<LoginPage> {
     caseSensitive: false,
   );
 
+  // ignore: non_constant_identifier_names
+  check(BuildContext) async{
+    if(formKey.currentState!.validate()){
+      setState(() {
+        _check = true;
+      });
+    }
+  }
+
+  
   // ignore: non_constant_identifier_names
   moveHome(BuildContext) async{
     if(formKey.currentState!.validate()){
@@ -98,6 +114,7 @@ class _LoginPageState extends State<LoginPage> {
                         onChanged: (value){
                           value = value.replaceAll(' ', '');
                           _name = ', ' + value;
+                          email = value + "@lnmiit.ac.in";
                           setState(() {
                             
                           });
@@ -119,6 +136,12 @@ class _LoginPageState extends State<LoginPage> {
                           else if(value.length < 6){return "Password lenght should be greater than 6!";}
                           else  return null;
                         },
+                        onChanged: (value){
+                          password = value;
+                          setState(() {
+                            
+                          });
+                        },
                       ),
                       SizedBox(
                         height: 35.0,
@@ -127,7 +150,18 @@ class _LoginPageState extends State<LoginPage> {
                         color: Colors.black,
                         borderRadius: BorderRadius.circular(_check?50:8),
                         child: InkWell(
-                          onTap: () => moveHome(context),
+                          onTap: () async{
+                            check(context);
+                            try {final user = await _auth.signInWithEmailAndPassword(email: email, password: password);
+                              moveHome(context);
+                            } on FirebaseAuthException catch (e){
+                              if(e.code == 'user-not-found'){
+                                print('No User found!');
+                              }else if(e.code == 'wrong-password'){
+                                print('Wrong password provided');
+                              }
+                            }
+                          },
                           child: AnimatedContainer(
                             duration: Duration(seconds: 1),
                             width: _check?50: 120,
