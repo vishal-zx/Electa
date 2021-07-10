@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.electa">
+    package="com.lnm.Electa">
 
   <uses-feature android:name="android.hardware.camera" />
 

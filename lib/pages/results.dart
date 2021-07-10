@@ -195,7 +195,7 @@ class _ResultState extends State<Result> {
           decoration: BoxDecoration(
             color: Colors.white,
             borderRadius: BorderRadius.circular(20),
-            image: DecorationImage(image: AssetImage('images/cc.jpg')),
+            image: DecorationImage(image: AssetImage('assets/images/cc.jpg')),
             boxShadow: [
               BoxShadow(
                 color: Colors.black.withOpacity(0.1),
