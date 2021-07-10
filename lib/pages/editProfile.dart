@@ -138,18 +138,18 @@ class _EditProfileState extends State<EditProfile> {
                                       ),
                                     ),
                                   ),
-                                  Positioned(
-                                    left: MediaQuery.of(context).size.width*0.24,
-                                    top: MediaQuery.of(context).size.height*0.184,
-                                    child: Container(
-                                      decoration: BoxDecoration(
-                                        color: Colors.grey,
-                                        borderRadius: BorderRadius.all(Radius.circular(20))
-                                      ),
-                                      padding: EdgeInsets.all(4),
-                                      child: Icon(Icons.edit)
-                                    )
-                                  ),
+                                  // Positioned(
+                                  //   left: MediaQuery.of(context).size.width*0.24,
+                                  //   top: MediaQuery.of(context).size.height*0.184,
+                                  //   child: Container(
+                                  //     decoration: BoxDecoration(
+                                  //       color: Colors.grey,
+                                  //       borderRadius: BorderRadius.all(Radius.circular(20))
+                                  //     ),
+                                  //     padding: EdgeInsets.all(4),
+                                  //     child: Icon(Icons.edit)
+                                  //   )
+                                  // ),
                                 ],
                               ),
                             ],

@@ -3,10 +3,16 @@ import 'package:electa/widgets/drawer.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:flutter_reaction_button/flutter_reaction_button.dart';
 
-class Home extends StatelessWidget {
+class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
 
+  @override
+  _HomeState createState() => _HomeState();
+}
+
+class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -93,12 +99,57 @@ class Home extends StatelessWidget {
           // label: Text("React"))
           Row(
             children: <Widget>[
-              IconButton(
-                  onPressed: () => print("Liked"),
-                  icon: Icon(Icons.thumb_up_off_alt_outlined)),
-              IconButton(
-                  onPressed: () => print("Disliked"),
-                  icon: Icon(Icons.thumb_down_off_alt_outlined))
+              FlutterReactionButtonCheck(
+                onReactionChanged: (reaction, index, isChecked) {
+                  print('reaction selected index: $index');
+                },
+                reactions: <Reaction>[
+                  Reaction(
+                      previewIcon: Icon(Icons.favorite),
+                      icon: Icon(Icons.favorite_outline)),
+                  Reaction(
+                    previewIcon:
+                        ImageIcon(AssetImage("assets/images/like.png")),
+                    icon: Icon(Icons.favorite_outline),
+                  ),
+                  Reaction(
+                    previewIcon: ImageIcon(
+                      AssetImage("assets/images/haha.png"),
+                      color: Colors.transparent,
+                    ),
+                    icon: Icon(Icons.favorite_outline),
+                  ),
+                  Reaction(
+                    previewIcon:
+                        ImageIcon(AssetImage("assets/images/love.png")),
+                    icon: Icon(Icons.favorite_outline),
+                  ),
+                  Reaction(
+                      previewIcon:
+                          ImageIcon(AssetImage("assets/images/dislike.png")),
+                      icon: ImageIcon(
+                        AssetImage("assets/images/dislike.png"),
+                      )),
+                  //  Reaction(
+                  //    previewIcon: buildWidgetPreview(
+                  //      icon: 'angry.gif',
+                  //    ),
+                  //    icon: buildWidget(icon: 'angry.png'),
+                  //  ),
+                ],
+                initialReaction: Reaction(
+                  icon: Icon(Icons.favorite),
+                ),
+                selectedReaction: Reaction(
+                  icon: Icon(Icons.favorite),
+                ),
+              )
+              // IconButton(
+              //  onPressed: () => print("Liked"),
+              // icon: Icon(Icons.thumb_up_off_alt_outlined)),
+              //IconButton(
+              //  onPressed: () => print("Disliked"),
+              //  icon: Icon(Icons.thumb_down_off_alt_outlined))
             ],
           )
         ],
