@@ -108,214 +108,245 @@ class _RegisterState extends State<Register> {
         body: SingleChildScrollView(
           child: Form(
             key: formKey,
-            child: Column(
-              children: <Widget>[
-                Image.asset(
-                  "assets/images/sign up.png",
-                  fit: BoxFit.fitHeight,
-                  // height: 400,
-                ),
-                Padding(
-                  padding: EdgeInsets.fromLTRB(15, 0, 25, 8),
-                  child: TextFormField(
-                    decoration: InputDecoration(
-                      icon: Icon(
-                        Icons.assignment_ind_outlined,
-                        color: Colors.black,
-                      ),
-                      labelText: "Roll Number",
-                      hintText: "Enter Your Roll Number",
-                    ),
-                    validator: (value){
-                      value = value!.replaceAll(' ', '');
-                      _validRoll = regExp.hasMatch(value).toString();
-                      if(value.isEmpty){
-                        return "Roll Number can't be Empty!";
-                      }
-                      else if(_validRoll == "false"){
-                        return "Invalid Roll Number";
-                      }
-                      return null;
-                    },
-                    onChanged: (value){
-                      roll = value.replaceAll(' ', '');
-                      email = roll + "@lnmiit.ac.in";
-                      setState(() {
-                        
-                      });
-                      if(value == "") roll = "";
-                    },
+            child: Container(
+              padding: EdgeInsets.only(bottom: 20),
+              child: Column(
+                children: <Widget>[
+                  Image.asset(
+                    "assets/images/sign up.png",
+                    fit: BoxFit.fitHeight,
+                    // height: 400,
                   ),
-                ),
-                Padding(
-                  padding: EdgeInsets.fromLTRB(15, 0, 25, 8),
-                  child: TextField(
-                    // enabled: false,
-                    readOnly: true,
-                    controller: TextEditingController()..text = (roll == "")?"":'$email',
-                    decoration: InputDecoration(
-                      icon: Icon(
-                        Icons.email_outlined,
-                        color: Colors.black,
+                  Padding(
+                    padding: EdgeInsets.fromLTRB(15, 0, 25, 8),
+                    child: TextFormField(
+                      decoration: InputDecoration(
+                        icon: Icon(
+                          Icons.assignment_ind_outlined,
+                          color: Colors.black,
+                        ),
+                        labelText: "Roll Number",
+                        hintText: "Enter Your Roll Number",
                       ),
-                      labelText: "Your Email",
+                      validator: (value){
+                        value = value!.replaceAll(' ', '');
+                        _validRoll = regExp.hasMatch(value).toString();
+                        if(value.isEmpty){
+                          return "Roll Number can't be Empty!";
+                        }
+                        else if(_validRoll == "false"){
+                          return "Invalid Roll Number";
+                        }
+                        return null;
+                      },
+                      onChanged: (value){
+                        roll = value.replaceAll(' ', '');
+                        email = roll + "@lnmiit.ac.in";
+                        setState(() {
+                          
+                        });
+                        if(value == "") roll = "";
+                      },
                     ),
                   ),
-                ),
-                Padding(
-                  padding: EdgeInsets.fromLTRB(15, 0, 25, 8),
-                  child: TextField(
-                    decoration: InputDecoration(
-                      icon: Icon(
-                        Icons.person_outline_sharp,
-                        color: Colors.black,
+                  Padding(
+                    padding: EdgeInsets.fromLTRB(15, 0, 25, 8),
+                    child: TextField(
+                      // enabled: false,
+                      readOnly: true,
+                      controller: TextEditingController()..text = (roll == "")?"":'$email',
+                      decoration: InputDecoration(
+                        icon: Icon(
+                          Icons.email_outlined,
+                          color: Colors.black,
+                        ),
+                        labelText: "Your Email",
                       ),
-                      labelText: "Your Name",
-                      hintText: "Enter Your Name",
                     ),
                   ),
-                ),
-                Padding(
-                  padding: EdgeInsets.fromLTRB(15, 0, 25, 8),
-                  child: TextField(  
-                    obscureText: _showPass,
-                    decoration: InputDecoration(
-                      icon: Icon(
-                        Icons.lock_outline,
-                        color: Colors.black,
+                  Padding(
+                    padding: EdgeInsets.fromLTRB(15, 0, 25, 8),
+                    child: TextField(
+                      decoration: InputDecoration(
+                        icon: Icon(
+                          Icons.person_outline_sharp,
+                          color: Colors.black,
+                        ),
+                        labelText: "Your Name",
+                        hintText: "Enter Your Name",
                       ),
-                      labelText: "New Password",
-                      hintText: "Enter New Password",
-                      suffix: InkWell(
-                        onTap: _togglePass,
-                        child: Icon(this._showPass?Icons.visibility:Icons.visibility_off),
-                      )
                     ),
                   ),
-                ),
-                SizedBox(
-                  height: MediaQuery.of(context).size.height*0.005,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: <Widget>[
-                    Padding(
-                      padding: EdgeInsets.only(top: 8.0, left: 18.0),
-                      child: Text("DOB : ",
-                          textDirection: TextDirection.ltr,
-                          style:
-                              TextStyle(fontSize: 17.0, fontWeight: FontWeight.bold)),
+                  Padding(
+                    padding: EdgeInsets.fromLTRB(15, 0, 25, 8),
+                    child: TextField(  
+                      obscureText: _showPass,
+                      decoration: InputDecoration(
+                        icon: Icon(
+                          Icons.lock_outline,
+                          color: Colors.black,
+                        ),
+                        labelText: "New Password",
+                        hintText: "Enter New Password",
+                        suffix: InkWell(
+                          onTap: _togglePass,
+                          child: Icon(this._showPass?Icons.visibility:Icons.visibility_off),
+                        )
+                      ),
                     ),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 10.0),
-                      child: Row(
-                        children: [
-                          Text(
-                            selectedDate.day.toString() + "/" + selectedDate.month.toString() + "/" + selectedDate.year.toString(),
+                  ),
+                  SizedBox(
+                    height: MediaQuery.of(context).size.height*0.005,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: <Widget>[
+                      Padding(
+                        padding: EdgeInsets.only(top: 8.0, left: 18.0),
+                        child: Text("DOB : ",
+                            textDirection: TextDirection.ltr,
+                            style:
+                                TextStyle(fontSize: 17.0, fontWeight: FontWeight.bold)),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(top: 10.0),
+                        child: Row(
+                          children: [
+                            Text(
+                              selectedDate.day.toString() + "/" + selectedDate.month.toString() + "/" + selectedDate.year.toString(),
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 16
+                              ),
+                            ),
+                          ],
+                        ), 
+                      ),
+                      Padding(
+                        padding: EdgeInsets.only(top: 12.0, left: 10.0),
+                        child: SizedBox(
+                          child: ElevatedButton(
+                            onPressed: () => _selectDate(context),
+                            child: Icon(Icons.date_range_outlined)
+                          )
+                        ),
+                      ),
+                    ],
+                  ),
+
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(18, 5, 8, 5),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: <Widget>[
+                        ElevatedButton(
+                          onPressed: _read,
+                          child: Text(
+                            'Scan Your College Id Card',
                             style: TextStyle(
-                              color: Colors.black,
+                              color: Colors.black, 
+                              fontWeight: FontWeight.bold
+                            ),
+                          )
+                        ),
+                        new Text(_textValue),
+                        buildcheckbox(),
+                      ]
+                    ),
+                  ),
+                
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(18, 5, 8, 5),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: <Widget>[
+                        ElevatedButton(
+                          onPressed: _read,
+                          child: Text(
+                            'Face Authentication',
+                            style: TextStyle(
+                              color: Colors.black, 
+                              fontWeight: FontWeight.bold
+                            ),
+                          )
+                        ),
+                        buildcheckbox2(),
+                      ]
+                    ),
+                  ),
+                
+                  Center(
+                      child: Padding(
+                    padding: EdgeInsets.only(top: 8.0),
+                    child: Text('You Want To Register Yourself As:',
+                        style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold)),
+                  )),
+                  Padding(
+                    padding: EdgeInsets.only(top: 10.0),
+                    child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          // ignore: deprecated_member_use
+                          RaisedButton(
+                            elevation: 10.0,
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(16),
+                                side: BorderSide(color: Colors.black, width: 2.0)),
+                            color: Colors.blue[200],
+                            onPressed: () {},
+                            child: Text(
+                              'VOTER',
+                              textDirection: TextDirection.ltr,
+                              style: TextStyle(color: Colors.black),
+                            ),
+                          ),
+                          SizedBox(
+                            width: 12.0,
+                          ),
+                          // ignore: deprecated_member_use
+                          RaisedButton(
+                            elevation: 10.0,
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(16),
+                                side: BorderSide(color: Colors.black, width: 2.0)),
+                            color: Colors.pink[100],
+                            onPressed: () {},
+                            child: Text('CANDIDATE',
+                                textDirection: TextDirection.ltr,
+                                style: TextStyle(
+                                  color: Colors.black,
+                                )),
+                          ),
+                        ]
+                      ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 15),
+                    child: Material(
+                      color: Colors.black,
+                      borderRadius: BorderRadius.circular(8),
+                      child: InkWell(
+                        onTap: () {
+                        },
+                        child: AnimatedContainer(
+                          duration: Duration(seconds: 1),
+                          width: 130,
+                          height: 50,
+                          alignment: Alignment.center,
+                          child: Text(
+                            "Register",
+                            style: TextStyle(
+                              color: Colors.white, 
+                              fontWeight: FontWeight.bold,
                               fontSize: 16
                             ),
                           ),
-                        ],
-                      ), 
-                    ),
-                    Padding(
-                      padding: EdgeInsets.only(top: 12.0, left: 10.0),
-                      child: SizedBox(
-                        child: ElevatedButton(
-                          onPressed: () => _selectDate(context),
-                          child: Icon(Icons.date_range_outlined)
-                        )
+                        ),
                       ),
                     ),
-                  ],
-                ),
-
-                Row(
-                  children: <Widget>[
-                    Padding(
-                      padding: const EdgeInsets.only(top: 5.0, left: 18.0),
-                      child: ElevatedButton(
-                        onPressed: _read,
-                        child: Text(
-                          'Scan Your College Id Card',
-                          style: TextStyle(
-                            color: Colors.black, 
-                            fontWeight: FontWeight.bold
-                          ),
-                        )
-                      ),
-                    ),
-                    new Text(_textValue),
-                    buildcheckbox(),
-                  ]
-                ),
-              
-                Row(
-                  children: <Widget>[
-                    Padding(
-                      padding: const EdgeInsets.only(top: 5.0, left: 18.0),
-                      child: ElevatedButton(
-                        onPressed: _read,
-                        child: Text(
-                          'Face Authenticatiom',
-                          style: TextStyle(
-                            color: Colors.black, 
-                            fontWeight: FontWeight.bold
-                          ),
-                        )
-                      ),
-                    ),
-                    buildcheckbox2(),
-                  ]
-                ),
-              
-                Center(
-                    child: Padding(
-                  padding: EdgeInsets.only(top: 8.0),
-                  child: Text('You Want To Register Yourself AAs:',
-                      style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold)),
-                )),
-                Padding(
-                  padding: EdgeInsets.only(top: 10.0),
-                  child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        // ignore: deprecated_member_use
-                        RaisedButton(
-                          elevation: 10.0,
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(16),
-                              side: BorderSide(color: Colors.black, width: 2.0)),
-                          color: Colors.blue[200],
-                          onPressed: () {},
-                          child: Text(
-                            'VOTER',
-                            textDirection: TextDirection.ltr,
-                            style: TextStyle(color: Colors.black),
-                          ),
-                        ),
-                        SizedBox(
-                          width: 12.0,
-                        ),
-                        // ignore: deprecated_member_use
-                        RaisedButton(
-                          elevation: 10.0,
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(16),
-                              side: BorderSide(color: Colors.black, width: 2.0)),
-                          color: Colors.pink[100],
-                          onPressed: () {},
-                          child: Text('CANDIDATE',
-                              textDirection: TextDirection.ltr,
-                              style: TextStyle(
-                                color: Colors.black,
-                              )),
-                        ),
-                      ]),
-                )
-              ],
+                  ),
+                ],
+              ),
             ),
           ),
         ),
