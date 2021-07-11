@@ -55,6 +55,16 @@ class _LoginPageState extends State<LoginPage> {
     }
   }
 
+  SnackBar makeBar(String text){
+    final snackBar = SnackBar(
+      duration: Duration(milliseconds: (text=="Loading...")?700:3000),
+      content: Text('$text', textAlign: TextAlign.center,),
+      backgroundColor: Colors.black,
+      elevation: 3,
+    );
+    return snackBar;
+  }
+
   void _togglePass(){
     setState(() {
       _showPass = !_showPass;
@@ -157,6 +167,8 @@ class _LoginPageState extends State<LoginPage> {
                           onTap: () async{
                             check(context);
                             FirebaseAuthException er = FirebaseAuthException(code: "");
+                            String msg = "";
+                            final snackBar;
                             try {
                               await _auth.signInWithEmailAndPassword(email: email, password: password);
                             } 
@@ -164,14 +176,15 @@ class _LoginPageState extends State<LoginPage> {
                               er = e; 
                             } 
                             if(er.code == 'user-not-found'){
-                              print('No User found!');
+                              msg = 'No User found!';
                             }else if(er.code == 'wrong-password'){
-                              print('Wrong password provided');
+                              msg = 'Incorrect Password !';
                             }else if(er.code == ""){
-                              print(er.code);
                               moveHome(context, er.code);
+                              msg = 'Loading...';
                             }
-                            
+                            snackBar = makeBar(msg);
+                            ScaffoldMessenger.of(context).showSnackBar(snackBar);
                           },
                           child: AnimatedContainer(
                             duration: Duration(seconds: 1),
