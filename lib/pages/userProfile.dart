@@ -24,14 +24,14 @@ class  UserProfile extends StatelessWidget {
         child: Stack(
           children: [
             Container(
-              margin: EdgeInsets.only(top: MediaQuery.of(context).size.height*0.35, right: 100),
+              margin: EdgeInsets.only(top: MediaQuery.of(context).size.height*0.365, right: 100),
               decoration: BoxDecoration(
                 image: DecorationImage(
                   image: AssetImage("assets/images/mypbg.png"),
                   fit: BoxFit.contain,
                 ),
               ),
-              height: MediaQuery.of(context).size.height*0.495,
+              height: MediaQuery.of(context).size.height*0.48,
               width: MediaQuery.of(context).size.width*0.9,
               child: Column(
                 children: [
