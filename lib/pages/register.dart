@@ -2,12 +2,9 @@ import 'dart:async';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'dart:core';
-import 'package:animated_text_kit/animated_text_kit.dart';
 
 // ignore: import_of_legacy_library_into_null_safe
 import 'package:flutter_mobile_vision/flutter_mobile_vision.dart';
-
-// import 'package:scanbot_sdk/scanbot_sdk.dart';
 
 class Register extends StatefulWidget {
   const Register({Key? key}) : super(key: key);
@@ -163,7 +160,12 @@ class _RegisterState extends State<Register> {
             Padding(
               padding: const EdgeInsets.only(top: 5.0, left: 7.0),
               child: ElevatedButton(
-                  onPressed: _read, child: Text('scan your college id card')),
+                  onPressed: _read,
+                  child: Text(
+                    'Scan Your College Id Card',
+                    style: TextStyle(
+                        color: Colors.black, fontWeight: FontWeight.bold),
+                  )),
             ),
             new Text(_textValue),
             Padding(
@@ -180,10 +182,15 @@ class _RegisterState extends State<Register> {
             Padding(
               padding: EdgeInsets.only(top: 5.0, left: 7.0),
               child: ElevatedButton(
-                  onPressed: () => {}, child: Text('Face Authentication')),
+                  onPressed: () => {},
+                  child: Text(
+                    'Face Authentication',
+                    style: TextStyle(
+                        color: Colors.black, fontWeight: FontWeight.bold),
+                  )),
             ),
             Padding(
-              padding: const EdgeInsets.only(left: 170),
+              padding: const EdgeInsets.only(left: 178),
               child: buildcheckbox2(),
             ),
           ]),
@@ -191,7 +198,7 @@ class _RegisterState extends State<Register> {
           Center(
               child: Padding(
             padding: EdgeInsets.only(top: 8.0),
-            child: Text('You want to register yourself as:',
+            child: Text('You Want To Register Yourself AAs:',
                 style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold)),
           )),
           Padding(

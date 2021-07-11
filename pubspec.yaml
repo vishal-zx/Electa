@@ -41,7 +41,6 @@ dependencies:
   # scanbot_sdk: ^2.5.0
   google_fonts: ^2.1.0
   flutter_mobile_vision: ^0.1.4+1
-  animated_text_kit: ^4.2.1
   font_awesome_flutter: ^9.1.0
   url_launcher: ^6.0.9
 
