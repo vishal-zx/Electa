@@ -202,12 +202,12 @@ class _RegisterState extends State<Register> {
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(16),
                         side: BorderSide(color: Colors.black, width: 2.0)),
-                    color: Colors.red[600],
+                    color: Colors.blue[200],
                     onPressed: () {},
                     child: Text(
                       'VOTER',
                       textDirection: TextDirection.ltr,
-                      style: TextStyle(color: Colors.white),
+                      style: TextStyle(color: Colors.black),
                     ),
                   ),
                   SizedBox(
@@ -217,13 +217,13 @@ class _RegisterState extends State<Register> {
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(16),
                         side: BorderSide(color: Colors.black, width: 2.0)),
-                    color: Colors.green[600],
+                    color: Colors.pink[100],
                     onPressed: () {},
-                    child: Text(
-                      'CANDIDATE',
-                      textDirection: TextDirection.ltr,
-                      style: TextStyle(color: Colors.white),
-                    ),
+                    child: Text('CANDIDATE',
+                        textDirection: TextDirection.ltr,
+                        style: TextStyle(
+                          color: Colors.black,
+                        )),
                   ),
                 ]),
           )
