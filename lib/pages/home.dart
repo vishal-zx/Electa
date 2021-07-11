@@ -43,20 +43,17 @@ class _HomeState extends State<Home> {
   }
 
   Container _getPost() {
+    final postComment =
+        "Vote Me , I am You , And You Are Me. Every Concern Will be respected";
+    //var username = "poojan_gadhiya";
+    final userImage = 'https://imgshare.io/images/2021/06/30/poojan.png';
+    final postImage = 'https://source.unsplash.com/random';
+    var userName = "Poojan Gadhiya";
     return Container(
-      height: 310,
-      width: 400,
+      height: MediaQuery.of(context).size.height * 0.6,
+      width: MediaQuery.of(context).size.width * 0.98,
       decoration: BoxDecoration(
-          color: Colors.transparent,
-          // image: DecorationImage(
-          //   image: NetworkImage(
-          //     "https://flutter.github.io/assets-for-api-docs/assets/widgets/owl-2.jpg"),
-          // fit: BoxFit.contain),
-          //border: Border.all(
-          // color: Colors.black26,
-          // width: 5,
-          //),
-          borderRadius: BorderRadius.circular(15)),
+          color: Colors.transparent, borderRadius: BorderRadius.circular(15)),
       child: Column(
         children: <Widget>[
           Row(
@@ -65,8 +62,7 @@ class _HomeState extends State<Home> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  CircularProfileAvatar(
-                      'https://imgshare.io/images/2021/06/30/poojan.png',
+                  CircularProfileAvatar('$userImage',
                       radius: 15,
                       backgroundColor: Colors.transparent,
                       onTap: () => print("You Clicked his Profile Image")),
@@ -77,7 +73,7 @@ class _HomeState extends State<Home> {
                 children: [
                   TextButton(
                       onPressed: () => print("You Are on the Profile"),
-                      child: Text("Poojan Gadhiya")),
+                      child: Text("$userName")),
                   //FlatButton.icon(
                   //  onPressed: () => print("You Opened Edit"),
                   //icon: Icon(Icons.brightness_5_outlined),
@@ -87,65 +83,109 @@ class _HomeState extends State<Home> {
             ],
           ),
           Container(
-            height: 200,
-            width: 400,
+            height: MediaQuery.of(context).size.height * 0.4,
+            width: MediaQuery.of(context).size.width,
             decoration: BoxDecoration(
                 image: DecorationImage(
-                    image: NetworkImage("https://source.unsplash.com/random"),
-                    fit: BoxFit.fitWidth)),
+                    image: NetworkImage("$postImage"), fit: BoxFit.fill)),
+          ),
+          Container(
+            padding: EdgeInsets.fromLTRB(25, 0, 25, 0),
+            child: Wrap(
+              children: [
+                Text(
+                  "$postComment",
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                    fontStyle: FontStyle.normal,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+              ],
+            ),
           ),
           //FlatButton.icon(
           //  onPressed: () => print("You Liked"),
           //  icon: Icon(Icons.favorite),
           // label: Text("React"))
           Row(
+            mainAxisAlignment: MainAxisAlignment.start,
             children: <Widget>[
               FlutterReactionButtonCheck(
                 onReactionChanged: (reaction, index, isChecked) {
                   print('reaction selected index: $index');
                 },
+                //boxColor: Colors.transparent,
+                boxPosition: Position.BOTTOM,
+                boxItemsSpacing: 50,
+                boxAlignment: Alignment.topLeft,
+                boxRadius: 50,
                 reactions: <Reaction>[
                   Reaction(
-                      previewIcon: Icon(Icons.favorite),
-                      icon: Icon(Icons.favorite_outline)),
-                  Reaction(
-                    previewIcon:
-                        ImageIcon(AssetImage("assets/images/like.png")),
-                    icon: Icon(Icons.favorite_outline),
-                  ),
-                  Reaction(
-                    previewIcon: ImageIcon(
-                      AssetImage("assets/images/haha.png"),
-                      color: Colors.transparent,
+                    previewIcon: Icon(
+                      CupertinoIcons.hand_thumbsup,
+                      color: Colors.black,
+                      size: 30,
                     ),
-                    icon: Icon(Icons.favorite_outline),
+                    icon: Icon(
+                      CupertinoIcons.hand_thumbsup_fill,
+                      color: Colors.red.shade200,
+                      size: 30,
+                    ),
                   ),
                   Reaction(
-                    previewIcon:
-                        ImageIcon(AssetImage("assets/images/love.png")),
-                    icon: Icon(Icons.favorite_outline),
+                    previewIcon: Icon(
+                      CupertinoIcons.smiley,
+                      color: Colors.black,
+                      size: 30,
+                    ),
+                    icon: Icon(CupertinoIcons.smiley,
+                        color: Colors.red.shade900, size: 30),
                   ),
                   Reaction(
-                      previewIcon:
-                          ImageIcon(AssetImage("assets/images/dislike.png")),
-                      icon: ImageIcon(
-                        AssetImage("assets/images/dislike.png"),
+                      previewIcon: Icon(
+                        CupertinoIcons.hand_thumbsdown,
+                        color: Colors.black,
+                        size: 30,
+                      ),
+                      icon: Icon(
+                        CupertinoIcons.hand_thumbsdown_fill,
+                        color: Colors.red.shade200,
+                        size: 30,
                       )),
-                  //  Reaction(
-                  //    previewIcon: buildWidgetPreview(
-                  //      icon: 'angry.gif',
-                  //    ),
-                  //    icon: buildWidget(icon: 'angry.png'),
-                  //  ),
+                  //     Reaction(
+                  //       previewIcon: Icon(),
+                  //       icon: buildWidget(),
+                  //     ),
+                  //     Reaction(
+                  //       previewIcon: buildWidgetPreview(
+                  //         icon: 'sad.gif',
+                  //       ),
+                  //       icon: buildWidget(icon: 'sad2.png'),
+                  //     ),
+                  //     Reaction(
+                  //       previewIcon: buildWidgetPreview(
+                  //         icon: 'angry.gif',
+                  //       ),
+                  //       icon: buildWidget(icon: 'angry2.png'),
+                  //     ),
                 ],
                 initialReaction: Reaction(
-                  icon: Icon(Icons.favorite),
+                  icon: Icon(
+                    Icons.favorite_outline,
+                    size: 30,
+                  ),
                 ),
                 selectedReaction: Reaction(
-                  icon: Icon(Icons.favorite),
+                  icon: Icon(
+                    Icons.favorite,
+                    color: Colors.red,
+                    size: 30,
+                  ),
                 ),
-              )
-              // IconButton(
+              ) // IconButton(
               //  onPressed: () => print("Liked"),
               // icon: Icon(Icons.thumb_up_off_alt_outlined)),
               //IconButton(
@@ -157,4 +197,8 @@ class _HomeState extends State<Home> {
       ),
     );
   }
+
+  buildWidget({required String icon}) {}
+
+  buildWidgetPreview({required String icon}) {}
 }
