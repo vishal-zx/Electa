@@ -18,6 +18,7 @@ class _LoginPageState extends State<LoginPage> {
   String password = "";
 
   String _name = "";
+  bool _check1 = false;
   bool _check = false;
   final formKey = GlobalKey<FormState>();
   bool _showPass = true;
@@ -31,24 +32,26 @@ class _LoginPageState extends State<LoginPage> {
   check(BuildContext) async{
     if(formKey.currentState!.validate()){
       setState(() {
-        _check = true;
+        _check1 = true;
       });
     }
   }
 
   
   // ignore: non_constant_identifier_names
-  moveHome(BuildContext) async{
-    if(formKey.currentState!.validate()){
-      setState(() {
-        _check = true;
-      });
+  moveHome(BuildContext, String a) async{
+    if(a == "" && _check1 == true){
+      if(formKey.currentState!.validate()){
+        setState(() {
+          _check = true;
+        });
 
-      await Future.delayed(Duration(seconds: 1));
-      await Navigator.pushNamed(context, MyRoutes.homeRoute);
-      setState(() {
-        _check = false;
-      });
+        await Future.delayed(Duration(seconds: 1));
+        await Navigator.pushNamed(context, MyRoutes.homeRoute);
+        setState(() {
+          _check = false;
+        });
+      }
     }
   }
 
@@ -62,9 +65,10 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
-      child: Material(
-        color: Colors.white,
-        child: SingleChildScrollView(
+      child: Scaffold(
+        // color: Colors.white,
+        backgroundColor: Colors.white,
+        body: SingleChildScrollView(
           child: Form(
             key: formKey,
             child: Column(
@@ -152,15 +156,22 @@ class _LoginPageState extends State<LoginPage> {
                         child: InkWell(
                           onTap: () async{
                             check(context);
-                            try {final user = await _auth.signInWithEmailAndPassword(email: email, password: password);
-                              moveHome(context);
-                            } on FirebaseAuthException catch (e){
-                              if(e.code == 'user-not-found'){
-                                print('No User found!');
-                              }else if(e.code == 'wrong-password'){
-                                print('Wrong password provided');
-                              }
+                            FirebaseAuthException er = FirebaseAuthException(code: "");
+                            try {
+                              final user = await _auth.signInWithEmailAndPassword(email: email, password: password);
+                            } 
+                            on FirebaseAuthException catch (e){
+                              er = e; 
+                            } 
+                            if(er.code == 'user-not-found'){
+                              print('No User found!');
+                            }else if(er.code == 'wrong-password'){
+                              print('Wrong password provided');
+                            }else if(er.code == ""){
+                              print(er.code);
+                              moveHome(context, er.code);
                             }
+                            
                           },
                           child: AnimatedContainer(
                             duration: Duration(seconds: 1),
