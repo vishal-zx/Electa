@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+// ignore: import_of_legacy_library_into_null_safe
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
@@ -106,7 +107,7 @@ class _EditProfileState extends State<EditProfile> {
                   children: <Widget>[
                     Container(
                       width: double.infinity,
-                      height: MediaQuery.of(context).size.height*0.62,
+                      height: MediaQuery.of(context).size.height*0.65,
                       margin: EdgeInsets.fromLTRB(20, 24, 20, 10),
                       padding: EdgeInsets.only(bottom: 10),
                       decoration: BoxDecoration(

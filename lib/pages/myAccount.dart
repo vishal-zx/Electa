@@ -1,4 +1,5 @@
 import 'dart:ui';
+// ignore: import_of_legacy_library_into_null_safe
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:electa/utils/routes.dart';
 import 'package:electa/widgets/drawer.dart';
@@ -62,6 +63,7 @@ Widget _logoutPopup(BuildContext context) {
   );
 }
 
+// ignore: must_be_immutable
 class  MyAccount extends StatelessWidget {
   MyAccount({ Key? key }) : super(key: key);
 

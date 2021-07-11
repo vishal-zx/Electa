@@ -1,3 +1,4 @@
+// ignore: import_of_legacy_library_into_null_safe
 import 'package:circular_profile_avatar/circular_profile_avatar.dart';
 import 'package:electa/widgets/drawer.dart';
 import 'package:flutter/cupertino.dart';
