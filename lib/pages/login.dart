@@ -58,9 +58,13 @@ class _LoginPageState extends State<LoginPage> {
   SnackBar makeBar(String text){
     final snackBar = SnackBar(
       duration: Duration(milliseconds: (text=="Loading...")?700:3000),
-      content: Text('$text', textAlign: TextAlign.center,),
-      backgroundColor: Colors.black,
+      content: Text('$text', textAlign: TextAlign.center, 
+        style: TextStyle(fontSize: 15),
+      ),
+      backgroundColor: Colors.black87.withOpacity(0.89),
       elevation: 3,
+      padding: EdgeInsets.all(5),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.only(topLeft: Radius.circular(50), topRight: Radius.circular(50))),
     );
     return snackBar;
   }
@@ -175,7 +179,7 @@ class _LoginPageState extends State<LoginPage> {
                               er = e; 
                             } 
                             if(er.code == 'user-not-found'){
-                              msg = 'No User found!';
+                              msg = 'No Such User found!';
                             }else if(er.code == 'wrong-password'){
                               msg = 'Incorrect Password !';
                             }else if(er.code == ""){
