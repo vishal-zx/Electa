@@ -8,4 +8,5 @@ class MyRoutes{
   static String changePswdRoute = "/ChangePswd";
   static String hNSRoute = "/HNS";
   static String editProfileRoute = "/EditProfile";
+  static String userProfileRoute = "/UserProfile";
 }

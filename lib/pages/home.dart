@@ -1,5 +1,6 @@
 // ignore: import_of_legacy_library_into_null_safe
 import 'package:circular_profile_avatar/circular_profile_avatar.dart';
+import 'package:electa/utils/routes.dart';
 import 'package:electa/widgets/drawer.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -72,7 +73,10 @@ class _HomeState extends State<Home> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   TextButton(
-                      onPressed: () => print("You Are on the Profile"),
+                      onPressed: () {
+                        print("You Are on the Profile");
+                        Navigator.pushNamed(context, MyRoutes.userProfileRoute);
+                      },
                       child: Text("$userName")),
                   //FlatButton.icon(
                   //  onPressed: () => print("You Opened Edit"),
