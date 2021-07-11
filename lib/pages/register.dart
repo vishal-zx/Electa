@@ -130,7 +130,8 @@ class _RegisterState extends State<Register> {
                 padding: EdgeInsets.only(top: 8.0, left: 15.0),
                 child: Text("DOB : ",
                     textDirection: TextDirection.ltr,
-                    style: TextStyle(fontSize: 15.0)),
+                    style:
+                        TextStyle(fontSize: 15.0, fontWeight: FontWeight.bold)),
               ),
               Padding(
                 padding: const EdgeInsets.only(top: 10.0),
@@ -199,6 +200,7 @@ class _RegisterState extends State<Register> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   RaisedButton(
+                    elevation: 10.0,
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(16),
                         side: BorderSide(color: Colors.black, width: 2.0)),
@@ -214,6 +216,7 @@ class _RegisterState extends State<Register> {
                     width: 12.0,
                   ),
                   RaisedButton(
+                    elevation: 10.0,
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(16),
                         side: BorderSide(color: Colors.black, width: 2.0)),
