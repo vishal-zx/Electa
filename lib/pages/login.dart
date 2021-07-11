@@ -70,7 +70,6 @@ class _LoginPageState extends State<LoginPage> {
       _showPass = !_showPass;
     });
   }
-
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
