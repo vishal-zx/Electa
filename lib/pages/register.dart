@@ -206,6 +206,7 @@ class _RegisterState extends State<Register> {
             child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
+                  // ignore: deprecated_member_use
                   RaisedButton(
                     elevation: 10.0,
                     shape: RoundedRectangleBorder(
@@ -222,6 +223,7 @@ class _RegisterState extends State<Register> {
                   SizedBox(
                     width: 12.0,
                   ),
+                  // ignore: deprecated_member_use
                   RaisedButton(
                     elevation: 10.0,
                     shape: RoundedRectangleBorder(

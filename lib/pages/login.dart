@@ -158,7 +158,7 @@ class _LoginPageState extends State<LoginPage> {
                             check(context);
                             FirebaseAuthException er = FirebaseAuthException(code: "");
                             try {
-                              final user = await _auth.signInWithEmailAndPassword(email: email, password: password);
+                              await _auth.signInWithEmailAndPassword(email: email, password: password);
                             } 
                             on FirebaseAuthException catch (e){
                               er = e; 

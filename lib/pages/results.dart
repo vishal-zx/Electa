@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 // ignore: import_of_legacy_library_into_null_safe
 import 'package:slimy_card/slimy_card.dart';
+// ignore: unused_import
 import 'package:pie_chart/pie_chart.dart';
 // ignore: import_of_legacy_library_into_null_safe
 import 'package:cached_network_image/cached_network_image.dart';
@@ -13,6 +14,7 @@ class Result extends StatefulWidget {
   _ResultState createState() => _ResultState();
 }
 
+// ignore: unused_element
 Widget _buildResultRow(BuildContext context, String winner, String roll, String image, String position){
   return Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
