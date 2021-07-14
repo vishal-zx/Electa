@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:electa/utils/routes.dart';
 import 'package:electa/widgets/drawer.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 Widget _logoutPopup(BuildContext context) { 
@@ -32,7 +33,8 @@ Widget _logoutPopup(BuildContext context) {
                   color: Colors.black
                 ),
               ),
-              onPressed: (){
+              onPressed: () async {
+                await FirebaseAuth.instance.signOut();
                 Navigator.pushNamedAndRemoveUntil(context, MyRoutes.loginRoute, (route) => false);
               },
             ),
