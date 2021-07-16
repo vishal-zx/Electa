@@ -33,7 +33,9 @@ dependencies:
   slimy_card: ^1.0.4
   pie_chart: ^5.0.0
   flutter_spinkit: ^5.0.0
-  
+  image_picker: ^0.8.2
+  firebase_storage: ^10.0.0
+  permission_handler: ^8.1.2
 
   circular_profile_avatar: ^1.0.8
   # The following adds the Cupertino Icons font to your application.
