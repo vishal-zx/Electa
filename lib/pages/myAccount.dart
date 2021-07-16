@@ -83,7 +83,8 @@ Widget errorProfile(String error){
           color: Colors.black,
         ),
       ),
-    )
+    ),
+    drawer: MyDrawer(),
   );
 }
 
@@ -462,6 +463,7 @@ class  MyAccount extends StatelessWidget {
             size: 50.0,
             duration: Duration(seconds: 5), 
           ),
+          drawer: MyDrawer(),
         );
       },
     );
