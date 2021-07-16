@@ -1,5 +1,7 @@
+import 'dart:convert';
 import 'dart:async';
 import 'dart:io';
+import 'dart:math';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:electa/utils/routes.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -9,6 +11,9 @@ import 'package:flutter/material.dart';
 import 'dart:core';
 import 'package:image_picker/image_picker.dart';
 import 'package:image_cropper/image_cropper.dart';
+import 'package:mailer/mailer.dart';
+import 'package:mailer/smtp_server.dart';
+
 
 // ignore: import_of_legacy_library_into_null_safe
 import 'package:flutter_mobile_vision/flutter_mobile_vision.dart';
@@ -39,6 +44,54 @@ class _RegisterState extends State<Register> {
       setState(() {
         selectedDate = picked;
       });
+  }
+
+  int otpFlag = 0;
+  int userOTP = 0;
+  int sentOTP = 0;
+
+  void sendOtp() async{
+    String OTPname = 'info.electa.lnm@gmail.com';
+    String OTPpass = 'Info@Electa1#';
+
+    final SmtpServer = gmail(OTPname, OTPpass);
+
+    Random rnd = new Random();
+    var next = rnd.nextDouble() * 1000000;
+    while (next < 100000) {
+      next *= 10;
+    }
+    sentOTP = next.toInt();
+
+    final msg = Message()
+      ..from = Address(OTPname, 'Info Electa')
+      ..recipients.add(email)
+      ..subject = 'OTP for Email Verification | Electa'
+      ..text = 'Hello $roll, \nYour OTP for Mail($email) verification is \n$sentOTP\n\nTeam Electa';
+
+    try {
+      await send(msg, SmtpServer);
+      ScaffoldMessenger.of(context).showSnackBar(makeBar("OTP successfully sent !"));
+    } on MailerException catch (e) {
+      if(email == ""){
+        ScaffoldMessenger.of(context).showSnackBar(makeBar("Enter Roll Number !"));
+      }
+      else{
+        ScaffoldMessenger.of(context).showSnackBar(makeBar("Problem sending OTP !"));
+      }
+    }
+  }
+
+  void matchOTP(){
+    if(sentOTP == userOTP){
+      otpFlag = 2;
+    }
+    else if(sentOTP != userOTP){
+      otpFlag = 1;
+    }
+    else{
+      otpFlag = 0;
+    }
   }
 
   bool _checkRollPass = true;
@@ -497,6 +550,37 @@ class _RegisterState extends State<Register> {
                     ),
                   ),
                   Padding(
+                    padding: EdgeInsets.fromLTRB(15, 0, 25, 8),
+                    child: TextFormField( 
+                      decoration: InputDecoration(
+                        icon: Icon(
+                          Icons.password,
+                          color: Colors.black,
+                        ),
+                        labelText: "OTP",
+                        hintText: "000000",
+                        suffix: InkWell(
+                          onTap: sendOtp,
+                          child: Text("Send OTP"),
+                        )
+                      ),
+                      validator: (value){
+                        if(value == null){
+                          return "Roll Number can't be Empty!";
+                        }
+                        return null;
+                      },
+                      onChanged: (value){
+                        setState(() {
+                          
+                        });
+                        if(value != ""){
+                          userOTP = int.parse(value);
+                        }
+                      },
+                    ),
+                  ),
+                  Padding(
                     padding: const EdgeInsets.fromLTRB(18, 5, 8, 5),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -590,12 +674,21 @@ class _RegisterState extends State<Register> {
                       child: InkWell(
                         onTap: () async {
                           if(roll!="" && name!=""){
-                            doRegister();
-                            await FirebaseAuth.instance.signOut();
-                            ScaffoldMessenger.of(context).showSnackBar(makeBar("Registered Successfully!! 🎉"));
-                            Timer(Duration(seconds: 2), (){
-                              Navigator.pushNamedAndRemoveUntil(context, MyRoutes.loginRoute, (route) => false);
-                            });
+                            matchOTP();
+                            if(otpFlag == 2){
+                              doRegister();
+                              await FirebaseAuth.instance.signOut();
+                              ScaffoldMessenger.of(context).showSnackBar(makeBar("Registered Successfully!! 🎉"));
+                              Timer(Duration(seconds: 2), (){
+                                Navigator.pushNamedAndRemoveUntil(context, MyRoutes.loginRoute, (route) => false);
+                              });
+                            }
+                            else if(otpFlag == 1){
+                              ScaffoldMessenger.of(context).showSnackBar(makeBar("OTP didn't match. Email could'nt verified."));
+                            }
+                            else{
+                              ScaffoldMessenger.of(context).showSnackBar(makeBar("Verify Email !!"));
+                            }
                           }
                           else{
                             ScaffoldMessenger.of(context).showSnackBar(makeBar("Name or Roll Number Missing !!"));

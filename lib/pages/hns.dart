@@ -227,12 +227,12 @@ class _HelpNSupportState extends State<HelpNSupport> {
                                   ),
                                   TextButton(
                                     child: Text(
-                                      " :  info.electa@gmail.com",
+                                      " :  info.electa.lnm@gmail.com",
                                       style: TextStyle(
                                           fontSize: 20, color: Colors.black),
                                     ),
                                     onPressed: () async {
-                                      var url = "mailto:info.electa@gmail.com";
+                                      var url = "mailto:info.electa.lnm@gmail.com";
                                       if (await canLaunch(url)) {
                                         await launch(url);
                                       } else {
