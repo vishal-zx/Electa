@@ -73,7 +73,7 @@ class _RegisterState extends State<Register> {
   String _validRoll = "false";
 
   bool _showPass = true;
-  bool _RollPresent = false;
+  bool _rollPresent = false;
   
   final formKey = GlobalKey<FormState>();
 
@@ -140,7 +140,7 @@ XFile? userImage;
 var file;
 
 void pickImage() async {
-    if(_RollPresent == true){
+    if(_rollPresent == true){
       final _imagePicker = ImagePicker();
       await Permission.photos.request();
       var permissionStatus = await Permission.photos.status;
@@ -266,8 +266,8 @@ void pickImage() async {
                         setState(() {
                           
                         });
-                        if(value == "") {roll = ""; _RollPresent = false;}
-                        else if(value !="") _RollPresent = true;
+                        if(value == "") {roll = ""; _rollPresent = false;}
+                        else if(value !="") _rollPresent = true;
                       },
                     ),
                   ),
