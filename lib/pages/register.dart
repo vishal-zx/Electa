@@ -8,6 +8,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'dart:core';
 import 'package:image_picker/image_picker.dart';
+import 'package:image_cropper/image_cropper.dart';
 
 // ignore: import_of_legacy_library_into_null_safe
 import 'package:flutter_mobile_vision/flutter_mobile_vision.dart';
@@ -40,7 +41,6 @@ class _RegisterState extends State<Register> {
       });
   }
 
-  // ignore: unused_field
   bool _checkRollPass = true;
 
   check(BuildContext context) async{
@@ -82,20 +82,22 @@ class _RegisterState extends State<Register> {
   bool? value2 = false;
 
   Widget buildcheckbox() => Checkbox(
-      value: value,
-      onChanged: (value) {
-        setState(() {
-          this.value = value;
-        });
+    value: value,
+    onChanged: (value) {
+      setState(() {
+        this.value = value;
       });
+    }
+  );
 
   Widget buildcheckbox2() => Checkbox(
-      value: value2,
-      onChanged: (value2) {
-        setState(() {
-          this.value2 = value2;
-        });
+    value: value2,
+    onChanged: (value2) {
+      setState(() {
+        this.value2 = value2;
       });
+    }
+  );
 
   Future<Null> _read() async {
     List<OcrText> texts = [];
@@ -120,36 +122,35 @@ class _RegisterState extends State<Register> {
     });
   }
 
-SnackBar makeBar(String text){
-  final snackBar = SnackBar(
-    duration: Duration(milliseconds: (text=="Loading...")?700:3000),
-    content: Text('$text', textAlign: TextAlign.center, 
-      style: TextStyle(fontSize: 15),
-    ),
-    backgroundColor: Colors.black87.withOpacity(1),
-    elevation: 3,
-    padding: EdgeInsets.all(5),
-    shape: RoundedRectangleBorder(borderRadius: BorderRadius.only(topLeft: Radius.circular(50), topRight: Radius.circular(50))),
-  );
-  return snackBar;
-}
+  SnackBar makeBar(String text){
+    final snackBar = SnackBar(
+      duration: Duration(milliseconds: (text=="Loading...")?700:3000),
+      content: Text('$text', textAlign: TextAlign.center, 
+        style: TextStyle(fontSize: 15),
+      ),
+      backgroundColor: Colors.black87.withOpacity(1),
+      elevation: 3,
+      padding: EdgeInsets.all(5),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.only(topLeft: Radius.circular(50), topRight: Radius.circular(50))),
+    );
+    return snackBar;
+  }
 
-SnackBar error = SnackBar(content: Text(""));
-  
-XFile? userImage;
-var file;
+  SnackBar error = SnackBar(content: Text(""));
 
-void pickImage() async {
-    if(_rollPresent == true){
-      final _imagePicker = ImagePicker();
+  File pickedImage = new File("");
+  bool isUploading = false;
+
+  _loadPicker() async{
+    if(_rollPresent == true){  
       await Permission.photos.request();
       var permissionStatus = await Permission.photos.status;
       if (permissionStatus.isGranted){
-        userImage = await _imagePicker.pickImage(source: ImageSource.gallery);
-        if (userImage != null){
-          file = File(userImage!.path);
+        XFile? picked = await ImagePicker().pickImage(source: ImageSource.gallery);
+        if(picked!=null){
+          _cropImage(picked);
         }else {
-          error = makeBar('No Image Received');
+          error = makeBar('No Image Selected');
           ScaffoldMessenger.of(context).showSnackBar(error);
         }
       }else {
@@ -162,13 +163,37 @@ void pickImage() async {
     }
   }
 
-  void uploadToFB(var file) async{
-    if(file!=null){
+  _cropImage(XFile picked) async{
+    File? cropped = await ImageCropper.cropImage(
+      androidUiSettings: AndroidUiSettings(
+        statusBarColor: Colors.black,
+        toolbarColor: Colors.black,
+        toolbarTitle: "Crop Image",
+        toolbarWidgetColor: Colors.white,
+      ),
+      sourcePath: picked.path,
+      aspectRatioPresets: [
+          CropAspectRatioPreset.square
+        ],
+        maxWidth: 800,
+    );
+    if(cropped !=null){
+      setState(() {
+        pickedImage = cropped;
+      });
+    }
+  }
+
+  void upload(File pickedImg) async{
+    if(pickedImg.path!=""){
       final _firebaseStorage = FirebaseStorage.instance;
-      var snapshot = await _firebaseStorage.ref().child('userImages/$roll.png').putFile(file).whenComplete(() => null);
-      var downloadUrl = await snapshot.ref.getDownloadURL();
+      isUploading = true;
+      UploadTask uploadTask = _firebaseStorage.ref().child('userImages/$roll.png').putFile(pickedImg);
+      var downloadUrl = await (await uploadTask.whenComplete(() => null)).ref.getDownloadURL();
+
       setState(() {
         imageUrl = downloadUrl;
+        isUploading = false;
       });
     }
     else{
@@ -180,12 +205,7 @@ void pickImage() async {
   
   void doRegister() async {
     if(_checkRollPass == true){
-      print(roll);
-      print(email);
-      print(name);
-      print(bio);
-      print(password);
-      users.doc(roll).set({'Name' : name, 'Roll' : roll, 'Bio' : bio, 'imageUrl' : imageUrl});
+      await users.doc(roll).set({'Name' : name, 'Roll' : roll, 'Bio' : bio, 'imageUrl' : imageUrl});
       try{
         await FirebaseAuth.instance.createUserWithEmailAndPassword(email: email, password: password);
       } 
@@ -219,12 +239,7 @@ void pickImage() async {
             "Register",
             textDirection: TextDirection.ltr,
           ),
-          elevation: 0,
-          leading: IconButton(
-              onPressed: () => {
-                    Navigator.pop(context),
-                  },
-              icon: Icon(Icons.arrow_back_rounded)),
+          elevation: 5,
         ),
         body: SingleChildScrollView(
           child: Form(
@@ -431,7 +446,7 @@ void pickImage() async {
                                 children: [
                                   ElevatedButton(
                                     onPressed: (){
-                                      pickImage();
+                                      _loadPicker();
                                     }, 
                                     child: Padding(
                                       padding: EdgeInsets.fromLTRB(2, 12, 2, 12),
@@ -453,7 +468,7 @@ void pickImage() async {
                                   ),
                                   ElevatedButton(
                                     onPressed: (){
-                                      uploadToFB(file);
+                                      upload(pickedImage);
                                     }, 
                                     child: Padding(
                                       padding: EdgeInsets.fromLTRB(2, 12, 2, 12),
