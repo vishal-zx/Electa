@@ -425,7 +425,7 @@ void pickImage() async {
                                   ),
                                 ),
                                 child: (imageUrl != "")?Image.network(imageUrl):
-                                Image.network('https://i.imgur.com/sUFH1Aq.png', fit: BoxFit.contain,)
+                                Image.asset('assets/images/imgbg.png', fit: BoxFit.contain,)
                               ),
                               Column(
                                 children: [
