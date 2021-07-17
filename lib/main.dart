@@ -4,7 +4,8 @@ import 'package:electa/pages/hns.dart';
 import 'package:electa/pages/login.dart';
 import 'package:electa/pages/myAccount.dart';
 import 'package:electa/pages/register.dart';
-import 'package:electa/pages/result.dart';
+import 'package:electa/pages/results.dart';
+import 'package:electa/pages/userProfile.dart';
 import 'package:electa/pages/vote.dart';
 import 'package:electa/utils/routes.dart';
 import 'package:flutter/material.dart';
@@ -82,11 +83,12 @@ class _MyAppState extends State<MyApp> {
         MyRoutes.registerRoute : (context) => Register(),
         MyRoutes.homeRoute : (context) => Home(),
         MyRoutes.voteRoute : (context) => Vote(),
-        MyRoutes.resultRoute : (context) => ResultScreen(),
+        MyRoutes.resultRoute : (context) => Result(),
         MyRoutes.myAccountRoute : (context) => MyAccount(),
         MyRoutes.changePswdRoute : (context) => ChangePswd(),
         MyRoutes.hNSRoute : (context) => HelpNSupport(),
         MyRoutes.editProfileRoute : (context) => EditProfile(),
+        MyRoutes.userProfileRoute : (context) => UserProfile(),
       },
     );
   }
