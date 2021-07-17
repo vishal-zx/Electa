@@ -6,6 +6,7 @@ import 'package:pie_chart/pie_chart.dart';
 // ignore: import_of_legacy_library_into_null_safe
 import 'package:cached_network_image/cached_network_image.dart';
 
+
 class Result extends StatefulWidget {
   const Result({ key }) : super(key: key);
 
@@ -20,6 +21,7 @@ Widget _buildResultRow(BuildContext context, String winner, String roll, String 
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
   Container(
+  
     width: MediaQuery.of(context).size.height*0.09,
     height: MediaQuery.of(context).size.height*0.09,
     child: ClipRRect(
@@ -118,6 +120,7 @@ class _ResultState extends State<Result> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+       drawer: Drawer(),
       appBar: AppBar(
         title: Text("Results"),
         elevation: 10,
