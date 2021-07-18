@@ -580,92 +580,92 @@ class _RegisterState extends State<Register> {
                       },
                     ),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(18, 5, 8, 5),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: <Widget>[
-                        ElevatedButton(
-                          onPressed: _read,
-                          child: Text(
-                            'Scan Your College Id Card',
-                            style: TextStyle(
-                              color: Colors.black, 
-                              fontWeight: FontWeight.bold
-                            ),
-                          )
-                        ),
-                        new Text(_textValue),
-                        buildcheckbox(),
-                      ]
-                    ),
-                  ),
+                  // Padding(
+                  //   padding: const EdgeInsets.fromLTRB(18, 5, 8, 5),
+                  //   child: Row(
+                  //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  //     children: <Widget>[
+                  //       ElevatedButton(
+                  //         onPressed: _read,
+                  //         child: Text(
+                  //           'Scan Your College Id Card',
+                  //           style: TextStyle(
+                  //             color: Colors.black, 
+                  //             fontWeight: FontWeight.bold
+                  //           ),
+                  //         )
+                  //       ),
+                  //       new Text(_textValue),
+                  //       buildcheckbox(),
+                  //     ]
+                  //   ),
+                  // ),
                 
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(18, 5, 8, 5),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: <Widget>[
-                        ElevatedButton(
-                          onPressed: _read,
-                          child: Text(
-                            'Face Authentication',
-                            style: TextStyle(
-                              color: Colors.black, 
-                              fontWeight: FontWeight.bold
-                            ),
-                          )
-                        ),
-                        buildcheckbox2(),
-                      ]
-                    ),
-                  ),
+                  // Padding(
+                  //   padding: const EdgeInsets.fromLTRB(18, 5, 8, 5),
+                  //   child: Row(
+                  //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  //     children: <Widget>[
+                  //       ElevatedButton(
+                  //         onPressed: _read,
+                  //         child: Text(
+                  //           'Face Authentication',
+                  //           style: TextStyle(
+                  //             color: Colors.black, 
+                  //             fontWeight: FontWeight.bold
+                  //           ),
+                  //         )
+                  //       ),
+                  //       buildcheckbox2(),
+                  //     ]
+                  //   ),
+                  // ),
                 
-                  Center(
-                      child: Padding(
-                    padding: EdgeInsets.only(top: 8.0),
-                    child: Text('You Want To Register Yourself As:',
-                        style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold)),
-                  )),
-                  Padding(
-                    padding: EdgeInsets.only(top: 10.0),
-                    child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: <Widget>[
-                          // ignore: deprecated_member_use
-                          RaisedButton(
-                            elevation: 10.0,
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(16),
-                                side: BorderSide(color: Colors.black, width: 2.0)),
-                            color: Colors.blue[200],
-                            onPressed: () {},
-                            child: Text(
-                              'VOTER',
-                              textDirection: TextDirection.ltr,
-                              style: TextStyle(color: Colors.black),
-                            ),
-                          ),
-                          SizedBox(
-                            width: 12.0,
-                          ),
-                          // ignore: deprecated_member_use
-                          RaisedButton(
-                            elevation: 10.0,
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(16),
-                                side: BorderSide(color: Colors.black, width: 2.0)),
-                            color: Colors.pink[100],
-                            onPressed: () {},
-                            child: Text('CANDIDATE',
-                                textDirection: TextDirection.ltr,
-                                style: TextStyle(
-                                  color: Colors.black,
-                                )),
-                          ),
-                        ]
-                      ),
-                  ),
+                  // Center(
+                  //     child: Padding(
+                  //   padding: EdgeInsets.only(top: 8.0),
+                  //   child: Text('You Want To Register Yourself As:',
+                  //       style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold)),
+                  // )),
+                  // Padding(
+                  //   padding: EdgeInsets.only(top: 10.0),
+                  //   child: Row(
+                  //       mainAxisAlignment: MainAxisAlignment.center,
+                  //       children: <Widget>[
+                  //         // ignore: deprecated_member_use
+                  //         RaisedButton(
+                  //           elevation: 10.0,
+                  //           shape: RoundedRectangleBorder(
+                  //               borderRadius: BorderRadius.circular(16),
+                  //               side: BorderSide(color: Colors.black, width: 2.0)),
+                  //           color: Colors.blue[200],
+                  //           onPressed: () {},
+                  //           child: Text(
+                  //             'VOTER',
+                  //             textDirection: TextDirection.ltr,
+                  //             style: TextStyle(color: Colors.black),
+                  //           ),
+                  //         ),
+                  //         SizedBox(
+                  //           width: 12.0,
+                  //         ),
+                  //         // ignore: deprecated_member_use
+                  //         RaisedButton(
+                  //           elevation: 10.0,
+                  //           shape: RoundedRectangleBorder(
+                  //               borderRadius: BorderRadius.circular(16),
+                  //               side: BorderSide(color: Colors.black, width: 2.0)),
+                  //           color: Colors.pink[100],
+                  //           onPressed: () {},
+                  //           child: Text('CANDIDATE',
+                  //               textDirection: TextDirection.ltr,
+                  //               style: TextStyle(
+                  //                 color: Colors.black,
+                  //               )),
+                  //         ),
+                  //       ]
+                  //     ),
+                  // ),
                   Padding(
                     padding: const EdgeInsets.only(top: 15),
                     child: Material(
