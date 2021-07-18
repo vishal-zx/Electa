@@ -1,3 +1,4 @@
+import 'package:electa/widgets/drawer.dart';
 import 'package:flutter/material.dart';
 // ignore: import_of_legacy_library_into_null_safe
 import 'package:slimy_card/slimy_card.dart';
@@ -120,7 +121,7 @@ class _ResultState extends State<Result> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-       drawer: Drawer(),
+       drawer: MyDrawer(),
       appBar: AppBar(
         title: Text("Results"),
         elevation: 10,
