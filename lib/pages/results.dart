@@ -1,9 +1,12 @@
+import 'package:electa/widgets/drawer.dart';
 import 'package:flutter/material.dart';
 // ignore: import_of_legacy_library_into_null_safe
 import 'package:slimy_card/slimy_card.dart';
+// ignore: unused_import
 import 'package:pie_chart/pie_chart.dart';
 // ignore: import_of_legacy_library_into_null_safe
 import 'package:cached_network_image/cached_network_image.dart';
+
 
 class Result extends StatefulWidget {
   const Result({ key }) : super(key: key);
@@ -13,11 +16,13 @@ class Result extends StatefulWidget {
   _ResultState createState() => _ResultState();
 }
 
+// ignore: unused_element
 Widget _buildResultRow(BuildContext context, String winner, String roll, String image, String position){
   return Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
   Container(
+  
     width: MediaQuery.of(context).size.height*0.09,
     height: MediaQuery.of(context).size.height*0.09,
     child: ClipRRect(
@@ -116,6 +121,7 @@ class _ResultState extends State<Result> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+       drawer: MyDrawer(),
       appBar: AppBar(
         title: Text("Results"),
         elevation: 10,
