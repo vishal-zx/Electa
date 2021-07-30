@@ -126,7 +126,7 @@ class MyDrawer extends StatelessWidget {
                     ),
                     ListTile(
                       leading: Icon(CupertinoIcons.today, color: Colors.white,),
-                      title: Text("Feed", 
+                      title: Text("Feeds", 
                       textScaleFactor: 1.3,
                       style: TextStyle(
                         color: Colors.white,
@@ -189,18 +189,13 @@ class MyDrawer extends StatelessWidget {
             ),
           );
         }
-        return Scaffold(
-          backgroundColor: Colors.blueGrey[100],
-          appBar: AppBar(
-            title: Text("Electa"),
-            elevation: 10,
-          ),
-          body: SpinKitCircle(
+        return BackdropFilter(
+          filter: ImageFilter.blur(sigmaX: 3.5, sigmaY: 3.5),
+          child: SpinKitCircle(
             color: Colors.black,
             size: 50.0,
             duration: Duration(seconds: 5), 
           ),
-          drawer: MyDrawer(),
         );
       }
     );
