@@ -7,6 +7,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 Widget _logoutPopup(BuildContext context) { 
   return BackdropFilter(
@@ -36,6 +37,8 @@ Widget _logoutPopup(BuildContext context) {
                 ),
               ),
               onPressed: () async {
+                SharedPreferences prefs = await SharedPreferences.getInstance();
+                prefs.remove('email');
                 await FirebaseAuth.instance.signOut();
                 Navigator.pushNamedAndRemoveUntil(context, MyRoutes.loginRoute, (route) => false);
               },

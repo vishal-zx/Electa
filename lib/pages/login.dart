@@ -3,6 +3,7 @@ import 'dart:core';
 import 'package:electa/utils/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({ Key? key }) : super(key: key);
@@ -181,6 +182,8 @@ class _LoginPageState extends State<LoginPage> {
                               }else if(er.code == 'wrong-password'){
                                 msg = 'Incorrect Password !';
                               }else if(er.code == ""){
+                                SharedPreferences prefs = await SharedPreferences.getInstance();
+                                prefs.setString('email', email);
                                 moveHome(context, er.code);
                                 msg = 'Loading...';
                               }
