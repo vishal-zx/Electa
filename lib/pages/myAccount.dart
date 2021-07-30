@@ -102,12 +102,11 @@ class  MyAccount extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    
   FirebaseFirestore firestore = FirebaseFirestore.instance;
   CollectionReference users = firestore.collection('users');
 
     return FutureBuilder<DocumentSnapshot>(
-      future: users.doc(roll).get(),
+      future: users.doc(roll).get(GetOptions(source: Source.cache)),
       builder: (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot){
         if (snapshot.hasError) {
           return errorProfile("Something went wrong");
