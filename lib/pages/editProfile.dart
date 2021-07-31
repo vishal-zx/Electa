@@ -93,9 +93,9 @@ Widget errorProfile(String error){
 
 class _EditProfileState extends State<EditProfile> {
 
-  var userName = "Vishal Gupta";
-  var userBio = "Bio Here! Bio Here! Bio Here! Bio Here! Bio Here! Bio Here! Bio Here! Bio Here! Bio Here! Bio Here!."; //max 100 limit on bio
-  var userImageUrl = "https://vishal-zx.github.io/assets/img/profile.jpg";
+  var userName = "";
+  var userBio = ""; //max 100 limit on bio
+  var userImageUrl = "";
   String newUserName = "";
   String newUserBio = "";
   final formKey = GlobalKey<FormState>();
@@ -219,9 +219,6 @@ class _EditProfileState extends State<EditProfile> {
                                           },
                                           onChanged: (value){
                                             newUserName = value;
-                                            setState(() {
-                                              
-                                            });
                                             if(value == "") newUserName = "";
                                           },
                                         ),
@@ -242,9 +239,6 @@ class _EditProfileState extends State<EditProfile> {
                                             onChanged: (value)
                                             {
                                               newUserBio = value;
-                                              setState(() {
-                                                
-                                              });
                                               if(value == "") newUserBio = "";
                                             },
                                           ),
@@ -264,10 +258,14 @@ class _EditProfileState extends State<EditProfile> {
                                       borderRadius: BorderRadius.circular(15),
                                       child: InkWell(
                                         onTap: () {
+                                          newUserName = (newUserName=="")?userName:newUserName;
+                                          newUserBio = (newUserBio=="")?userBio:newUserBio;
+                                          users.doc(roll).update({'Name' : newUserName, 'Bio' : newUserBio});
                                           userBio = newUserBio;
                                           userName = newUserName;
                                           newUserBio = "";
                                           newUserName = "";
+                                          Navigator.of(context).pop();
                                         },
                                         child: AnimatedContainer(
                                           duration: Duration(seconds: 1),
