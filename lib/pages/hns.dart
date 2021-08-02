@@ -203,9 +203,9 @@ class _HelpNSupportState extends State<HelpNSupport> {
                 children: <Widget>[
                   Container(
                     width: double.infinity,
-                    height: MediaQuery.of(context).size.height * 0.15,
-                    margin: EdgeInsets.fromLTRB(20, 24, 20, 10),
-                    padding: EdgeInsets.only(bottom: 10),
+                    height: MediaQuery.of(context).size.height * 0.16,
+                    margin: EdgeInsets.fromLTRB(20, 24, 20, 5),
+                    padding: EdgeInsets.only(bottom: 5),
                     decoration: BoxDecoration(
                       border: Border.all(
                           color: Color.fromARGB(255, 0, 0, 0), width: 2),
@@ -215,7 +215,7 @@ class _HelpNSupportState extends State<HelpNSupport> {
                     child: Column(
                       children: [
                         Container(
-                          padding: EdgeInsets.fromLTRB(50, 12, 0, 0),
+                          padding: EdgeInsets.fromLTRB(30, 12, 0, 0),
                           child: Column(
                             children: [
                               Row(
@@ -249,9 +249,20 @@ class _HelpNSupportState extends State<HelpNSupport> {
                                     CupertinoIcons.globe,
                                     size: 24,
                                   ),
-                                  Text(
-                                    " : www.electa-xyz.com",
-                                    style: TextStyle(fontSize: 20),
+                                  TextButton(
+                                    child: Text(
+                                      " :  www.electa-xyz.com",
+                                      style: TextStyle(
+                                          fontSize: 20, color: Colors.black),
+                                    ),
+                                    onPressed: () async {
+                                      var url = "mailto:info.electa.lnm@gmail.com";
+                                      if (await canLaunch(url)) {
+                                        await launch(url);
+                                      } else {
+                                        throw 'Could not launch $url';
+                                      }
+                                    },
                                   )
                                 ],
                               )
@@ -273,9 +284,6 @@ class _HelpNSupportState extends State<HelpNSupport> {
                         ),
                       )),
                 ],
-              ),
-              SizedBox(
-                height: MediaQuery.of(context).size.height * 0.008,
               ),
               Stack(
                 children: <Widget>[
