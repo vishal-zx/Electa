@@ -1,4 +1,3 @@
-import 'dart:convert';
 import 'dart:async';
 import 'dart:io';
 import 'dart:math';
@@ -51,10 +50,10 @@ class _RegisterState extends State<Register> {
   int sentOTP = 0;
 
   void sendOtp() async{
-    String OTPname = 'info.electa.lnm@gmail.com';
-    String OTPpass = 'Info@Electa1#';
+    String otpEmail = 'info.electa.lnm@gmail.com';
+    String otpPass = 'Info@Electa1#';
 
-    final SmtpServer = gmail(OTPname, OTPpass);
+    final smtpServer = gmail(otpEmail, otpPass);
 
     Random rnd = new Random();
     var next = rnd.nextDouble() * 1000000;
@@ -64,13 +63,13 @@ class _RegisterState extends State<Register> {
     sentOTP = next.toInt();
 
     final msg = Message()
-      ..from = Address(OTPname, 'Info Electa')
+      ..from = Address(otpEmail, 'Info Electa')
       ..recipients.add(email)
       ..subject = 'OTP for Email Verification | Electa'
       ..text = 'Hello $roll, \nYour OTP for Mail($email) verification is \n$sentOTP\n\nTeam Electa';
 
     try {
-      await send(msg, SmtpServer);
+      await send(msg, smtpServer);
       ScaffoldMessenger.of(context).showSnackBar(makeBar("OTP successfully sent !"));
     } on MailerException catch (e) {
       if(email == ""){

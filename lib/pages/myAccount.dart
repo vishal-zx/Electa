@@ -101,7 +101,6 @@ class  MyAccount extends StatefulWidget {
 class _MyAccountState extends State<MyAccount> {
   var roll = FirebaseAuth.instance.currentUser!.email!.substring(0,8);  
   static String userName = "";
-  static String userRoll = "";
   static String userEmail = "";
   static String userBio = "";
   static String userImageUrl = "";
