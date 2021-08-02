@@ -165,7 +165,7 @@ class _MyAccountState extends State<MyAccount> {
                     child: Column(
                       children: [
                         Container(
-                          padding: EdgeInsets.fromLTRB(MediaQuery.of(context).size.height*0.025, MediaQuery.of(context).size.height*0.035, 0, MediaQuery.of(context).size.height*0.035),
+                          padding: EdgeInsets.fromLTRB(MediaQuery.of(context).size.height*0.025, MediaQuery.of(context).size.height*0.035, 0, MediaQuery.of(context).size.height*0.030),
                           child: Row(
                             children: [
                               Container(
