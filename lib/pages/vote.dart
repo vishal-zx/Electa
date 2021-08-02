@@ -192,8 +192,8 @@ class _VoteState extends State<Vote> {
       new Candidate("Karan Aditte Singh", "19UCC025", "https://imgshare.io/images/2021/06/30/karan.png")
     ], 
     [
-      new Candidate("Shubham Jain", "18UEC022", "https://imgshare.io/images/2021/06/30/shubham.png"), 
-      new Candidate("Daksh Bindal", "18UCS176", "https://imgshare.io/images/2021/06/30/daksh.png")
+      new Candidate("Shubham Jain", "18UEC022", "https://imgshare.io/images/2021/06/30/vishal1.png"), 
+      new Candidate("Daksh Bindal", "18UCS176", "https://imgshare.io/images/2021/06/30/vishal1.png")
     ], 
     [
       new Candidate("Ketan Jakhar", "19UCC020", "https://imgshare.io/images/2021/06/30/ketan.png"), 
@@ -201,7 +201,7 @@ class _VoteState extends State<Vote> {
     ], 
     [
       new Candidate("Poojan Gadhiya", "19UCS245", "https://imgshare.io/images/2021/06/30/poojan.png"),
-      new Candidate("Dhananjay Sharma", "19UME041", "https://imgshare.io/images/2021/06/30/dj.png"), 
+      new Candidate("Dhananjay Sharma", "19UME041", "https://imgshare.io/images/2021/06/30/vishal1.png"), 
       new Candidate("Karan Aditte Singh", "19UCC025", "https://imgshare.io/images/2021/06/30/karan.png")
     ],
   ];
