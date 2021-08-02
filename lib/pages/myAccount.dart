@@ -192,17 +192,14 @@ class _MyAccountState extends State<MyAccount> {
                                     width: MediaQuery.of(context).size.height*0.28,
                                     child: Align(
                                       alignment: Alignment.bottomCenter,
-                                      child: FittedBox(
-                                        fit: BoxFit.fitWidth,
-                                        child: Text(
-                                          "${userName}",
-                                          style: TextStyle(
-                                            color: Colors.white,
-                                            fontSize: 27,
-                                            fontWeight: FontWeight.bold,
-                                          ),
-                                          textAlign: TextAlign.center,
+                                      child: Text(
+                                        "$userName",
+                                        style: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 27,
+                                          fontWeight: FontWeight.bold,
                                         ),
+                                        textAlign: TextAlign.center,
                                       ),
                                     ),
                                   ),
@@ -214,7 +211,7 @@ class _MyAccountState extends State<MyAccount> {
                                     child: FittedBox(
                                       fit: BoxFit.fitWidth,
                                       child: Text(
-                                        "${userEmail}",
+                                        "$userEmail",
                                         style: TextStyle(
                                           color: Colors.white,
                                           fontSize: 16,
@@ -232,7 +229,7 @@ class _MyAccountState extends State<MyAccount> {
                         Container(
                           padding: EdgeInsets.fromLTRB(25, 0, 25, 0),
                           child: Text(
-                            "${userBio}",
+                            userBio.replaceAll('\n', ' '),
                             style: TextStyle(
                               color: Colors.white,
                               fontSize: 16,
