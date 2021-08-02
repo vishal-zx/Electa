@@ -77,8 +77,16 @@ class _ChangePswdState extends State<ChangePswd> {
       String userEmail =  FirebaseAuth.instance.currentUser!.email!;
       AuthCredential credential = EmailAuthProvider.credential(email: userEmail, password: current);
       try {
-        await FirebaseAuth.instance.currentUser!.reauthenticateWithCredential(credential).then((value){
-          print(value);
+        await FirebaseAuth.instance.currentUser!.reauthenticateWithCredential(credential).then((value)async{
+          await FirebaseAuth.instance.currentUser!.updatePassword(new1).then((value)async{
+            SnackBar snackBar;
+            snackBar = makeBar("Password Updated Successfully!");
+            setState(() {
+              loading = true;
+            });
+            ScaffoldMessenger.of(context).showSnackBar(snackBar);
+            Navigator.of(context).pop();
+          });
         });
       } on FirebaseAuthException catch (e) {
         SnackBar snackBar;
