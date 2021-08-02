@@ -92,16 +92,19 @@ Widget errorProfile(String error){
 }
 
 // ignore: must_be_immutable
-class  MyAccount extends StatelessWidget {
+class  MyAccount extends StatefulWidget {
   MyAccount({ Key? key }) : super(key: key);
+  @override
+  _MyAccountState createState() => _MyAccountState();
+}
 
+class _MyAccountState extends State<MyAccount> {
+  var roll = FirebaseAuth.instance.currentUser!.email!.substring(0,8);  
   static String userName = "";
   static String userRoll = "";
   static String userEmail = "";
   static String userBio = "";
   static String userImageUrl = "";
-
-  var roll = FirebaseAuth.instance.currentUser!.email!.substring(0,8);
 
   @override
   Widget build(BuildContext context) {
@@ -193,7 +196,7 @@ class  MyAccount extends StatelessWidget {
                                         child: FittedBox(
                                           fit: BoxFit.fitWidth,
                                           child: Text(
-                                            "$userName",
+                                            "${userName}",
                                             style: TextStyle(
                                               color: Colors.white,
                                               fontSize: 27,
@@ -212,7 +215,7 @@ class  MyAccount extends StatelessWidget {
                                       child: FittedBox(
                                         fit: BoxFit.fitWidth,
                                         child: Text(
-                                          "$userEmail",
+                                          "${userEmail}",
                                           style: TextStyle(
                                             color: Colors.white,
                                             fontSize: 16,
@@ -230,7 +233,7 @@ class  MyAccount extends StatelessWidget {
                           Container(
                             padding: EdgeInsets.fromLTRB(25, 0, 25, 0),
                             child: Text(
-                              "$userBio",
+                              "${userBio}",
                               style: TextStyle(
                                 color: Colors.white,
                                 fontSize: 16,
@@ -302,7 +305,7 @@ class  MyAccount extends StatelessWidget {
                                 ),
                               ),
                               onTap: () {
-                                Navigator.pushNamed(context, MyRoutes.editProfileRoute);
+                                Navigator.pushNamed(context, MyRoutes.editProfileRoute).then((_) => setState(() {}));
                               },
                             ),
                           ),

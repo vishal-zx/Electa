@@ -265,6 +265,16 @@ class _EditProfileState extends State<EditProfile> {
                                           userName = newUserName;
                                           newUserBio = "";
                                           newUserName = "";
+                                          // Future.delayed(const Duration(milliseconds: 2000), () {
+                                          //   setState(() {
+
+                                          //   });
+                                          // });
+                                          SpinKitCircle(
+                                            color: Colors.black,
+                                            size: 50.0,
+                                            duration: Duration(seconds: 50), 
+                                          );
                                           Navigator.of(context).pop();
                                         },
                                         child: AnimatedContainer(
