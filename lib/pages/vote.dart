@@ -201,7 +201,7 @@ class _VoteState extends State<Vote> {
     ], 
     [
       new Candidate("Poojan Gadhiya", "19UCS245", "https://imgshare.io/images/2021/06/30/poojan.png"),
-      new Candidate("Dhananjay Sharma", "19UME041", "https://imgshare.io/images/2021/06/30/dj.md.png"), 
+      new Candidate("Dhananjay Sharma", "19UME041", "https://imgshare.io/images/2021/06/30/dj.png"), 
       new Candidate("Karan Aditte Singh", "19UCC025", "https://imgshare.io/images/2021/06/30/karan.png")
     ],
   ];

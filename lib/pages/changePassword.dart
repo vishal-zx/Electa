@@ -61,7 +61,6 @@ class _ChangePswdState extends State<ChangePswd> {
   bool loading = true;
 
   void _changePass(String current, String new1, String new2) async {
-    print(current+" "+new1 +" "+ new2);
     if(new1!=new2)
     {
       SnackBar snackBar = makeBar("Passwords doesn't match in new fields!");
