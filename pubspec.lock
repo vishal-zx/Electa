@@ -14,7 +14,7 @@ packages:
       name: async
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.6.1"
+    version: "2.5.0"
   boolean_selector:
     dependency: transitive
     description:
@@ -85,6 +85,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.15.0"
+  confetti:
+    dependency: "direct main"
+    description:
+      name: confetti
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.5.5"
   cross_file:
     dependency: transitive
     description:
@@ -478,6 +485,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "4.2.1"
+  random_color:
+    dependency: transitive
+    description:
+      name: random_color
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.5"
   rxdart:
     dependency: transitive
     description:
@@ -545,7 +559,7 @@ packages:
       name: source_span
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.8.1"
+    version: "1.8.0"
   sqflite:
     dependency: transitive
     description:
@@ -601,7 +615,7 @@ packages:
       name: test_api
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.3.0"
+    version: "0.2.19"
   transparent_image:
     dependency: "direct main"
     description:
@@ -678,7 +692,7 @@ packages:
       name: win32
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.2.5"
+    version: "2.0.5"
   xdg_directories:
     dependency: transitive
     description:
@@ -694,5 +708,5 @@ packages:
     source: hosted
     version: "5.1.2"
 sdks:
-  dart: ">=2.13.0 <3.0.0"
+  dart: ">=2.12.0 <3.0.0"
   flutter: ">=2.0.0"
