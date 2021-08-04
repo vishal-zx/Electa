@@ -94,7 +94,6 @@ class _MyAppState extends State<MyApp> {
         MyRoutes.changePswdRoute : (context) => ChangePswd(),
         MyRoutes.hNSRoute : (context) => HelpNSupport(),
         MyRoutes.editProfileRoute : (context) => EditProfile(),
-        MyRoutes.userProfileRoute : (context) => UserProfile(),
       },
     );
   }
