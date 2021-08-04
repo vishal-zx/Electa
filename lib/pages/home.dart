@@ -42,7 +42,7 @@ class _HomeState extends State<Home> {
               var userName = "Poojan Gadhiya";
               var postComment =
                   "If You Want To Save Water, Take a bath with your neighbour's daughter. But She Dosent likes me: if she ignores you, her mother is you should pursue.";
-              var userImage = "https://imgshare.io/images/2021/06/30/poojan.png";
+              var userImage = "https://firebasestorage.googleapis.com/v0/b/electa-e343d.appspot.com/o/userImages%2F19ucs245.png?alt=media&token=12f17277-c8f3-4011-a92a-44ed968dec7d";
               return Container(
                 height: MediaQuery.of(context).size.height * 0.6,
                 width: MediaQuery.of(context).size.width,
