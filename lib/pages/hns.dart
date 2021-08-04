@@ -163,25 +163,25 @@ class _HelpNSupportState extends State<HelpNSupport> {
   List<Member> mem = [
     Member(
         "Manya Sharma",
-        "https://imgshare.io/images/2021/06/30/manya.png",
+        "https://firebasestorage.googleapis.com/v0/b/electa-e343d.appspot.com/o/userImages%2F19ucc066.png?alt=media&token=89ac7e00-02c9-4152-b205-1e2c7d216ba4",
         "19ucc066@lnmiit.ac.in",
         Socials("https://www.linkedin.com/in/manya-sharma-b449671b8/",
             "https://www.instagram.com/_manya.sharma/")),
     Member(
         "Poojan Gadhiya",
-        "https://imgshare.io/images/2021/06/30/poojan.png",
+        "https://firebasestorage.googleapis.com/v0/b/electa-e343d.appspot.com/o/userImages%2F19ucs245.png?alt=media&token=12f17277-c8f3-4011-a92a-44ed968dec7d",
         "19ucs245@lnmiit.ac.in",
         Socials("https://www.linkedin.com/in/poojan-gadhiya/",
             "https://www.instagram.com/enjoying___alwayss/")),
     Member(
         "Saumitra Vyas",
-        "https://imgshare.io/images/2021/06/30/saumitra.png",
+        "https://firebasestorage.googleapis.com/v0/b/electa-e343d.appspot.com/o/userImages%2F19ucs252.png?alt=media&token=f2a8a26f-6bf4-45dc-866f-f219c7042967",
         "19ucs252@lnmiit.ac.in",
         Socials("https://www.linkedin.com/in/saumitra-vyas-631b701a6/",
             "https://www.instagram.com/saumitra_vyas/")),
     Member(
         "Vishal Gupta",
-        "https://imgshare.io/images/2021/06/30/vishal1.png",
+        "https://vishal-zx.github.io/assets/img/profile.jpg",
         "19ucs053@lnmiit.ac.in",
         Socials("https://www.linkedin.com/in/vishal-zx/",
             "https://www.instagram.com/vishalagrawal__/")),

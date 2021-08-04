@@ -10,7 +10,7 @@ class  UserProfile extends StatelessWidget {
   String userName = "Poojan Gadhiya";
   String userEmail = "some.email@example.com";
   final userBio = "Bio Here! Bio Here! Bio Here! Bio Here! Bio Here! Bio Here! Bio Here! Bio Here! Bio Here! Bio Here!.";
-  String userImageUrl = "https://imgshare.io/images/2021/06/30/poojan.png";
+  String userImageUrl = "https://firebasestorage.googleapis.com/v0/b/electa-e343d.appspot.com/o/userImages%2F19ucs245.png?alt=media&token=12f17277-c8f3-4011-a92a-44ed968dec7d";
 
   @override
   Widget build(BuildContext context) {
