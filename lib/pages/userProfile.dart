@@ -60,134 +60,134 @@ class  UserProfile extends StatelessWidget {
               title: Text("Electa"),
               elevation: 10,
             ),
-            body: SingleChildScrollView(
-              child: Stack(
-                children: [
-                  Container(
-                    margin: EdgeInsets.only(top: MediaQuery.of(context).size.height*0.365, right: 100),
-                    decoration: BoxDecoration(
-                      image: DecorationImage(
-                        image: AssetImage("assets/images/mypbg.png"),
-                        fit: BoxFit.contain,
-                      ),
-                    ),
-                    height: MediaQuery.of(context).size.height*0.48,
-                    width: MediaQuery.of(context).size.width*0.9,
-                    child: Column(
-                      children: [
-                        Text("")
-                      ],
+            body: Stack(
+              children: [
+                Container(
+                  margin: EdgeInsets.only(top: MediaQuery.of(context).size.height*0.375, right: 100),
+                  decoration: BoxDecoration(
+                    image: DecorationImage(
+                      image: AssetImage("assets/images/mypbg.png"),
+                      fit: BoxFit.contain,
                     ),
                   ),
-                  Container(
-                    child: Column(
-                      children: [
-                        Container(
-                          height: MediaQuery.of(context).size.height*0.32,
-                          margin: EdgeInsets.fromLTRB(MediaQuery.of(context).size.width*0.12,MediaQuery.of(context).size.height*0.031,0,0),
-                          decoration: BoxDecoration(
-                            gradient: LinearGradient(
-                              begin: Alignment.topRight,
-                              end: Alignment.bottomLeft,
-                              colors: [
-                                Color(0xff546e7a),
-                                Colors.blueGrey,
-                                Color(0xff616161),
-                                Color(0xff757575),
-                              ],
-                            ),
-                            shape: BoxShape.rectangle,
-                            borderRadius: BorderRadius.only(topLeft: Radius.circular(20), bottomLeft: Radius.circular(20)),
-                            boxShadow: <BoxShadow>[
-                              BoxShadow(  
-                                color: Colors.black26,
-                                blurRadius: 15.0,
-                                offset: Offset(0.0, 15.0),
-                              ),
+                  height: MediaQuery.of(context).size.height*0.48,
+                  width: MediaQuery.of(context).size.width*0.9,
+                  child: Column(
+                    children: [
+                      Text("")
+                    ],
+                  ),
+                ),
+                Container(
+                  child: Column(
+                    children: [
+                      Container(
+                        height: MediaQuery.of(context).size.height*0.54,
+                        margin: EdgeInsets.fromLTRB(MediaQuery.of(context).size.width*0.18,MediaQuery.of(context).size.height*0.031,0,0),
+                        decoration: BoxDecoration(
+                          gradient: LinearGradient(
+                            begin: Alignment.topRight,
+                            end: Alignment.bottomLeft,
+                            colors: [
+                              Color(0xff546e7a),
+                              Colors.blueGrey,
+                              Color(0xff616161),
+                              Color(0xff757575),
                             ],
                           ),
-                          child: Column(
-                            children: [
-                              Container(
-                                padding: EdgeInsets.fromLTRB(MediaQuery.of(context).size.height*0.025, MediaQuery.of(context).size.height*0.035, 0, MediaQuery.of(context).size.height*0.035),
-                                child: Row(
-                                  children: [
-                                    Container(
-                                      width: MediaQuery.of(context).size.height*0.14,
-                                      height: MediaQuery.of(context).size.height*0.14,
-                                      child: ClipRRect(
-                                        borderRadius: BorderRadius.circular(100),
-                                        child: CachedNetworkImage(
-                                          fit: BoxFit.fill,
-                                          imageUrl: userImageUrl,
-                                          progressIndicatorBuilder: (context, url, downloadProgress) => 
-                                                  CircularProgressIndicator(value: downloadProgress.progress),
-                                          errorWidget: (context, url, error) => Icon(Icons.error),
-                                        ),
+                          shape: BoxShape.rectangle,
+                          borderRadius: BorderRadius.only(topLeft: Radius.circular(20), bottomLeft: Radius.circular(20)),
+                          boxShadow: <BoxShadow>[
+                            BoxShadow(  
+                              color: Colors.black26,
+                              blurRadius: 15.0,
+                              offset: Offset(0.0, 15.0),
+                            ),
+                          ],
+                        ),
+                        child: Column(
+                          children: [
+                            Container(
+                              padding: EdgeInsets.fromLTRB(0, MediaQuery.of(context).size.height*0.065, 0, MediaQuery.of(context).size.height*0.035),
+                              child: Column(
+                                children: [
+                                  Container(
+                                    width: MediaQuery.of(context).size.height*0.18,
+                                    height: MediaQuery.of(context).size.height*0.18,
+                                    child: ClipRRect(
+                                      borderRadius: BorderRadius.circular(100),
+                                      child: CachedNetworkImage(
+                                        fit: BoxFit.fill,
+                                        imageUrl: userImageUrl,
+                                        progressIndicatorBuilder: (context, url, downloadProgress) => 
+                                                CircularProgressIndicator(value: downloadProgress.progress),
+                                        errorWidget: (context, url, error) => Icon(Icons.error),
                                       ),
                                     ),
-                                    Column(
-                                      children: [
-                                        Container(
-                                          height: MediaQuery.of(context).size.height*(((userName.length)/16).ceil()*0.038),
-                                          width: MediaQuery.of(context).size.height*0.275,
-                                          child: Align(
-                                            alignment: Alignment.bottomCenter,
-                                            child: Text(
-                                              "$userName",
-                                              style: TextStyle(
-                                                color: Colors.white,
-                                                fontSize: 27,
-                                                fontWeight: FontWeight.bold,
-                                              ),
-                                              textAlign: TextAlign.center,
-                                            ),
-                                          ),
-                                        ),
-                                        SizedBox(
-                                          height: MediaQuery.of(context).size.height*0.005,
-                                        ),
-                                        Container(
-                                          height: MediaQuery.of(context).size.height*0.022,
-                                          child: FittedBox(
-                                            fit: BoxFit.fitWidth,
-                                            child: Text(
-                                              "$userEmail",
-                                              style: TextStyle(
-                                                color: Colors.white,
-                                                fontSize: 16,
-                                                fontWeight: FontWeight.w500,
-                                              ),
-                                              textAlign: TextAlign.left,
-                                            ),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              Container(
-                                padding: EdgeInsets.fromLTRB(25, 0, 25, 0),
-                                child: Text(
-                                  "$userBio",
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.w500,
-                                    fontStyle: FontStyle.italic,
+                                    margin: EdgeInsets.only(bottom: MediaQuery.of(context).size.height*0.025),
                                   ),
-                                  textAlign: TextAlign.center,
-                                ),
+                                  Column(
+                                    children: [
+                                      Container(
+                                        height: MediaQuery.of(context).size.height*(((userName.length)/16).ceil()*0.050),
+                                        width: MediaQuery.of(context).size.height*0.275,
+                                        child: Align(
+                                          alignment: Alignment.bottomCenter,
+                                          child: Text(
+                                            "$userName",
+                                            style: TextStyle(
+                                              color: Colors.white,
+                                              fontSize: 30,
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                            textAlign: TextAlign.center,
+                                          ),
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        height: MediaQuery.of(context).size.height*0.015,
+                                      ),
+                                      Container(
+                                        height: MediaQuery.of(context).size.height*0.022,
+                                        child: FittedBox(
+                                          fit: BoxFit.fitWidth,
+                                          child: Text(
+                                            "$userEmail",
+                                            style: TextStyle(
+                                              color: Colors.white,
+                                              fontSize: 16,
+                                              fontWeight: FontWeight.w500,
+                                            ),
+                                            textAlign: TextAlign.left,
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ],
                               ),
-                            ],
-                          ),
+                            ),
+                            Container(
+                              padding: EdgeInsets.fromLTRB(15, 5, 15, 0),
+                              child: Text(
+                                "$userBio",
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w500,
+                                  // fontStyle: FontStyle.italic,
+                                  height: 1.4 
+                                ),
+                                textAlign: TextAlign.center,
+                              ),
+                            ),
+                          ],
                         ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
           );
         }
