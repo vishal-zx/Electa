@@ -168,41 +168,41 @@ class Candidate{
 class _VoteState extends State<Vote> {
   int _index = 0, cpos=0;
   var positions = ["President", "Vice-President", "G-Sec Science", "G-Sec Cultural", "G-Sec Sports", "AG-Sec Science", "AG-Sec Cultural", "AG-Sec Sports",];
-
+  String imageLink = "https://firebasestorage.googleapis.com/v0/b/electa-e343d.appspot.com/o/userImages%2F19ucs245.png?alt=media&token=12f17277-c8f3-4011-a92a-44ed968dec7d";
   final List<List<Candidate>> cn = [
     [
-      new Candidate("Saumitra Vyas", "19UCS252", "https://imgshare.io/images/2021/06/30/saumitra.png"), 
-      new Candidate("Manya Sharma", "19UCC066", "https://imgshare.io/images/2021/06/30/manya.png")
+      new Candidate("Saumitra Vyas", "19UCS252", "https://firebasestorage.googleapis.com/v0/b/electa-e343d.appspot.com/o/userImages%2F19ucs245.png?alt=media&token=12f17277-c8f3-4011-a92a-44ed968dec7d"),
+      new Candidate("Manya Sharma", "19UCC066", "https://firebasestorage.googleapis.com/v0/b/electa-e343d.appspot.com/o/userImages%2F19ucs245.png?alt=media&token=12f17277-c8f3-4011-a92a-44ed968dec7d"),
     ], 
     [
-      new Candidate("Vishal Gupta", "19UCS053", "https://imgshare.io/images/2021/06/30/vishal1.png"), 
-      new Candidate("Poojan Gadhiya", "19UCS245", "https://imgshare.io/images/2021/06/30/poojan.png"),
+      new Candidate("Vishal Gupta", "19UCS053", "https://firebasestorage.googleapis.com/v0/b/electa-e343d.appspot.com/o/userImages%2F19ucs245.png?alt=media&token=12f17277-c8f3-4011-a92a-44ed968dec7d"),
+      new Candidate("Poojan Gadhiya", "19UCS245", "https://firebasestorage.googleapis.com/v0/b/electa-e343d.appspot.com/o/userImages%2F19ucs245.png?alt=media&token=12f17277-c8f3-4011-a92a-44ed968dec7d"),
     ], 
     [
-      new Candidate("Gunit Varshney", "19UCS188", "https://imgshare.io/images/2021/06/30/gunit.png"), 
-      new Candidate("Mayank Vyas", "19UEC065", "https://imgshare.io/images/2021/06/30/mayank.png")
+      new Candidate("Gunit Varshney", "19UCS188", "https://firebasestorage.googleapis.com/v0/b/electa-e343d.appspot.com/o/userImages%2F19ucs245.png?alt=media&token=12f17277-c8f3-4011-a92a-44ed968dec7d"),
+      new Candidate("Mayank Vyas", "19UEC065", "https://firebasestorage.googleapis.com/v0/b/electa-e343d.appspot.com/o/userImages%2F19ucs245.png?alt=media&token=12f17277-c8f3-4011-a92a-44ed968dec7d"),
     ], 
     [
-      new Candidate("Ketan Jakhar", "19UCC020", "https://imgshare.io/images/2021/06/30/ketan.png"), 
-      new Candidate("Saumitra Vyas", "19UCS252", "https://imgshare.io/images/2021/06/30/saumitra.png")
+      new Candidate("Ketan Jakhar", "19UCC020", "https://firebasestorage.googleapis.com/v0/b/electa-e343d.appspot.com/o/userImages%2F19ucs245.png?alt=media&token=12f17277-c8f3-4011-a92a-44ed968dec7d"),
+      new Candidate("Saumitra Vyas", "19UCS252", "https://firebasestorage.googleapis.com/v0/b/electa-e343d.appspot.com/o/userImages%2F19ucs245.png?alt=media&token=12f17277-c8f3-4011-a92a-44ed968dec7d"),
     ], 
     [
-      new Candidate("Abhinav Maheshwari", "19UCS169", "https://imgshare.io/images/2021/07/01/avhinav.jpg"), 
-      new Candidate("Vishal Gupta", "19UCS053", "https://imgshare.io/images/2021/06/30/vishal1.png"),
-      new Candidate("Karan Aditte Singh", "19UCC025", "https://imgshare.io/images/2021/06/30/karan.png")
+      new Candidate("Abhinav Maheshwari", "19UCS169", "https://firebasestorage.googleapis.com/v0/b/electa-e343d.appspot.com/o/userImages%2F19ucs245.png?alt=media&token=12f17277-c8f3-4011-a92a-44ed968dec7d"),
+      new Candidate("Vishal Gupta", "19UCS053", "https://firebasestorage.googleapis.com/v0/b/electa-e343d.appspot.com/o/userImages%2F19ucs245.png?alt=media&token=12f17277-c8f3-4011-a92a-44ed968dec7d"),
+      new Candidate("Karan Aditte Singh", "19UCC025", "https://firebasestorage.googleapis.com/v0/b/electa-e343d.appspot.com/o/userImages%2F19ucs245.png?alt=media&token=12f17277-c8f3-4011-a92a-44ed968dec7d"),
     ], 
     [
-      new Candidate("Shubham Jain", "18UEC022", "https://imgshare.io/images/2021/06/30/vishal1.png"), 
-      new Candidate("Daksh Bindal", "18UCS176", "https://imgshare.io/images/2021/06/30/vishal1.png")
+      new Candidate("Shubham Jain", "18UEC022", "https://firebasestorage.googleapis.com/v0/b/electa-e343d.appspot.com/o/userImages%2F19ucs245.png?alt=media&token=12f17277-c8f3-4011-a92a-44ed968dec7d"),
+      new Candidate("Daksh Bindal", "18UCS176", "https://firebasestorage.googleapis.com/v0/b/electa-e343d.appspot.com/o/userImages%2F19ucs245.png?alt=media&token=12f17277-c8f3-4011-a92a-44ed968dec7d"),
     ], 
     [
-      new Candidate("Ketan Jakhar", "19UCC020", "https://imgshare.io/images/2021/06/30/ketan.png"), 
-      new Candidate("Vishal Gupta", "19UCS053", "https://imgshare.io/images/2021/06/30/vishal1.png")
+      new Candidate("Ketan Jakhar", "19UCC020", "https://firebasestorage.googleapis.com/v0/b/electa-e343d.appspot.com/o/userImages%2F19ucs245.png?alt=media&token=12f17277-c8f3-4011-a92a-44ed968dec7d"),
+      new Candidate("Vishal Gupta", "19UCS053", "https://firebasestorage.googleapis.com/v0/b/electa-e343d.appspot.com/o/userImages%2F19ucs245.png?alt=media&token=12f17277-c8f3-4011-a92a-44ed968dec7d"),
     ], 
     [
-      new Candidate("Poojan Gadhiya", "19UCS245", "https://imgshare.io/images/2021/06/30/poojan.png"),
-      new Candidate("Dhananjay Sharma", "19UME041", "https://imgshare.io/images/2021/06/30/vishal1.png"), 
-      new Candidate("Karan Aditte Singh", "19UCC025", "https://imgshare.io/images/2021/06/30/karan.png")
+      new Candidate("Poojan Gadhiya", "19UCS245", "https://firebasestorage.googleapis.com/v0/b/electa-e343d.appspot.com/o/userImages%2F19ucs245.png?alt=media&token=12f17277-c8f3-4011-a92a-44ed968dec7d"),
+      new Candidate("Dhananjay Sharma", "19UME041", "https://firebasestorage.googleapis.com/v0/b/electa-e343d.appspot.com/o/userImages%2F19ucs245.png?alt=media&token=12f17277-c8f3-4011-a92a-44ed968dec7d"),
+      new Candidate("Karan Aditte Singh", "19UCC025", "https://firebasestorage.googleapis.com/v0/b/electa-e343d.appspot.com/o/userImages%2F19ucs245.png?alt=media&token=12f17277-c8f3-4011-a92a-44ed968dec7d"),
     ],
   ];
   

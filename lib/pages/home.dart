@@ -196,7 +196,7 @@ class _HomeState extends State<Home> {
   //   final postComment =
   //       "Vote Me , I am You , And You Are Me. Every Concern Will be respected";
   //   //var username = "poojan_gadhiya";
-  //   final userImage = 'https://imgshare.io/images/2021/06/30/poojan.png';
+  //   final userImage = 'https://firebasestorage.googleapis.com/v0/b/electa-e343d.appspot.com/o/userImages%2F19ucs245.png?alt=media&token=12f17277-c8f3-4011-a92a-44ed968dec7d';
   //   final postImage = 'https://source.unsplash.com/random';
   //   var userName = "Poojan Gadhiya";
   //   return Container(
