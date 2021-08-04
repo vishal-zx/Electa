@@ -242,7 +242,7 @@ class _ResultState extends State<Result> {
   bottomCardWidget() {
     return Column(
       children: [
-        AllConfettiWidget(child: Text('Congratulations') , key: key),
+        AllConfettiWidget(child: Text('Congratulations, Saumitra Vyas!') , key: key),
         Text(
           'Saumitra Vyas V/S Manya Sharma',
           style: TextStyle(
