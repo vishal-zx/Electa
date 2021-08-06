@@ -1,5 +1,6 @@
 // ignore: import_of_legacy_library_into_null_safe
 import 'package:circular_profile_avatar/circular_profile_avatar.dart';
+import 'package:electa/pages/userProfile.dart';
 import 'package:electa/utils/routes.dart';
 import 'package:electa/widgets/drawer.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -68,8 +69,9 @@ class _HomeState extends State<Home> {
                                 TextButton(
                                     onPressed: () {
                                       print("You Are on the Profile");
-                                      Navigator.pushNamed(
-                                          context, MyRoutes.userProfileRoute);
+                                      Navigator.push(
+                                          // context, MyRoutes.userProfileRoute);
+                                      context, MaterialPageRoute(builder:(context) => UserProfile(roll: "19ucs053")));
                                     },
                                     child: Text("$userName")),
                                 //FlatButton.icon(
