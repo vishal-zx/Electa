@@ -188,11 +188,11 @@ class _LoginPageState extends State<LoginPage> {
                                   moveHome(context, er.code);
                                   msg = 'Loading...';
                                 }
-                                else{
-                                  msg = "Something Went Wrong. Please try again.";
-                                }
                                 snackBar = makeBar(msg);
                                 ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                                setState(() {
+                                  _check1 = false;
+                                });
                               }
                             },
                             child: AnimatedContainer(
