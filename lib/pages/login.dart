@@ -163,32 +163,37 @@ class _LoginPageState extends State<LoginPage> {
                           height: 35.0,
                         ),
                         Material(
-                          color: Colors.black,
+                          color: (_check1 == true)?Colors.grey:Colors.black,
                           borderRadius: BorderRadius.circular(_check?50:8),
                           child: InkWell(
                             onTap: () async{
                               check(context);
-                              FirebaseAuthException er = FirebaseAuthException(code: "");
-                              String msg = "";
-                              final snackBar;
-                              try {
-                                await _auth.signInWithEmailAndPassword(email: email, password: password);
-                              } 
-                              on FirebaseAuthException catch (e){
-                                er = e; 
-                              } 
-                              if(er.code == 'user-not-found'){
-                                msg = 'No Such User found!';
-                              }else if(er.code == 'wrong-password'){
-                                msg = 'Incorrect Password !';
-                              }else if(er.code == ""){
-                                SharedPreferences prefs = await SharedPreferences.getInstance();
-                                prefs.setString('email', email);
-                                moveHome(context, er.code);
-                                msg = 'Loading...';
+                              if(_check1 == true){
+                                FirebaseAuthException er = FirebaseAuthException(code: "");
+                                String msg = "";
+                                final snackBar;
+                                try {
+                                  await _auth.signInWithEmailAndPassword(email: email, password: password);
+                                } 
+                                on FirebaseAuthException catch (e){
+                                  er = e; 
+                                } 
+                                if(er.code == 'user-not-found'){
+                                  msg = 'No Such User found!';
+                                }else if(er.code == 'wrong-password'){
+                                  msg = 'Incorrect Password !';
+                                }else if(er.code == ""){
+                                  SharedPreferences prefs = await SharedPreferences.getInstance();
+                                  prefs.setString('email', email);
+                                  moveHome(context, er.code);
+                                  msg = 'Loading...';
+                                }
+                                else{
+                                  msg = "Something Went Wrong. Please try again.";
+                                }
+                                snackBar = makeBar(msg);
+                                ScaffoldMessenger.of(context).showSnackBar(snackBar);
                               }
-                              snackBar = makeBar(msg);
-                              ScaffoldMessenger.of(context).showSnackBar(snackBar);
                             },
                             child: AnimatedContainer(
                               duration: Duration(seconds: 1),
