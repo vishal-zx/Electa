@@ -175,32 +175,10 @@ class MyDrawer extends StatelessWidget {
     // FirebaseFirestore.instance.enablePersistence();
     CollectionReference users = FirebaseFirestore.instance.collection('users');
     return FutureBuilder<DocumentSnapshot>(
-      future: users.doc(roll).get(GetOptions(source: Source.cache)),
+      future: users.doc(roll).get(GetOptions(source: Source.serverAndCache)),
       builder: (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot){
         if (snapshot.hasError) {
-          return FutureBuilder<DocumentSnapshot>(
-            future: users.doc(roll).get(),
-            builder: (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot){
-              if(snapshot.hasError){
-                return errorProfile("Something seriously went wrong!");
-              }
-              if (snapshot.connectionState == ConnectionState.done){
-                Map<String, dynamic> data = snapshot.data!.data() as Map<String, dynamic>;
-                userName = data['Name'];
-                userEmail = roll+'@lnmiit.ac.in';
-                userImageUrl = data['imageUrl'];
-                return ElectaDrawer(context, userName, userEmail, userImageUrl);
-              }
-              return BackdropFilter(
-                filter: ImageFilter.blur(sigmaX: 3.5, sigmaY: 3.5),
-                child: SpinKitCircle(
-                  color: Colors.black,
-                  size: 50.0,
-                  duration: Duration(seconds: 5), 
-                ),
-              );
-            }
-          );
+          return errorProfile("Something went wrong!");
         }
 
         if (snapshot.hasData && !snapshot.data!.exists) {
@@ -218,9 +196,8 @@ class MyDrawer extends StatelessWidget {
         return BackdropFilter(
           filter: ImageFilter.blur(sigmaX: 3.5, sigmaY: 3.5),
           child: SpinKitCircle(
-            color: Colors.black,
-            size: 50.0,
-            duration: Duration(seconds: 5), 
+            color: Colors.grey,
+            size: 55.0,
           ),
         );
       }
