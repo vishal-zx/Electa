@@ -71,7 +71,7 @@ Widget _buildCandidateRow(BuildContext context, UserCandidate candidate){
         onPressed: (){
           showDialog(
             context: context,
-            builder: (BuildContext context) => _buildPopupDialog(context, candidate.title, candidate.name),
+            builder: (BuildContext context) => _buildPopupDialog(context, candidate),
           );
         },
       ),
@@ -79,7 +79,21 @@ Widget _buildCandidateRow(BuildContext context, UserCandidate candidate){
   );
 }
 
-Widget _buildPopupDialog(BuildContext context, String position, String name) {
+SnackBar makeBar(String text){
+    final snackBar = SnackBar(
+      duration: Duration(milliseconds: 3000),
+      content: Text('$text', textAlign: TextAlign.center, 
+        style: TextStyle(fontSize: 15),
+      ),
+      backgroundColor: Colors.black87.withOpacity(1),
+      elevation: 3,
+      padding: EdgeInsets.all(5),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.only(topLeft: Radius.circular(50), topRight: Radius.circular(50))),
+    );
+    return snackBar;
+  }
+
+Widget _buildPopupDialog(BuildContext context, UserCandidate cand) {
   
   return BackdropFilter(
     filter: ImageFilter.blur(sigmaX: 3, sigmaY: 3),
@@ -116,13 +130,13 @@ Widget _buildPopupDialog(BuildContext context, String position, String name) {
                 children: [  
                   FittedBox(
                     fit: BoxFit.fitHeight,
-                    child: Text("Position : $position",
+                    child: Text("Position : ${cand.title}",
                       textAlign: TextAlign.start,
                     ),
                   ),
                   FittedBox(
                     fit: BoxFit.fitHeight,
-                    child: Text("Candidate : $name",
+                    child: Text("Candidate : ${cand.name}",
                       textAlign: TextAlign.start,
                     ),
                   ),
@@ -134,7 +148,17 @@ Widget _buildPopupDialog(BuildContext context, String position, String name) {
         actions: <Widget>[
           new TextButton(
             onPressed: () {
-              Navigator.of(context).pop();
+              var counter = cand.counter;
+              counter++;
+              print(counter);
+              cand.counter++;
+              FirebaseFirestore.instance.collection('candidates').doc(cand.rollNo).update({'counter':counter}).then((value) {
+                String msg = "Your Vote Is Successfully Submitted !! 🔥";
+                ScaffoldMessenger.of(context).showSnackBar(makeBar(msg));
+                Future.delayed(const Duration(milliseconds: 700), () {
+                  Navigator.of(context).pop();
+                });
+              });
             },
             child: const Text('Confirm',
               style: TextStyle(
@@ -160,12 +184,12 @@ Widget _buildPopupDialog(BuildContext context, String position, String name) {
 }
 
 class UserCandidate{
-  final name;
-  final rollNo;
-  final imageUrl;
-  final bio;
-  final counter;
-  final title;
+  var name;
+  var rollNo;
+  var imageUrl;
+  var bio;
+  var counter;
+  var title;
 
   UserCandidate(this.name, this.rollNo, this.imageUrl, this.bio, this.counter, this.title);
 }
