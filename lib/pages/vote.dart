@@ -148,11 +148,8 @@ Widget _buildPopupDialog(BuildContext context, UserCandidate cand) {
         actions: <Widget>[
           new TextButton(
             onPressed: () {
-              var counter = cand.counter;
-              counter++;
-              print(counter);
               cand.counter++;
-              FirebaseFirestore.instance.collection('candidates').doc(cand.rollNo).update({'counter':counter}).then((value) {
+              FirebaseFirestore.instance.collection('candidates').doc(cand.rollNo).update({'counter':cand.counter}).then((value) {
                 String msg = "Your Vote Is Successfully Submitted !! 🔥";
                 ScaffoldMessenger.of(context).showSnackBar(makeBar(msg));
                 Future.delayed(const Duration(milliseconds: 700), () {
