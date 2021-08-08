@@ -2,9 +2,11 @@ import 'dart:ui';
 
 // ignore: import_of_legacy_library_into_null_safe
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:electa/widgets/drawer.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 class Vote extends StatefulWidget {
   const Vote({ Key? key }) : super(key: key);
@@ -13,7 +15,7 @@ class Vote extends StatefulWidget {
   _VoteState createState() => _VoteState();
 }
 
-Widget _buildCandidateRow(BuildContext context, String name, String roll, String image, String position){
+Widget _buildCandidateRow(BuildContext context, UserCandidate candidate){
   return Row(
     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
     children: [
@@ -24,7 +26,7 @@ Widget _buildCandidateRow(BuildContext context, String name, String roll, String
           borderRadius: BorderRadius.circular(50),
           child: CachedNetworkImage(
             fit: BoxFit.fill,
-            imageUrl: image,
+            imageUrl: candidate.imageUrl,
             progressIndicatorBuilder: (context, url, downloadProgress) => 
                     CircularProgressIndicator(value: downloadProgress.progress),
             errorWidget: (context, url, error) => Icon(Icons.error),
@@ -38,7 +40,7 @@ Widget _buildCandidateRow(BuildContext context, String name, String roll, String
           children: [
             FittedBox(
                 fit: BoxFit.fitWidth,
-                child: Text("$name",
+                child: Text("${candidate.name}",
                   style: TextStyle(
                     fontSize: 20,
                     color: Colors.white,
@@ -50,7 +52,7 @@ Widget _buildCandidateRow(BuildContext context, String name, String roll, String
             ),
             FittedBox(
               fit: BoxFit.fitWidth,
-              child: Text("$roll",
+              child: Text("${candidate.rollNo}",
                 style: TextStyle(
                   fontSize: 16,
                   color: Colors.white,
@@ -69,7 +71,7 @@ Widget _buildCandidateRow(BuildContext context, String name, String roll, String
         onPressed: (){
           showDialog(
             context: context,
-            builder: (BuildContext context) => _buildPopupDialog(context, position, name),
+            builder: (BuildContext context) => _buildPopupDialog(context, candidate.title, candidate.name),
           );
         },
       ),
@@ -157,54 +159,54 @@ Widget _buildPopupDialog(BuildContext context, String position, String name) {
   );
 }
 
-class Candidate{
+class UserCandidate{
   final name;
   final rollNo;
   final imageUrl;
+  final bio;
+  final counter;
+  final title;
 
-  Candidate(this.name, this.rollNo, this.imageUrl);
+  UserCandidate(this.name, this.rollNo, this.imageUrl, this.bio, this.counter, this.title);
 }
 
 class _VoteState extends State<Vote> {
+
   int _index = 0, cpos=0;
   var positions = ["President", "Vice-President", "G-Sec Science", "G-Sec Cultural", "G-Sec Sports", "AG-Sec Science", "AG-Sec Cultural", "AG-Sec Sports",];
-  String imageLink = "https://firebasestorage.googleapis.com/v0/b/electa-e343d.appspot.com/o/userImages%2F19ucs245.png?alt=media&token=12f17277-c8f3-4011-a92a-44ed968dec7d";
-  final List<List<Candidate>> cn = [
-    [
-      new Candidate("Saumitra Vyas", "19UCS252", "https://firebasestorage.googleapis.com/v0/b/electa-e343d.appspot.com/o/userImages%2F19ucs245.png?alt=media&token=12f17277-c8f3-4011-a92a-44ed968dec7d"),
-      new Candidate("Manya Sharma", "19UCC066", "https://firebasestorage.googleapis.com/v0/b/electa-e343d.appspot.com/o/userImages%2F19ucs245.png?alt=media&token=12f17277-c8f3-4011-a92a-44ed968dec7d"),
-    ], 
-    [
-      new Candidate("Vishal Gupta", "19UCS053", "https://firebasestorage.googleapis.com/v0/b/electa-e343d.appspot.com/o/userImages%2F19ucs245.png?alt=media&token=12f17277-c8f3-4011-a92a-44ed968dec7d"),
-      new Candidate("Poojan Gadhiya", "19UCS245", "https://firebasestorage.googleapis.com/v0/b/electa-e343d.appspot.com/o/userImages%2F19ucs245.png?alt=media&token=12f17277-c8f3-4011-a92a-44ed968dec7d"),
-    ], 
-    [
-      new Candidate("Gunit Varshney", "19UCS188", "https://firebasestorage.googleapis.com/v0/b/electa-e343d.appspot.com/o/userImages%2F19ucs245.png?alt=media&token=12f17277-c8f3-4011-a92a-44ed968dec7d"),
-      new Candidate("Mayank Vyas", "19UEC065", "https://firebasestorage.googleapis.com/v0/b/electa-e343d.appspot.com/o/userImages%2F19ucs245.png?alt=media&token=12f17277-c8f3-4011-a92a-44ed968dec7d"),
-    ], 
-    [
-      new Candidate("Ketan Jakhar", "19UCC020", "https://firebasestorage.googleapis.com/v0/b/electa-e343d.appspot.com/o/userImages%2F19ucs245.png?alt=media&token=12f17277-c8f3-4011-a92a-44ed968dec7d"),
-      new Candidate("Saumitra Vyas", "19UCS252", "https://firebasestorage.googleapis.com/v0/b/electa-e343d.appspot.com/o/userImages%2F19ucs245.png?alt=media&token=12f17277-c8f3-4011-a92a-44ed968dec7d"),
-    ], 
-    [
-      new Candidate("Abhinav Maheshwari", "19UCS169", "https://firebasestorage.googleapis.com/v0/b/electa-e343d.appspot.com/o/userImages%2F19ucs245.png?alt=media&token=12f17277-c8f3-4011-a92a-44ed968dec7d"),
-      new Candidate("Vishal Gupta", "19UCS053", "https://firebasestorage.googleapis.com/v0/b/electa-e343d.appspot.com/o/userImages%2F19ucs245.png?alt=media&token=12f17277-c8f3-4011-a92a-44ed968dec7d"),
-      new Candidate("Karan Aditte Singh", "19UCC025", "https://firebasestorage.googleapis.com/v0/b/electa-e343d.appspot.com/o/userImages%2F19ucs245.png?alt=media&token=12f17277-c8f3-4011-a92a-44ed968dec7d"),
-    ], 
-    [
-      new Candidate("Shubham Jain", "18UEC022", "https://firebasestorage.googleapis.com/v0/b/electa-e343d.appspot.com/o/userImages%2F19ucs245.png?alt=media&token=12f17277-c8f3-4011-a92a-44ed968dec7d"),
-      new Candidate("Daksh Bindal", "18UCS176", "https://firebasestorage.googleapis.com/v0/b/electa-e343d.appspot.com/o/userImages%2F19ucs245.png?alt=media&token=12f17277-c8f3-4011-a92a-44ed968dec7d"),
-    ], 
-    [
-      new Candidate("Ketan Jakhar", "19UCC020", "https://firebasestorage.googleapis.com/v0/b/electa-e343d.appspot.com/o/userImages%2F19ucs245.png?alt=media&token=12f17277-c8f3-4011-a92a-44ed968dec7d"),
-      new Candidate("Vishal Gupta", "19UCS053", "https://firebasestorage.googleapis.com/v0/b/electa-e343d.appspot.com/o/userImages%2F19ucs245.png?alt=media&token=12f17277-c8f3-4011-a92a-44ed968dec7d"),
-    ], 
-    [
-      new Candidate("Poojan Gadhiya", "19UCS245", "https://firebasestorage.googleapis.com/v0/b/electa-e343d.appspot.com/o/userImages%2F19ucs245.png?alt=media&token=12f17277-c8f3-4011-a92a-44ed968dec7d"),
-      new Candidate("Dhananjay Sharma", "19UME041", "https://firebasestorage.googleapis.com/v0/b/electa-e343d.appspot.com/o/userImages%2F19ucs245.png?alt=media&token=12f17277-c8f3-4011-a92a-44ed968dec7d"),
-      new Candidate("Karan Aditte Singh", "19UCC025", "https://firebasestorage.googleapis.com/v0/b/electa-e343d.appspot.com/o/userImages%2F19ucs245.png?alt=media&token=12f17277-c8f3-4011-a92a-44ed968dec7d"),
-    ],
-  ];
+
+  final List<List<UserCandidate>> allCans = [];
+  bool allRight = false;
+  @override 
+  void initState(){
+    if(allCans.length == 0){
+      getData().then((val){
+        setState((){
+          allRight = true;
+        });
+      });
+    }
+    else{
+      allRight = true;
+    }
+    super.initState();
+  }
+
+  CollectionReference _collectionRef = FirebaseFirestore.instance.collection('candidates');
+
+  Future<void> getData() async {
+    for(int i=0;i<positions.length;i++) {
+      QuerySnapshot querySnapshot = await _collectionRef.where('title', isEqualTo: positions[i]).get();
+      var cans = querySnapshot.docs;
+      List<UserCandidate> temp=[];
+      for(var can in cans){
+        Map<String, dynamic> data = can.data() as Map<String, dynamic>;
+        UserCandidate c = new UserCandidate(data['Name'], data['Roll'], data['imageUrl'], data['Bio'], data['counter'], data['title']);
+        temp.add(c);
+      }
+      allCans.add(temp);
+    }
+  }
   
   @override
   Widget build(BuildContext context) {
@@ -286,11 +288,18 @@ class _VoteState extends State<Vote> {
                               ),
                               Container(
                                 height: MediaQuery.of(context).size.height*0.4,
-                                child: Column(
+                                child: 
+                                (allRight==false)?
+                                SpinKitCircle(
+                                  color: Colors.black,
+                                  size: 50.0,
+                                  duration: Duration(seconds: 5), 
+                                ):
+                                Column(
                                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                                   children: [
-                                    for (var j = 0; j < cn[i].length; j++)
-                                      _buildCandidateRow(context, cn[i][j].name, cn[i][j].rollNo, cn[i][j].imageUrl, positions[i]),
+                                    for (var j = 0; j < allCans[i].length; j++)
+                                      _buildCandidateRow(context, allCans[i][j]),
                                   ],
                                 ),
                               ),
