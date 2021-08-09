@@ -42,38 +42,36 @@ Widget _buildResultRow(BuildContext context, String winner, String roll, String 
     ),
   ),
   SizedBox(
-       width: MediaQuery.of(context).size.width*0.35,
-       child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            FittedBox(
-                fit: BoxFit.fitWidth,
-                child: Text("$winner",
-                style: TextStyle(
-               fontSize: 20,
-               color: Colors.white,
-             ),
-           ),
-         ),
-     SizedBox(
-       height: 5,
-         ),
-     FittedBox(
-        fit: BoxFit.fitWidth,
-        child: Text("$roll",
-          style: TextStyle(
-            fontSize: 16,
+    width: MediaQuery.of(context).size.width*0.35,
+    child: Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        FittedBox(
+            fit: BoxFit.fitWidth,
+            child: Text("$winner",
+            style: TextStyle(
+            fontSize: 20,
             color: Colors.white,
           ),
         ),
-       ),
-     ],
-   ),
+      ),
+     SizedBox(
+       height: 5,
+      ),
+      FittedBox(
+          fit: BoxFit.fitWidth,
+          child: Text("$roll",
+            style: TextStyle(
+              fontSize: 16,
+              color: Colors.white,
+            ),
+          ),
+        ),
+      ],
+    ),
   ),
   ]
   );
-
-
 }
 
 class UserCandidate{
@@ -98,39 +96,6 @@ class CandidateResult{
 class _ResultState extends State<Result> {
   int _index = 0, cpos=0;
   var positions = ["President", "Vice-President", "G-Sec Science", "G-Sec Cultural", "G-Sec Sports", "AG-Sec Science", "AG-Sec Cultural", "AG-Sec Sports",];
-
-  final List<List<CandidateResult>> cn = [
-    [
-      new CandidateResult("Saumitra Vyas", "19UCS252", "https://imgshare.io/images/2021/06/30/saumitra.png"),
-
-    ],
-    [
-      new CandidateResult("Vishal Gupta", "19UCS053", "https://imgshare.io/images/2021/06/30/vishal1.png"),
-
-    ],
-    [
-      new CandidateResult("Gunit Varshney", "19UCS188", "https://imgshare.io/images/2021/06/30/gunit.png"),
-
-    ],
-    [
-      new CandidateResult("Ketan Jakhar", "19UCC020", "https://imgshare.io/images/2021/06/30/ketan.png"),
-
-    ],
-    [
-      new CandidateResult("Abhinav Maheshwari", "19UCS169", "https://imgshare.io/images/2021/07/01/avhinav.jpg"),
-
-    ],
-    [
-      new CandidateResult("Shubham Jain", "18UEC022", "https://imgshare.io/images/2021/06/30/shubham.png"),
-    ],
-    [
-      new CandidateResult("Vishal Gupta", "19UCS053", "https://imgshare.io/images/2021/06/30/vishal1.png")
-    ],
-    [
-
-      new CandidateResult("Karan Aditte Singh", "19UCC025", "https://imgshare.io/images/2021/06/30/karan.png")
-    ],
-  ];
 
   get key => null;
 
@@ -266,16 +231,10 @@ class _ResultState extends State<Result> {
                     );
                   },
                 ),
-
               ),
-
             )
             )
-
-
-
           ]
-
         )
       ),
     );
@@ -337,7 +296,6 @@ class _ResultState extends State<Result> {
   bottomCardWidget() {
     return Column(
       children: [
-        
         Text(
           'Saumitra Vyas V/S Manya Sharma',
           style: TextStyle(
