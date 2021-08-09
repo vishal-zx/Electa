@@ -63,7 +63,7 @@ Widget electaDrawer(BuildContext context, String userName, String userEmail, Str
                           imageUrl: userImageUrl,
                           progressIndicatorBuilder: (context, url, downloadProgress) => 
                                   CircularProgressIndicator(value: downloadProgress.progress),
-                          errorWidget: (context, url, error) => Icon(Icons.error),
+                          errorWidget: (context, url, error) => Image(image: AssetImage("assets/images/u1.png")),
                         ),
                       ),
                     ),
