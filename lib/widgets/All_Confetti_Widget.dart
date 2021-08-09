@@ -37,7 +37,7 @@ class _AllConfettiWidgetState extends State<AllConfettiWidget> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      behavior: HitTestBehavior.opaque,
+      // behavior: HitTestBehavior.deferToChild,
       onTap: () {
         if(controller.state == ConfettiControllerState.playing){
           controller.stop();
@@ -71,7 +71,7 @@ class _AllConfettiWidgetState extends State<AllConfettiWidget> {
       blastDirectionality: BlastDirectionality.explosive,
       shouldLoop: true,
       emissionFrequency: 0,
-      numberOfParticles: 25,
+      numberOfParticles: 75,
     ),
   );
 
