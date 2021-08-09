@@ -36,7 +36,7 @@ Widget errorProfile(String error){
   );
 }
 
-Widget ElectaDrawer(BuildContext context, String userName, String userEmail, String userImageUrl){
+Widget electaDrawer(BuildContext context, String userName, String userEmail, String userImageUrl, String page){
   return SafeArea(
     child: BackdropFilter(
       filter: ImageFilter.blur(sigmaX: 3.5, sigmaY: 3.5),
@@ -63,7 +63,7 @@ Widget ElectaDrawer(BuildContext context, String userName, String userEmail, Str
                           imageUrl: userImageUrl,
                           progressIndicatorBuilder: (context, url, downloadProgress) => 
                                   CircularProgressIndicator(value: downloadProgress.progress),
-                          errorWidget: (context, url, error) => Icon(Icons.error),
+                          errorWidget: (context, url, error) => Image(image: AssetImage("assets/images/u1.png")),
                         ),
                       ),
                     ),
@@ -97,11 +97,11 @@ Widget ElectaDrawer(BuildContext context, String userName, String userEmail, Str
               height: 20,
             ),
             ListTile(
-              leading: Icon(CupertinoIcons.today, color: Colors.white,),
-              title: Text("Feeds", 
+              leading: Icon(CupertinoIcons.today, color: (page == '/home')?Colors.blue:Colors.white,),
+              title: Text("Feed", 
               textScaleFactor: 1.3,
               style: TextStyle(
-                color: Colors.white,
+                color: (page == '/home')?Colors.blue:Colors.white,
               ),),
               onTap: (){
                 Navigator.pop(context);
@@ -109,11 +109,11 @@ Widget ElectaDrawer(BuildContext context, String userName, String userEmail, Str
               },
             ),
             ListTile(
-              leading: Icon(CupertinoIcons.chart_bar, color: Colors.white,),
+              leading: Icon(CupertinoIcons.chart_bar, color: (page == '/vote')?Colors.blue:Colors.white,),
               title: Text("Vote", 
                 textScaleFactor: 1.3,
                 style: TextStyle(
-                  color: Colors.white,
+                  color: (page == '/vote')?Colors.blue:Colors.white,
                 ),
               ),
               onTap: (){
@@ -122,11 +122,11 @@ Widget ElectaDrawer(BuildContext context, String userName, String userEmail, Str
               },
             ),
             ListTile(
-              leading: Icon(CupertinoIcons.star_circle, color: Colors.white,),
+              leading: Icon(CupertinoIcons.star_circle, color: (page == '/result')?Colors.blue:Colors.white,),
               title: Text("Results", 
                 textScaleFactor: 1.3,
                 style: TextStyle(
-                  color: Colors.white,
+                  color: (page == '/result')?Colors.blue:Colors.white,
                 ),
               ),
               onTap: (){
@@ -135,11 +135,11 @@ Widget ElectaDrawer(BuildContext context, String userName, String userEmail, Str
               },
             ),
             ListTile(
-              leading: Icon(CupertinoIcons.profile_circled, color: Colors.white,),
+              leading: Icon(CupertinoIcons.profile_circled, color: (page == '/MyAccount')?Colors.blue:Colors.white,),
               title: Text("My Account", 
                 textScaleFactor: 1.3,
                 style: TextStyle(
-                  color: Colors.white,
+                  color: (page == '/MyAccount')?Colors.blue:Colors.white,
                 ),
               ),
               onTap: (){
@@ -170,37 +170,16 @@ class MyDrawer extends StatelessWidget {
   static String userImageUrl = "";
 
   final roll = FirebaseAuth.instance.currentUser!.email!.substring(0,8);
+  static String page = "";
   @override
   Widget build(BuildContext context) {
     // FirebaseFirestore.instance.enablePersistence();
     CollectionReference users = FirebaseFirestore.instance.collection('users');
     return FutureBuilder<DocumentSnapshot>(
-      future: users.doc(roll).get(GetOptions(source: Source.cache)),
+      future: users.doc(roll).get(GetOptions(source: Source.serverAndCache)),
       builder: (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot){
         if (snapshot.hasError) {
-          return FutureBuilder<DocumentSnapshot>(
-            future: users.doc(roll).get(),
-            builder: (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot){
-              if(snapshot.hasError){
-                return errorProfile("Something seriously went wrong!");
-              }
-              if (snapshot.connectionState == ConnectionState.done){
-                Map<String, dynamic> data = snapshot.data!.data() as Map<String, dynamic>;
-                userName = data['Name'];
-                userEmail = roll+'@lnmiit.ac.in';
-                userImageUrl = data['imageUrl'];
-                return ElectaDrawer(context, userName, userEmail, userImageUrl);
-              }
-              return BackdropFilter(
-                filter: ImageFilter.blur(sigmaX: 3.5, sigmaY: 3.5),
-                child: SpinKitCircle(
-                  color: Colors.black,
-                  size: 50.0,
-                  duration: Duration(seconds: 5), 
-                ),
-              );
-            }
-          );
+          return errorProfile("Something went wrong!");
         }
 
         if (snapshot.hasData && !snapshot.data!.exists) {
@@ -212,15 +191,14 @@ class MyDrawer extends StatelessWidget {
           userName = data['Name'];
           userEmail = roll+'@lnmiit.ac.in';
           userImageUrl = data['imageUrl'];
-
-          return ElectaDrawer(context, userName, userEmail, userImageUrl);
+          page = ModalRoute.of(context)!.settings.name!;
+          return electaDrawer(context, userName, userEmail, userImageUrl, page);
         }
         return BackdropFilter(
           filter: ImageFilter.blur(sigmaX: 3.5, sigmaY: 3.5),
           child: SpinKitCircle(
-            color: Colors.black,
-            size: 50.0,
-            duration: Duration(seconds: 5), 
+            color: Colors.grey,
+            size: 55.0,
           ),
         );
       }

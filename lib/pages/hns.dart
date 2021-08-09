@@ -145,7 +145,7 @@ Widget _buildTeamRow(BuildContext context, Member person) {
                             (context, url, downloadProgress) =>
                                 CircularProgressIndicator(
                                     value: downloadProgress.progress),
-                        errorWidget: (context, url, error) => Icon(Icons.error),
+                        errorWidget: (context, url, error) => Image(image: AssetImage("assets/images/u1.png")),
                       ),
                     ),
                   ),

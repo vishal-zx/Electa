@@ -69,9 +69,10 @@ class _HomeState extends State<Home> {
                                 TextButton(
                                     onPressed: () {
                                       print("You Are on the Profile");
-                                      Navigator.push(
-                                          // context, MyRoutes.userProfileRoute);
-                                      context, MaterialPageRoute(builder:(context) => UserProfile(roll: "19ucs053")));
+                                      showDialog(
+                                        context: context,
+                                        builder: (BuildContext context) => userPro(context, "19ucs053"),
+                                      );
                                     },
                                     child: Text("$userName")),
                                 //FlatButton.icon(
