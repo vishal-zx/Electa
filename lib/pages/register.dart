@@ -553,7 +553,7 @@ class _RegisterState extends State<Register> {
                     child: TextFormField( 
                       decoration: InputDecoration(
                         icon: Icon(
-                          Icons.password,
+                          Icons.lock,
                           color: Colors.black,
                         ),
                         labelText: "OTP",
