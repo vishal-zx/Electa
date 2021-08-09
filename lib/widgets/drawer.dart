@@ -109,11 +109,11 @@ Widget electaDrawer(BuildContext context, String userName, String userEmail, Str
               },
             ),
             ListTile(
-              leading: Icon(CupertinoIcons.chart_bar, color: (page == '/vote')?Colors.redAccent:Colors.white,),
+              leading: Icon(CupertinoIcons.chart_bar, color: (page == '/vote')?Colors.blue:Colors.white,),
               title: Text("Vote", 
                 textScaleFactor: 1.3,
                 style: TextStyle(
-                  color: (page == '/vote')?Colors.redAccent:Colors.white,
+                  color: (page == '/vote')?Colors.blue:Colors.white,
                 ),
               ),
               onTap: (){
@@ -122,11 +122,11 @@ Widget electaDrawer(BuildContext context, String userName, String userEmail, Str
               },
             ),
             ListTile(
-              leading: Icon(CupertinoIcons.star_circle, color: (page == '/result')?Colors.lightGreen:Colors.white,),
+              leading: Icon(CupertinoIcons.star_circle, color: (page == '/result')?Colors.blue:Colors.white,),
               title: Text("Results", 
                 textScaleFactor: 1.3,
                 style: TextStyle(
-                  color: (page == '/result')?Colors.lightGreen:Colors.white,
+                  color: (page == '/result')?Colors.blue:Colors.white,
                 ),
               ),
               onTap: (){
@@ -135,11 +135,11 @@ Widget electaDrawer(BuildContext context, String userName, String userEmail, Str
               },
             ),
             ListTile(
-              leading: Icon(CupertinoIcons.profile_circled, color: (page == '/MyAccount')?Colors.amber:Colors.white,),
+              leading: Icon(CupertinoIcons.profile_circled, color: (page == '/MyAccount')?Colors.blue:Colors.white,),
               title: Text("My Account", 
                 textScaleFactor: 1.3,
                 style: TextStyle(
-                  color: (page == '/MyAccount')?Colors.amber:Colors.white,
+                  color: (page == '/MyAccount')?Colors.blue:Colors.white,
                 ),
               ),
               onTap: (){
