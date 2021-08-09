@@ -1,4 +1,5 @@
 import 'package:electa/widgets/drawer.dart';
+import 'package:electa/widgets/All_Confetti_Widget.dart';
 import 'package:flutter/material.dart';
 // ignore: import_of_legacy_library_into_null_safe
 import 'package:slimy_card/slimy_card.dart';
@@ -6,6 +7,8 @@ import 'package:slimy_card/slimy_card.dart';
 import 'package:pie_chart/pie_chart.dart';
 // ignore: import_of_legacy_library_into_null_safe
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:confetti/confetti.dart';
+
 
 
 class Result extends StatefulWidget {
@@ -115,6 +118,8 @@ class _ResultState extends State<Result> {
       new CandidateResult("Karan Aditte Singh", "19UCC025", "https://imgshare.io/images/2021/06/30/karan.png")
     ],
   ];
+
+  get key => null;
 
 
 
@@ -237,6 +242,7 @@ class _ResultState extends State<Result> {
   bottomCardWidget() {
     return Column(
       children: [
+        AllConfettiWidget(child: Text('Congratulations, Saumitra Vyas!') , key: key),
         Text(
           'Saumitra Vyas V/S Manya Sharma',
           style: TextStyle(
