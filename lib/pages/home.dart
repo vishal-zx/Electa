@@ -19,10 +19,11 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  Future<bool> _exitApp() async{
+  Future<bool> _exitApp() async {
     SystemNavigator.pop();
     return true;
   }
+
   @override
   Widget build(BuildContext context) {
     FirebaseFirestore firestore = FirebaseFirestore.instance;
@@ -42,8 +43,9 @@ class _HomeState extends State<Home> {
               var postImage = "https://picsum.photos/200";
               var userName = "Poojan Gadhiya";
               var postComment =
-                  "If You Want To Save Water, Take a bath with your neighbour's daughter. But She Dosent likes me: if she ignores you, her mother is you should pursue.";
-              var userImage = "https://firebasestorage.googleapis.com/v0/b/electa-e343d.appspot.com/o/userImages%2F19ucs245.png?alt=media&token=12f17277-c8f3-4011-a92a-44ed968dec7d";
+                  "If You Want To Save Water, Then Start from your house. Irrlevent";
+              var userImage =
+                  "https://firebasestorage.googleapis.com/v0/b/electa-e343d.appspot.com/o/userImages%2F19ucs245.png?alt=media&token=12f17277-c8f3-4011-a92a-44ed968dec7d";
               return Container(
                 height: MediaQuery.of(context).size.height * 0.6,
                 width: MediaQuery.of(context).size.width,
@@ -62,7 +64,8 @@ class _HomeState extends State<Home> {
                             CircularProfileAvatar('$userImage',
                                 radius: 15,
                                 backgroundColor: Colors.transparent,
-                                onTap: () => print("You Clicked sd his  Image")),
+                                onTap: () =>
+                                    print("You Clicked sd his  Image")),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
@@ -71,7 +74,8 @@ class _HomeState extends State<Home> {
                                       print("You Are on the Profile");
                                       showDialog(
                                         context: context,
-                                        builder: (BuildContext context) => userPro(context, "19ucs053"),
+                                        builder: (BuildContext context) =>
+                                            userPro(context, "19ucs053"),
                                       );
                                     },
                                     child: Text("$userName")),
@@ -86,7 +90,7 @@ class _HomeState extends State<Home> {
                       ],
                     ),
                     Container(
-                      height: MediaQuery.of(context).size.height * 0.4,
+                      height: MediaQuery.of(context).size.height * 0.45,
                       width: MediaQuery.of(context).size.width * 0.9,
                       decoration: BoxDecoration(
                           border:
@@ -98,7 +102,7 @@ class _HomeState extends State<Home> {
                           )),
                     ),
                     Container(
-                      padding: EdgeInsets.fromLTRB(25, 0, 25, 0),
+                      padding: EdgeInsets.fromLTRB(5, 0, 5, 0),
                       child: Wrap(
                         children: [
                           Text(
@@ -110,7 +114,7 @@ class _HomeState extends State<Home> {
                               fontWeight: FontWeight.bold,
                               fontStyle: FontStyle.normal,
                             ),
-                            textAlign: TextAlign.start,
+                            textAlign: TextAlign.center,
                           ),
                         ],
                       ),
@@ -128,9 +132,9 @@ class _HomeState extends State<Home> {
                           },
                           //boxColor: Colors.transparent,
                           boxPosition: Position.BOTTOM,
-                          boxItemsSpacing: 50,
+                          boxItemsSpacing: 20,
                           boxAlignment: Alignment.topLeft,
-                          boxRadius: 50,
+                          boxRadius: 40,
                           reactions: <Reaction>[
                             Reaction(
                               previewIcon: Icon(
@@ -140,7 +144,7 @@ class _HomeState extends State<Home> {
                               ),
                               icon: Icon(
                                 CupertinoIcons.hand_thumbsup_fill,
-                                color: Colors.red.shade200,
+                                color: Colors.red.shade500,
                                 size: 30,
                               ),
                             ),
@@ -161,7 +165,7 @@ class _HomeState extends State<Home> {
                                 ),
                                 icon: Icon(
                                   CupertinoIcons.hand_thumbsdown_fill,
-                                  color: Colors.red.shade200,
+                                  color: Colors.red.shade500,
                                   size: 30,
                                 )),
                           ],
