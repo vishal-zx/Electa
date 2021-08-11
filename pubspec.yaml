@@ -37,6 +37,7 @@ dependencies:
   firebase_storage: ^10.0.0
   permission_handler: ^8.1.2
   confetti: ^0.5.5
+  file_picker: ^2.0.0
 
 
   circular_profile_avatar: ^1.0.8
