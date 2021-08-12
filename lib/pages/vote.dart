@@ -2,6 +2,7 @@ import 'dart:ui';
 // ignore: import_of_legacy_library_into_null_safe
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:electa/pages/userProfile.dart';
 import 'package:electa/widgets/drawer.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
@@ -49,15 +50,24 @@ Widget _buildCandidateRow(BuildContext context, UserCandidate candidate, List<dy
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            FittedBox(
-                fit: BoxFit.fitWidth,
-                child: Text("${candidate.name}",
-                  style: TextStyle(
-                    fontSize: 20,
-                    color: Colors.white,
+            TextButton(
+              onPressed: () {
+                showDialog(
+                  context: context,
+                  builder: (BuildContext context) =>
+                      userPro(context, candidate.rollNo),
+                );
+              },
+              child: FittedBox(
+                  fit: BoxFit.fitWidth,
+                  child: Text("${candidate.name}",
+                    style: TextStyle(
+                      fontSize: 20,
+                      color: Colors.white,
+                    ),
                   ),
                 ),
-              ),
+            ),
             SizedBox(
               height: 5,
             ),
