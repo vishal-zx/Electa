@@ -2,7 +2,6 @@ import 'dart:ui';
 // ignore: import_of_legacy_library_into_null_safe
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:electa/pages/userProfile.dart';
 import 'package:electa/widgets/drawer.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
@@ -200,7 +199,7 @@ Widget _buildPopupDialog(BuildContext context, UserCandidate cand) {
                 String msg = "Your Vote Is Successfully Submitted !! 🔥";
                 isVoted[positions.indexOf(cand.title)] = true;
                 var roll = FirebaseAuth.instance.currentUser!.email!.substring(0,8);
-                _collectionRef.doc(roll.toUpperCase()).update({'isVoted' : isVoted});
+                _collectionRef.doc(roll).update({'isVoted' : isVoted});
                 ScaffoldMessenger.of(context).showSnackBar(makeBar(msg));
                 Future.delayed(const Duration(milliseconds: 700), () {
                   Navigator.of(context).pop();
