@@ -80,6 +80,7 @@ Widget _buildCandidateRow(BuildContext context, UserCandidate candidate, List<dy
           color: Colors.white,
         ),
         onPressed: (){
+          ScaffoldMessenger.of(context).hideCurrentSnackBar();
           if(isVoted[positions.indexOf(candidate.title)] == true){
             String msg = "Hold it Sparky!\nYou already cast the vote for this position !!";
             ScaffoldMessenger.of(context).showSnackBar(
@@ -280,173 +281,176 @@ class _VoteState extends State<Vote> {
   
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text("Electa"),
-        elevation: 10,
-      ),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Container(
-            margin: EdgeInsets.only(top: MediaQuery.of(context).size.height*0.01),
-            child: SizedBox(
-              width: MediaQuery.of(context).size.width * 0.8,
-              height: MediaQuery.of(context).size.height * 0.1,
-              child: Center(
-                child: Text("Every responsible student must vote \nfor their better future !!",
-                  style: TextStyle(
-                    fontSize: 18,
-                    color: Colors.black,
-                  ),
-                  textAlign: TextAlign.center,
-                  ),
+    return GestureDetector(
+      onTap: () => ScaffoldMessenger.of(context).hideCurrentSnackBar(),
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text("Electa"),
+          elevation: 10,
+        ),
+        body: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Container(
+              margin: EdgeInsets.only(top: MediaQuery.of(context).size.height*0.01),
+              child: SizedBox(
+                width: MediaQuery.of(context).size.width * 0.8,
+                height: MediaQuery.of(context).size.height * 0.1,
+                child: Center(
+                  child: Text("Every responsible student must vote \nfor their better future !!",
+                    style: TextStyle(
+                      fontSize: 18,
+                      color: Colors.black,
+                    ),
+                    textAlign: TextAlign.center,
+                    ),
+                ),
               ),
             ),
-          ),
-          SizedBox(
-            height: MediaQuery.of(context).size.height * 0.51,
-            child: Container(
-              child: PageView.builder(
-                itemCount: positions.length,
-                controller: PageController(viewportFraction: 0.85),
-                onPageChanged: (int index) => setState(() => _index = index),
-                itemBuilder: (_, i) {
-                  return Transform.scale(
-                    scale: i == _index ? 1 : 0.9,
-                    child: Card(
-                      margin: EdgeInsets.all(0),
-                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-                      child: Container(
-                        decoration: BoxDecoration(
-                          gradient: LinearGradient(
-                            begin: Alignment.topRight,
-                            end: Alignment.bottomLeft,
-                            colors: [Color(0xff63717e), Color(0xff4d6277), Color(0xff2d5173), Color(0xff003f6b), Color(0xff003b6d)]
-                          ),
-                          borderRadius: BorderRadius.circular(20),
-                        ),
-                        child: Column(
-                          children: [
-                            SizedBox(
-                              height: MediaQuery.of(context).size.height *0.02,
+            SizedBox(
+              height: MediaQuery.of(context).size.height * 0.51,
+              child: Container(
+                child: PageView.builder(
+                  itemCount: positions.length,
+                  controller: PageController(viewportFraction: 0.85),
+                  onPageChanged: (int index) => setState(() => _index = index),
+                  itemBuilder: (_, i) {
+                    return Transform.scale(
+                      scale: i == _index ? 1 : 0.9,
+                      child: Card(
+                        margin: EdgeInsets.all(0),
+                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+                        child: Container(
+                          decoration: BoxDecoration(
+                            gradient: LinearGradient(
+                              begin: Alignment.topRight,
+                              end: Alignment.bottomLeft,
+                              colors: [Color(0xff63717e), Color(0xff4d6277), Color(0xff2d5173), Color(0xff003f6b), Color(0xff003b6d)]
                             ),
-                            Center(
-                              heightFactor: 0.9,
-                              child: FittedBox(
-                                fit: BoxFit.fill,
-                                child: Text(
-                                  positions[i],
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: MediaQuery.of(context).size.width*0.08,
+                            borderRadius: BorderRadius.circular(20),
+                          ),
+                          child: Column(
+                            children: [
+                              SizedBox(
+                                height: MediaQuery.of(context).size.height *0.02,
+                              ),
+                              Center(
+                                heightFactor: 0.9,
+                                child: FittedBox(
+                                  fit: BoxFit.fill,
+                                  child: Text(
+                                    positions[i],
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: MediaQuery.of(context).size.width*0.08,
+                                    ),
                                   ),
                                 ),
                               ),
-                            ),
-                            SizedBox(
-                              height: MediaQuery.of(context).size.height *0.005,
-                            ),
-                            Divider(
-                              color: Colors.white,
-                              thickness: 1,
-                              indent: 25,
-                              endIndent: 25,
-                            ),
-                            SizedBox(
-                              height: MediaQuery.of(context).size.height*0.006,
-                            ),
-                            Container(
-                              height: MediaQuery.of(context).size.height*0.4,
-                              child: 
-                              (allRight==false)?
-                              Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  SpinKitCubeGrid(
-                                    color: Colors.grey,
-                                    size: 50.0,
-                                    duration: Duration(seconds: 3),
-                                  ),
-                                  SizedBox(
-                                    height: MediaQuery.of(context).size.height*0.01,
-                                  ),
-                                  Text(
-                                    "Loading Data ...",
-                                    style: TextStyle(
-                                      fontSize: 19,
-                                      color: Colors.white
-                                    )
-                                  ),
-                                ],
-                              ):
-                              Column(
-                                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                                children: [
-                                  for (var j = 0; j < allCans[i].length; j++)
-                                    _buildCandidateRow(context, allCans[i][j], isVoted),
-                                ],
+                              SizedBox(
+                                height: MediaQuery.of(context).size.height *0.005,
                               ),
-                            ),
-                          ],
+                              Divider(
+                                color: Colors.white,
+                                thickness: 1,
+                                indent: 25,
+                                endIndent: 25,
+                              ),
+                              SizedBox(
+                                height: MediaQuery.of(context).size.height*0.006,
+                              ),
+                              Container(
+                                height: MediaQuery.of(context).size.height*0.4,
+                                child: 
+                                (allRight==false)?
+                                Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    SpinKitCubeGrid(
+                                      color: Colors.grey,
+                                      size: 50.0,
+                                      duration: Duration(seconds: 3),
+                                    ),
+                                    SizedBox(
+                                      height: MediaQuery.of(context).size.height*0.01,
+                                    ),
+                                    Text(
+                                      "Loading Data ...",
+                                      style: TextStyle(
+                                        fontSize: 19,
+                                        color: Colors.white
+                                      )
+                                    ),
+                                  ],
+                                ):
+                                Column(
+                                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                  children: [
+                                    for (var j = 0; j < allCans[i].length; j++)
+                                      _buildCandidateRow(context, allCans[i][j], isVoted),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
+                        elevation: 5,
                       ),
-                      elevation: 5,
-                    ),
-                  );
-                },
+                    );
+                  },
+                ),
               ),
             ),
-          ),
-          Container(
-            margin: EdgeInsets.only(top: MediaQuery.of(context).size.height*0.03),
-            padding: EdgeInsets.all(0),
-            width: MediaQuery.of(context).size.width,
-            height: MediaQuery.of(context).size.height*0.16,
-            decoration: BoxDecoration(
-              color: Colors.blueGrey[300],
-              shape: BoxShape.rectangle,
-              borderRadius: BorderRadius.only(topRight: Radius.circular(60), topLeft: Radius.circular(60)),
-              boxShadow: <BoxShadow>[
-                BoxShadow(  
-                  color: Colors.black26,
-                  blurRadius: 15.0,
-                  // offset: Offset(0.0, 15.0),
-                ),
-              ],
-            ),
-            child: Column(
-              children: [
-                SizedBox(
-                  height: MediaQuery.of(context).size.height*0.015,
-                ),
-                Icon(
-                  Icons.lightbulb_outline,
-                  color: Colors.black,
-                  size: 30,
-                ),
-                SizedBox(
-                  width: MediaQuery.of(context).size.width * 0.9,
-                  height: MediaQuery.of(context).size.height * 0.1,
-                  child: FittedBox(
-                    fit: BoxFit.fitWidth,
-                    child: Text(
-                      "How to vote :\nTap on the arrow against the name of candidate of your \nchoice. Then to confirm your vote, click Confirm.",
-                      style: TextStyle(
-                        fontSize: 14,
-                        color: Colors.black,
-                        fontStyle: FontStyle.italic,
+            Container(
+              margin: EdgeInsets.only(top: MediaQuery.of(context).size.height*0.03),
+              padding: EdgeInsets.all(0),
+              width: MediaQuery.of(context).size.width,
+              height: MediaQuery.of(context).size.height*0.16,
+              decoration: BoxDecoration(
+                color: Colors.blueGrey[300],
+                shape: BoxShape.rectangle,
+                borderRadius: BorderRadius.only(topRight: Radius.circular(60), topLeft: Radius.circular(60)),
+                boxShadow: <BoxShadow>[
+                  BoxShadow(  
+                    color: Colors.black26,
+                    blurRadius: 15.0,
+                    // offset: Offset(0.0, 15.0),
+                  ),
+                ],
+              ),
+              child: Column(
+                children: [
+                  SizedBox(
+                    height: MediaQuery.of(context).size.height*0.015,
+                  ),
+                  Icon(
+                    Icons.lightbulb_outline,
+                    color: Colors.black,
+                    size: 30,
+                  ),
+                  SizedBox(
+                    width: MediaQuery.of(context).size.width * 0.9,
+                    height: MediaQuery.of(context).size.height * 0.1,
+                    child: FittedBox(
+                      fit: BoxFit.fitWidth,
+                      child: Text(
+                        "How to vote :\nTap on the arrow against the name of candidate of your \nchoice. Then to confirm your vote, click Confirm.",
+                        style: TextStyle(
+                          fontSize: 14,
+                          color: Colors.black,
+                          fontStyle: FontStyle.italic,
+                        ),
+                        textAlign: TextAlign.center,
                       ),
-                      textAlign: TextAlign.center,
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
+        drawer: MyDrawer(),
       ),
-      drawer: MyDrawer(),
     );
   }
 }

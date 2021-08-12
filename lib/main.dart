@@ -7,7 +7,6 @@ import 'package:electa/pages/login.dart';
 import 'package:electa/pages/myAccount.dart';
 import 'package:electa/pages/register.dart';
 import 'package:electa/pages/results.dart';
-import 'package:electa/pages/userProfile.dart';
 import 'package:electa/pages/vote.dart';
 import 'package:electa/utils/routes.dart';
 import 'package:flutter/material.dart';
