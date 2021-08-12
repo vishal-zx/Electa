@@ -1,8 +1,7 @@
+// ignore: import_of_legacy_library_into_null_safe
 import 'package:circular_profile_avatar/circular_profile_avatar.dart';
 import 'package:electa/pages/userProfile.dart';
-import 'package:electa/utils/routes.dart';
 import 'package:electa/widgets/drawer.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -10,14 +9,14 @@ import 'package:flutter/services.dart';
 import 'package:flutter_reaction_button/flutter_reaction_button.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-class candidatefeed extends StatefulWidget {
-  const candidatefeed({Key? key}) : super(key: key);
+class CandidateFeed extends StatefulWidget {
+  const CandidateFeed({Key? key}) : super(key: key);
 
   @override
-  _candidatefeedState createState() => _candidatefeedState();
+  _CandidateFeedState createState() => _CandidateFeedState();
 }
 
-class _candidatefeedState extends State<candidatefeed> {
+class _CandidateFeedState extends State<CandidateFeed> {
   @override
   Widget build(BuildContext context) {
     var total_posts = 10;
