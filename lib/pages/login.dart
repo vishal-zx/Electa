@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:core';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:electa/utils/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -46,7 +47,16 @@ class _LoginPageState extends State<LoginPage> {
         setState(() {
           _check = true;
         });
-
+        QuerySnapshot querySnapshot = await FirebaseFirestore.instance.collection('candidates').where('Roll', isEqualTo: email.substring(0,8).toUpperCase()).get();
+          var cans = querySnapshot.docs;
+          if(cans.length == 0) {
+            await Future.delayed(Duration(seconds: 1));
+            await Navigator.pushNamed(context, MyRoutes.homeRoute);
+          }
+          else{
+            await Future.delayed(Duration(seconds: 1));
+            await Navigator.pushNamed(context, MyRoutes.candHomeRoute);
+          }
         await Future.delayed(Duration(seconds: 1));
         await Navigator.pushNamed(context, MyRoutes.homeRoute);
         setState(() {

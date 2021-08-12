@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:electa/pages/candidateHome.dart';
 import 'package:electa/pages/changePassword.dart';
 import 'package:electa/pages/editProfile.dart';
@@ -20,9 +21,22 @@ String route = MyRoutes.loginRoute;
 
 Future<void> main() async{
   WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   SharedPreferences prefs = await SharedPreferences.getInstance();
   var email = prefs.getString('email');
-  route = (email==null)? MyRoutes.loginRoute : MyRoutes.homeRoute;
+  if(email == null){
+    route =  MyRoutes.loginRoute;
+  }
+  else{
+    QuerySnapshot querySnapshot = await FirebaseFirestore.instance.collection('candidates').where('Roll', isEqualTo: email.substring(0,8).toUpperCase()).get();
+    var cans = querySnapshot.docs;
+    if(cans.length == 0) {
+      route = MyRoutes.homeRoute;
+    }
+    else{
+      route = MyRoutes.candHomeRoute;
+    }
+  }
   runApp(MyApp());
 }
 
