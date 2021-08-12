@@ -50,24 +50,15 @@ Widget _buildCandidateRow(BuildContext context, UserCandidate candidate, List<dy
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            TextButton(
-              onPressed: () {
-                showDialog(
-                  context: context,
-                  builder: (BuildContext context) =>
-                      userPro(context, candidate.rollNo),
-                );
-              },
-              child: FittedBox(
-                  fit: BoxFit.fitWidth,
-                  child: Text("${candidate.name}",
-                    style: TextStyle(
-                      fontSize: 20,
-                      color: Colors.white,
-                    ),
+            FittedBox(
+                fit: BoxFit.fitWidth,
+                child: Text("${candidate.name}",
+                  style: TextStyle(
+                    fontSize: 20,
+                    color: Colors.white,
                   ),
                 ),
-            ),
+              ),
             SizedBox(
               height: 5,
             ),
@@ -209,7 +200,7 @@ Widget _buildPopupDialog(BuildContext context, UserCandidate cand) {
                 String msg = "Your Vote Is Successfully Submitted !! 🔥";
                 isVoted[positions.indexOf(cand.title)] = true;
                 var roll = FirebaseAuth.instance.currentUser!.email!.substring(0,8);
-                _collectionRef.doc(roll).update({'isVoted' : isVoted});
+                _collectionRef.doc(roll.toUpperCase()).update({'isVoted' : isVoted});
                 ScaffoldMessenger.of(context).showSnackBar(makeBar(msg));
                 Future.delayed(const Duration(milliseconds: 700), () {
                   Navigator.of(context).pop();

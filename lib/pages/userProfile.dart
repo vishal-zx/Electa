@@ -78,7 +78,7 @@ Widget userPro(BuildContext context, String roll) {
         if (snapshot.connectionState == ConnectionState.done){
           Map<String, dynamic> data = snapshot.data!.data() as Map<String, dynamic>;
           String userName = data['Name'];
-          String userEmail = roll+"@lnmiit.ac.in";
+          String userEmail = roll.toLowerCase()+"@lnmiit.ac.in";
           final userBio = data['Bio'];
           String userImageUrl = data['imageUrl'];
 

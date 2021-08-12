@@ -260,7 +260,7 @@ class _RegisterState extends State<Register> {
     if(_checkRollPass == true){
       try{
         await FirebaseAuth.instance.createUserWithEmailAndPassword(email: email, password: password);
-        await users.doc(roll).set({'Name' : name, 'Roll' : roll.toUpperCase(), 'Bio' : bio, 'imageUrl' : imageUrl, 'isVoted' : isVoted});
+        await users.doc(roll.toUpperCase()).set({'Name' : name, 'Roll' : roll.toUpperCase(), 'Bio' : bio, 'imageUrl' : imageUrl, 'isVoted' : isVoted});
       } 
       on FirebaseAuthException catch(e){
         if (e.code == 'weak-password') {
@@ -330,7 +330,7 @@ class _RegisterState extends State<Register> {
                       },
                       onChanged: (value){
                         roll = value.replaceAll(' ', '');
-                        email = roll + "@lnmiit.ac.in";
+                        email = roll.toLowerCase() + "@lnmiit.ac.in";
                         setState(() {
                           
                         });

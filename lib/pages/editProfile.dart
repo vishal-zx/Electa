@@ -107,7 +107,7 @@ class _EditProfileState extends State<EditProfile> {
   FirebaseFirestore firestore = FirebaseFirestore.instance;
   CollectionReference users = firestore.collection('users');
     return FutureBuilder<DocumentSnapshot>(
-      future: users.doc(roll).get(GetOptions(source: Source.cache)),
+      future: users.doc(roll.toUpperCase()).get(GetOptions(source: Source.cache)),
       builder: (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot){
 
         if (snapshot.hasError) {
@@ -260,7 +260,7 @@ class _EditProfileState extends State<EditProfile> {
                                         onTap: () {
                                           newUserName = (newUserName=="")?userName:newUserName;
                                           newUserBio = (newUserBio=="")?userBio:newUserBio;
-                                          users.doc(roll).update({'Name' : newUserName, 'Bio' : newUserBio});
+                                          users.doc(roll.toUpperCase()).update({'Name' : newUserName, 'Bio' : newUserBio});
                                           userBio = newUserBio;
                                           userName = newUserName;
                                           newUserBio = "";

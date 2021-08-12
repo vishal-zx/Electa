@@ -176,7 +176,7 @@ class MyDrawer extends StatelessWidget {
     // FirebaseFirestore.instance.enablePersistence();
     CollectionReference users = FirebaseFirestore.instance.collection('users');
     return FutureBuilder<DocumentSnapshot>(
-      future: users.doc(roll).get(GetOptions(source: Source.serverAndCache)),
+      future: users.doc(roll.toUpperCase()).get(GetOptions(source: Source.serverAndCache)),
       builder: (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot){
         if (snapshot.hasError) {
           return errorProfile("Something went wrong!");

@@ -111,7 +111,7 @@ class _MyAccountState extends State<MyAccount> {
   CollectionReference users = firestore.collection('users');
 
     return FutureBuilder<DocumentSnapshot>(
-      future: users.doc(roll).get(GetOptions(source: Source.cache)),
+      future: users.doc(roll.toUpperCase()).get(GetOptions(source: Source.cache)),
       builder: (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot){
         if (snapshot.hasError) {
           return errorProfile("Something went wrong");
@@ -203,7 +203,7 @@ class _MyAccountState extends State<MyAccount> {
                                     ),
                                   ),
                                   SizedBox(
-                                    height: MediaQuery.of(context).size.height*0.005,
+                                    height: MediaQuery.of(context).size.height*0.01,
                                   ),
                                   Container(
                                     height: MediaQuery.of(context).size.height*0.022,
