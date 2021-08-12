@@ -41,7 +41,7 @@ class _CandidateFeedState extends State<CandidateFeed> {
               var userImage =
                   "https://firebasestorage.googleapis.com/v0/b/electa-e343d.appspot.com/o/userImages%2F19ucs245.png?alt=media&token=12f17277-c8f3-4011-a92a-44ed968dec7d";
               return Container(
-                height: MediaQuery.of(context).size.height * 0.6,
+                height: MediaQuery.of(context).size.height * 0.63,
                 width: MediaQuery.of(context).size.width,
                 padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
                 decoration: BoxDecoration(
