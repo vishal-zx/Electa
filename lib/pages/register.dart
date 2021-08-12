@@ -45,7 +45,7 @@ class _RegisterState extends State<Register> {
       });
   }
 
-  int otpFlag = 0;
+  int otpFlag = -1;
   int userOTP = 0;
   int sentOTP = 0;
 
@@ -81,15 +81,15 @@ class _RegisterState extends State<Register> {
     }
   }
 
-  void matchOTP(){
+  int matchOTP(){
     if(sentOTP == userOTP){
-      otpFlag = 2;
+      return 2;
     }
     else if(sentOTP != userOTP){
-      otpFlag = 1;
+      return 1;
     }
     else{
-      otpFlag = 0;
+      return 0;
     }
   }
 
@@ -122,6 +122,7 @@ class _RegisterState extends State<Register> {
   String email="";
   String password="";
   String imageUrl="";
+  List<dynamic> isVoted = List.filled(8, false);
   String _validRoll = "false";
 
   bool _showPass = true;
@@ -257,9 +258,9 @@ class _RegisterState extends State<Register> {
   
   void doRegister() async {
     if(_checkRollPass == true){
-      await users.doc(roll).set({'Name' : name, 'Roll' : roll, 'Bio' : bio, 'imageUrl' : imageUrl});
       try{
         await FirebaseAuth.instance.createUserWithEmailAndPassword(email: email, password: password);
+        await users.doc(roll).set({'Name' : name, 'Roll' : roll.toUpperCase(), 'Bio' : bio, 'imageUrl' : imageUrl, 'isVoted' : isVoted});
       } 
       on FirebaseAuthException catch(e){
         if (e.code == 'weak-password') {
@@ -579,92 +580,6 @@ class _RegisterState extends State<Register> {
                       },
                     ),
                   ),
-                  // Padding(
-                  //   padding: const EdgeInsets.fromLTRB(18, 5, 8, 5),
-                  //   child: Row(
-                  //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  //     children: <Widget>[
-                  //       ElevatedButton(
-                  //         onPressed: _read,
-                  //         child: Text(
-                  //           'Scan Your College Id Card',
-                  //           style: TextStyle(
-                  //             color: Colors.black, 
-                  //             fontWeight: FontWeight.bold
-                  //           ),
-                  //         )
-                  //       ),
-                  //       new Text(_textValue),
-                  //       buildcheckbox(),
-                  //     ]
-                  //   ),
-                  // ),
-                
-                  // Padding(
-                  //   padding: const EdgeInsets.fromLTRB(18, 5, 8, 5),
-                  //   child: Row(
-                  //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  //     children: <Widget>[
-                  //       ElevatedButton(
-                  //         onPressed: _read,
-                  //         child: Text(
-                  //           'Face Authentication',
-                  //           style: TextStyle(
-                  //             color: Colors.black, 
-                  //             fontWeight: FontWeight.bold
-                  //           ),
-                  //         )
-                  //       ),
-                  //       buildcheckbox2(),
-                  //     ]
-                  //   ),
-                  // ),
-                
-                  // Center(
-                  //     child: Padding(
-                  //   padding: EdgeInsets.only(top: 8.0),
-                  //   child: Text('You Want To Register Yourself As:',
-                  //       style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold)),
-                  // )),
-                  // Padding(
-                  //   padding: EdgeInsets.only(top: 10.0),
-                  //   child: Row(
-                  //       mainAxisAlignment: MainAxisAlignment.center,
-                  //       children: <Widget>[
-                  //         // ignore: deprecated_member_use
-                  //         RaisedButton(
-                  //           elevation: 10.0,
-                  //           shape: RoundedRectangleBorder(
-                  //               borderRadius: BorderRadius.circular(16),
-                  //               side: BorderSide(color: Colors.black, width: 2.0)),
-                  //           color: Colors.blue[200],
-                  //           onPressed: () {},
-                  //           child: Text(
-                  //             'VOTER',
-                  //             textDirection: TextDirection.ltr,
-                  //             style: TextStyle(color: Colors.black),
-                  //           ),
-                  //         ),
-                  //         SizedBox(
-                  //           width: 12.0,
-                  //         ),
-                  //         // ignore: deprecated_member_use
-                  //         RaisedButton(
-                  //           elevation: 10.0,
-                  //           shape: RoundedRectangleBorder(
-                  //               borderRadius: BorderRadius.circular(16),
-                  //               side: BorderSide(color: Colors.black, width: 2.0)),
-                  //           color: Colors.pink[100],
-                  //           onPressed: () {},
-                  //           child: Text('CANDIDATE',
-                  //               textDirection: TextDirection.ltr,
-                  //               style: TextStyle(
-                  //                 color: Colors.black,
-                  //               )),
-                  //         ),
-                  //       ]
-                  //     ),
-                  // ),
                   Padding(
                     padding: const EdgeInsets.only(top: 15),
                     child: Material(
@@ -673,7 +588,9 @@ class _RegisterState extends State<Register> {
                       child: InkWell(
                         onTap: () async {
                           if(roll!="" && name!=""){
-                            matchOTP();
+                            otpFlag = matchOTP();
+                            print(otpFlag);
+                            print(sentOTP);
                             if(otpFlag == 2){
                               doRegister();
                               await FirebaseAuth.instance.signOut();
@@ -690,7 +607,7 @@ class _RegisterState extends State<Register> {
                             }
                           }
                           else{
-                            ScaffoldMessenger.of(context).showSnackBar(makeBar("Name or Roll Number Missing !!"));
+                            ScaffoldMessenger.of(context).showSnackBar(makeBar("Enter valid Name & Roll Number !!"));
                           }
                         },
                         child: AnimatedContainer(
@@ -718,5 +635,4 @@ class _RegisterState extends State<Register> {
       ),
     );
   }
-
 }

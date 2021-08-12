@@ -1,9 +1,9 @@
 import 'dart:ui';
-
 // ignore: import_of_legacy_library_into_null_safe
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:electa/widgets/drawer.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -15,7 +15,18 @@ class Vote extends StatefulWidget {
   _VoteState createState() => _VoteState();
 }
 
-Widget _buildCandidateRow(BuildContext context, UserCandidate candidate){
+Future<void> checkVoteDone() async
+{
+  var roll = FirebaseAuth.instance.currentUser!.email!.substring(0,8);
+  QuerySnapshot querySnapshot = await _collectionRef.where('Roll', isEqualTo: roll.toUpperCase()).get();
+  var cans = querySnapshot.docs;
+  for(var can in cans){
+    Map<String, dynamic> data = can.data() as Map<String, dynamic>;
+    isVoted = data['isVoted'];
+  }
+}
+
+Widget _buildCandidateRow(BuildContext context, UserCandidate candidate, List<dynamic> isVoted){
   return Row(
     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
     children: [
@@ -69,10 +80,28 @@ Widget _buildCandidateRow(BuildContext context, UserCandidate candidate){
           color: Colors.white,
         ),
         onPressed: (){
-          showDialog(
-            context: context,
-            builder: (BuildContext context) => _buildPopupDialog(context, candidate),
-          );
+          if(isVoted[positions.indexOf(candidate.title)] == true){
+            String msg = "Hold it Sparky!\nYou already cast the vote for this position !!";
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                duration: Duration(milliseconds: 5000),
+                content: Text('$msg', textAlign: TextAlign.center, 
+                  style: TextStyle(fontSize: 16),
+                ),
+                backgroundColor: Colors.red[900]!.withOpacity(1),
+                elevation: 3,
+                behavior: SnackBarBehavior.floating,
+                padding: EdgeInsets.all(5),
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(20))),
+              )
+            );
+          }
+          else{
+            showDialog(
+              context: context,
+              builder: (BuildContext context) => _buildPopupDialog(context, candidate),
+            );
+          }
         },
       ),
     ],
@@ -93,23 +122,39 @@ SnackBar makeBar(String text){
     return snackBar;
   }
 
-Widget _buildPopupDialog(BuildContext context, UserCandidate cand) {
   
+CollectionReference _collectionRef = FirebaseFirestore.instance.collection('users');
+List<dynamic> isVoted = [];
+var positions = ["President", "Vice-President", "G-Sec Science", "G-Sec Cultural", "G-Sec Sports", "AG-Sec Science", "AG-Sec Cultural", "AG-Sec Sports"];
+
+Widget _buildPopupDialog(BuildContext context, UserCandidate cand) {
   return BackdropFilter(
     filter: ImageFilter.blur(sigmaX: 3, sigmaY: 3),
       child: new AlertDialog(
-        // scrollable: true,
         elevation: 5,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(20),
         ),
         backgroundColor: Colors.blueGrey[100],
-        title: const Text('Confirm Your Vote!',
-          textAlign: TextAlign.center,
-          style: TextStyle(fontWeight: FontWeight.bold),
+        title: Column(
+          children: [
+            Text('Confirm Your Vote !',
+              textAlign: TextAlign.center,
+              style: TextStyle(fontWeight: FontWeight.bold),
+            ),
+            SizedBox(
+              height:5
+            ),
+            Divider(
+              color: Colors.black,
+              thickness: 2,
+              indent: 25,
+              endIndent: 25,
+            ),
+          ]
         ),
         content: Container(
-          height: MediaQuery.of(context).size.height*0.28,
+          height: MediaQuery.of(context).size.height*0.20,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
@@ -151,6 +196,9 @@ Widget _buildPopupDialog(BuildContext context, UserCandidate cand) {
               cand.counter++;
               FirebaseFirestore.instance.collection('candidates').doc(cand.rollNo).update({'counter':cand.counter}).then((value) {
                 String msg = "Your Vote Is Successfully Submitted !! 🔥";
+                isVoted[positions.indexOf(cand.title)] = true;
+                var roll = FirebaseAuth.instance.currentUser!.email!.substring(0,8);
+                _collectionRef.doc(roll).update({'isVoted' : isVoted});
                 ScaffoldMessenger.of(context).showSnackBar(makeBar(msg));
                 Future.delayed(const Duration(milliseconds: 700), () {
                   Navigator.of(context).pop();
@@ -194,12 +242,13 @@ class UserCandidate{
 class _VoteState extends State<Vote> {
 
   int _index = 0, cpos=0;
-  var positions = ["President", "Vice-President", "G-Sec Science", "G-Sec Cultural", "G-Sec Sports", "AG-Sec Science", "AG-Sec Cultural", "AG-Sec Sports",];
+  var positions = ["President", "Vice-President", "G-Sec Science", "G-Sec Cultural", "G-Sec Sports", "AG-Sec Science", "AG-Sec Cultural", "AG-Sec Sports"];
 
   final List<List<UserCandidate>> allCans = [];
   bool allRight = false;
   @override 
   void initState(){
+    checkVoteDone();
     if(allCans.length == 0){
       getData().then((val){
         setState((){
@@ -335,7 +384,7 @@ class _VoteState extends State<Vote> {
                                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                                 children: [
                                   for (var j = 0; j < allCans[i].length; j++)
-                                    _buildCandidateRow(context, allCans[i][j]),
+                                    _buildCandidateRow(context, allCans[i][j], isVoted),
                                 ],
                               ),
                             ),
