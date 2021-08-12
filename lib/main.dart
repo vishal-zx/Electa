@@ -1,3 +1,4 @@
+import 'package:electa/pages/candidateHome.dart';
 import 'package:electa/pages/changePassword.dart';
 import 'package:electa/pages/editProfile.dart';
 import 'package:electa/pages/hns.dart';
@@ -88,6 +89,7 @@ class _MyAppState extends State<MyApp> {
         MyRoutes.loginRoute : (context) => LoginPage(),
         MyRoutes.registerRoute : (context) => Register(),
         MyRoutes.homeRoute : (context) => Home(),
+        MyRoutes.candHomeRoute : (context) => CandidateFeed(),
         MyRoutes.voteRoute : (context) => Vote(),
         MyRoutes.resultRoute : (context) => Result(),
         MyRoutes.myAccountRoute : (context) => MyAccount(),
