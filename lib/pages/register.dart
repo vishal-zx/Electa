@@ -93,17 +93,20 @@ class _RegisterState extends State<Register> {
     }
   }
 
-  bool _checkRollPass = true;
+  bool _checkRoll = true;
+  bool _checkPass = true;
 
   check(BuildContext context) async{
     if(formKey.currentState!.validate()){
       setState(() {
-        _checkRollPass = true;
+        _checkRoll = true;
+        _checkPass = true;
       });
     }
     else{
       setState(() {
-        _checkRollPass = false;
+        _checkRoll = false;
+        _checkPass = false;
       });
     }
   }
@@ -255,24 +258,46 @@ class _RegisterState extends State<Register> {
     }
   }
 
-  
-  void doRegister() async {
-    if(_checkRollPass == true){
+  bool registerd = false;
+  Future<void> doRegister(String email, String password) async {
+    if(_checkRoll == true){
       try{
-        await FirebaseAuth.instance.createUserWithEmailAndPassword(email: email, password: password);
-        await users.doc(roll.toUpperCase()).set({'Name' : name, 'Roll' : roll.toUpperCase(), 'Bio' : bio, 'imageUrl' : imageUrl, 'isVoted' : isVoted});
-      } 
-      on FirebaseAuthException catch(e){
-        if (e.code == 'weak-password') {
-          error = makeBar('The password provided is too weak.');
-          ScaffoldMessenger.of(context).showSnackBar(error);
-        } else if (e.code == 'email-already-in-use') {
-          error = makeBar('The account already exists for that roll number.');
-          ScaffoldMessenger.of(context).showSnackBar(error);
+        QuerySnapshot qs = await FirebaseFirestore.instance.collection('users').where('Roll',isEqualTo: email.substring(0,8).toUpperCase()).get();
+        var cans = qs.docs;
+        var fl = 0;
+        for(var can in cans){
+          Map<String, dynamic> data = can.data() as Map<String, dynamic>;
+          if(email.substring(0,8).toUpperCase() == data['Roll'])
+          {
+            error = makeBar('The account already exists for that roll number.');
+            fl=1;
+            ScaffoldMessenger.of(context).showSnackBar(error);
+          }
         }
-      } 
-      catch (e){
-        error = makeBar('Something went wrong! Please try again.');
+        if(fl==0){
+          try{
+            FirebaseAuth.instance.createUserWithEmailAndPassword(email: email, password: password).then((value)async{
+              await FirebaseFirestore.instance.collection('users').doc(roll.toUpperCase()).
+              set({'Name' : name, 'Roll' : roll.toUpperCase(), 'Bio' : bio, 'imageUrl' : imageUrl, 'isVoted' : isVoted}).then((value){
+                setState((){
+                  registerd = true;
+                });
+              });
+            });
+          }on FirebaseAuthException catch(e)
+          {
+            if (e.code == 'weak-password') {
+              error = makeBar('The password provided is too weak.');
+              ScaffoldMessenger.of(context).showSnackBar(error);
+            } else if (e.code == 'email-already-in-use') {
+              error = makeBar('The account already exists for that roll number.');
+              ScaffoldMessenger.of(context).showSnackBar(error);
+            }
+          }
+        }
+      } on FirebaseAuthException catch(e)
+      {
+        error = makeBar('Something went wrong. Please try after some time.\nError Code : ${e.code}');
         ScaffoldMessenger.of(context).showSnackBar(error);
       }
     }
@@ -326,6 +351,14 @@ class _RegisterState extends State<Register> {
                         else if(_validRoll == "false"){
                           return "Invalid Roll Number";
                         }
+                        setState((){
+                          if(_validRoll == "false"){
+                            _checkRoll = false;
+                          }
+                          else{
+                            _checkRoll = true;
+                          }
+                        });
                         return null;
                       },
                       onChanged: (value){
@@ -401,15 +434,12 @@ class _RegisterState extends State<Register> {
                       },
                       onChanged: (value){
                         password = value;
-                        setState(() {
-                          
-                        });
                         if(value == "") password = "";
                       },
                     ),
                   ),
                   Padding(
-                    padding: EdgeInsets.fromLTRB(15, 0, 25, 8),
+                    padding: EdgeInsets.fromLTRB(15, 0, 25, 0),
                     child: TextField( 
                       readOnly: true,
                       controller: TextEditingController()..text = toDate(selectedDate),
@@ -428,7 +458,7 @@ class _RegisterState extends State<Register> {
                     ),
                   ),
                   Container(
-                    height: MediaQuery.of(context).size.height*0.15,
+                    height: MediaQuery.of(context).size.height*0.13,
                     child: Padding(
                       padding: EdgeInsets.fromLTRB(15, 0, 25, 0),
                       child: TextField(
@@ -441,7 +471,7 @@ class _RegisterState extends State<Register> {
                           hintText: "Write Something About Yourself",
                         ),
                         keyboardType: TextInputType. multiline,
-                        maxLines: null,
+                        maxLines: 3,
                         maxLength: 100,
                         onChanged: (value){
                         bio = value;
@@ -454,99 +484,112 @@ class _RegisterState extends State<Register> {
                     ),
                   ),
                   Padding(
-                    padding: EdgeInsets.fromLTRB(0, 0, 30, 0),
-                    child: Container(
-                      padding: EdgeInsets.only(left: 15),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.only(left: 20),
-                            child: Row(
-                              children: [
-                                Icon(
-                                  Icons.portrait_outlined
-                                ),
-                                SizedBox(
-                                  width: 8,
-                                ),
-                                Text(
-                                  "User Image",
-                                  style: TextStyle(
-                                    fontSize: 18,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    padding: EdgeInsets.fromLTRB(0, 0, 20, 0),
+                    child: Column(
+                      children: [
+                        Container(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Container(
-                                width: MediaQuery.of(context).size.width*0.4,
-                                height: MediaQuery.of(context).size.height*0.15,
-                                margin: EdgeInsets.all(10),
-                                decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  borderRadius: BorderRadius.all(
-                                    Radius.circular(15),
-                                  ),
+                              Padding(
+                                padding: EdgeInsets.only(left: 15),
+                                child: Row(
+                                  crossAxisAlignment: CrossAxisAlignment.end,
+                                  children: [
+                                    Icon(
+                                      Icons.portrait_outlined
+                                    ),
+                                    SizedBox(
+                                      width: 8,
+                                    ),
+                                    Text(
+                                      "User Image",
+                                      style: TextStyle(
+                                        fontSize: 18,
+                                      ),
+                                    ),
+                                    Text(
+                                      "       *This can't be edited later.",
+                                      style: TextStyle(
+                                        fontSize: 13,
+                                        fontStyle: FontStyle.italic, 
+                                        color: Colors.red[900],
+                                      ),
+                                    ),
+                                  ],
                                 ),
-                                child: (imageUrl != "")?Image.network(imageUrl):
-                                Image.asset('assets/images/imgbg.png', fit: BoxFit.contain,)
                               ),
-                              Column(
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
-                                  ElevatedButton(
-                                    onPressed: (){
-                                      _loadPicker();
-                                    }, 
-                                    child: Padding(
-                                      padding: EdgeInsets.fromLTRB(2, 12, 2, 12),
-                                      child: Text("1.   Select Image",
-                                        style: TextStyle(
-                                          fontSize: 12
-                                        ),
+                                  Container(
+                                    padding: EdgeInsets.only(left: 15),
+                                    width: MediaQuery.of(context).size.width*0.5,
+                                    height: MediaQuery.of(context).size.height*0.15,
+                                    margin: EdgeInsets.only(left:30),
+                                    decoration: BoxDecoration(
+                                      color: Colors.white,
+                                      borderRadius: BorderRadius.all(
+                                        Radius.circular(15),
                                       ),
                                     ),
-                                    style: ButtonStyle(
-                                      backgroundColor: MaterialStateProperty.all<Color>(Colors.black87),
-                                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                                        RoundedRectangleBorder(
-                                          borderRadius: BorderRadius.circular(12.0),
-                                          side: BorderSide(color: Colors.black87)
-                                        )
-                                      )
-                                    ),
+                                    child: (imageUrl != "")?Image.network(imageUrl):
+                                    Image.asset('assets/images/imgbg.png', fit: BoxFit.contain,)
                                   ),
-                                  ElevatedButton(
-                                    onPressed: (){
-                                      upload(pickedImage);
-                                    }, 
-                                    child: Padding(
-                                      padding: EdgeInsets.fromLTRB(2, 12, 2, 12),
-                                      child: Text("2.   Upload Image",
-                                        style: TextStyle(
-                                          fontSize: 12
+                                  Column(
+                                    children: [
+                                      ElevatedButton(
+                                        onPressed: (){
+                                          _loadPicker();
+                                        }, 
+                                        child: Padding(
+                                          padding: EdgeInsets.fromLTRB(2, 12, 2, 12),
+                                          child: Text("1.   Select Image",
+                                            style: TextStyle(
+                                              fontSize: 12
+                                            ),
+                                          ),
+                                        ),
+                                        style: ButtonStyle(
+                                          backgroundColor: MaterialStateProperty.all<Color>(Colors.black87),
+                                          shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                                            RoundedRectangleBorder(
+                                              borderRadius: BorderRadius.circular(12.0),
+                                              side: BorderSide(color: Colors.black87)
+                                            )
+                                          )
                                         ),
                                       ),
-                                    ),
-                                    style: ButtonStyle(
-                                      backgroundColor: MaterialStateProperty.all<Color>(Colors.black),
-                                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                                        RoundedRectangleBorder(
-                                          borderRadius: BorderRadius.circular(12.0),
-                                          side: BorderSide(color: Colors.black)
-                                        )
-                                      )
-                                    ),
-                                  ),
+                                      ElevatedButton(
+                                        onPressed: (){
+                                          upload(pickedImage);
+                                        }, 
+                                        child: Padding(
+                                          padding: EdgeInsets.fromLTRB(2, 12, 2, 12),
+                                          child: Text("2.   Upload Image",
+                                            style: TextStyle(
+                                              fontSize: 12
+                                            ),
+                                          ),
+                                        ),
+                                        style: ButtonStyle(
+                                          backgroundColor: MaterialStateProperty.all<Color>(Colors.black),
+                                          shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                                            RoundedRectangleBorder(
+                                              borderRadius: BorderRadius.circular(12.0),
+                                              side: BorderSide(color: Colors.black)
+                                            )
+                                          )
+                                        ),
+                                      ),
+                                    ],
+                                  ), 
                                 ],
-                              ), 
+                              ),
                             ],
-                          ),
-                        ],
-                      )
+                          )
+                        ),
+                      ],
                     ),
                   ),
                   Padding(
@@ -587,27 +630,42 @@ class _RegisterState extends State<Register> {
                       borderRadius: BorderRadius.circular(8),
                       child: InkWell(
                         onTap: () async {
+                          check(context);
                           if(roll!="" && name!=""){
-                            otpFlag = matchOTP();
-                            print(otpFlag);
-                            print(sentOTP);
-                            if(otpFlag == 2){
-                              doRegister();
-                              await FirebaseAuth.instance.signOut();
-                              ScaffoldMessenger.of(context).showSnackBar(makeBar("Registered Successfully!! 🎉"));
-                              Timer(Duration(seconds: 2), (){
-                                Navigator.pushNamedAndRemoveUntil(context, MyRoutes.loginRoute, (route) => false);
-                              });
-                            }
-                            else if(otpFlag == 1){
-                              ScaffoldMessenger.of(context).showSnackBar(makeBar("OTP didn't match. Email could'nt verified."));
+                            if(_validRoll == "true"){
+                              if(_checkPass == true){
+                                if(bio != "")
+                                {
+                                  await doRegister(email, password);
+                                  Future.delayed(const Duration(milliseconds: 3000), () {
+                                    if(registerd == true)
+                                    {
+                                      print("ok");
+                                      FirebaseAuth.instance.signOut();
+                                      ScaffoldMessenger.of(context).showSnackBar(makeBar("Registered Successfully!! 🎉"));
+                                      Timer(Duration(seconds: 2), (){
+                                        Navigator.pushNamedAndRemoveUntil(context, MyRoutes.loginRoute, (route) => false);
+                                      });
+                                    }
+                                    else{
+                                      ScaffoldMessenger.of(context).showSnackBar(makeBar("Something went wrong. Please try again later!"));
+                                    }
+                                  });
+                                }
+                                else{
+                                  ScaffoldMessenger.of(context).showSnackBar(makeBar("Add something to your bio ! "));
+                                }
+                              }
+                              else{
+                                ScaffoldMessenger.of(context).showSnackBar(makeBar("Please enter a valid password !"));
+                              }
                             }
                             else{
-                              ScaffoldMessenger.of(context).showSnackBar(makeBar("Verify Email !!"));
+                              ScaffoldMessenger.of(context).showSnackBar(makeBar("Invalid Roll Number !!\nEnter in right format ! (e.g, 19UCS053)"));
                             }
                           }
                           else{
-                            ScaffoldMessenger.of(context).showSnackBar(makeBar("Enter valid Name & Roll Number !!"));
+                            ScaffoldMessenger.of(context).showSnackBar(makeBar("Name/Roll number missing !!"));
                           }
                         },
                         child: AnimatedContainer(
