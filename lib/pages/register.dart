@@ -30,7 +30,7 @@ class _RegisterState extends State<Register> {
   String _textValue = "sample";
   DateTime selectedDate = DateTime.now();
 
-  
+  bool loading = false;
   CollectionReference users = FirebaseFirestore.instance.collection('users');
 
   Future<Null> _selectDate(BuildContext context) async {
@@ -130,6 +130,7 @@ class _RegisterState extends State<Register> {
 
   bool _showPass = true;
   bool _rollPresent = false;
+  bool emailVerified = false;
   
   final formKey = GlobalKey<FormState>();
 
@@ -180,9 +181,9 @@ class _RegisterState extends State<Register> {
 
   SnackBar makeBar(String text){
     final snackBar = SnackBar(
-      duration: Duration(milliseconds: (text=="Loading...")?700:3000),
+      duration: Duration(milliseconds: (text=="Loading...")?700:3500),
       content: Text('$text', textAlign: TextAlign.center, 
-        style: TextStyle(fontSize: 15),
+        style: TextStyle(fontSize: 14),
       ),
       backgroundColor: Colors.black87.withOpacity(1),
       elevation: 3,
@@ -307,6 +308,7 @@ class _RegisterState extends State<Register> {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
+        ScaffoldMessenger.of(context).hideCurrentSnackBar();
         FocusManager.instance.primaryFocus?.unfocus(); 
         check(context);
       },
@@ -492,7 +494,7 @@ class _RegisterState extends State<Register> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Padding(
-                                padding: EdgeInsets.only(left: 15),
+                                padding: EdgeInsets.only(left: 15, bottom: 15),
                                 child: Row(
                                   crossAxisAlignment: CrossAxisAlignment.end,
                                   children: [
@@ -500,7 +502,7 @@ class _RegisterState extends State<Register> {
                                       Icons.portrait_outlined
                                     ),
                                     SizedBox(
-                                      width: 8,
+                                      width: 12,
                                     ),
                                     Text(
                                       "User Image",
@@ -573,7 +575,8 @@ class _RegisterState extends State<Register> {
                                           ),
                                         ),
                                         style: ButtonStyle(
-                                          backgroundColor: MaterialStateProperty.all<Color>(Colors.black),
+                                          backgroundColor: MaterialStateProperty.all<Color>(
+                                            (isUploading==true)?Colors.grey:Colors.black),
                                           shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                                             RoundedRectangleBorder(
                                               borderRadius: BorderRadius.circular(12.0),
@@ -593,88 +596,88 @@ class _RegisterState extends State<Register> {
                     ),
                   ),
                   Padding(
-                    padding: EdgeInsets.fromLTRB(15, 0, 25, 8),
-                    child: TextFormField( 
-                      decoration: InputDecoration(
-                        icon: Icon(
-                          Icons.lock,
-                          color: Colors.black,
-                        ),
-                        labelText: "OTP",
-                        hintText: "000000",
-                        suffix: InkWell(
-                          onTap: sendOtp,
-                          child: Text("Send OTP"),
-                        )
-                      ),
-                      validator: (value){
-                        if(value == null){
-                          return "Roll Number can't be Empty!";
-                        }
-                        return null;
-                      },
-                      onChanged: (value){
-                        setState(() {
-                          
-                        });
-                        if(value != ""){
-                          userOTP = int.parse(value);
-                        }
-                      },
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 15),
+                    padding: const EdgeInsets.only(top: 10),
                     child: Material(
                       color: Colors.black,
                       borderRadius: BorderRadius.circular(8),
                       child: InkWell(
                         onTap: () async {
-                          check(context);
-                          if(roll!="" && name!=""){
-                            if(_validRoll == "true"){
-                              if(_checkPass == true){
-                                if(bio != "")
-                                {
-                                  await doRegister(email, password);
-                                  Future.delayed(const Duration(milliseconds: 3000), () {
-                                    if(registerd == true)
-                                    {
-                                      print("ok");
-                                      FirebaseAuth.instance.signOut();
-                                      ScaffoldMessenger.of(context).showSnackBar(makeBar("Registered Successfully!! 🎉"));
-                                      Timer(Duration(seconds: 2), (){
-                                        Navigator.pushNamedAndRemoveUntil(context, MyRoutes.loginRoute, (route) => false);
-                                      });
-                                    }
-                                    else{
-                                      ScaffoldMessenger.of(context).showSnackBar(makeBar("Something went wrong. Please try again later!"));
-                                    }
-                                  });
+                          if(loading == false){
+                            setState((){
+                              loading = true;
+                            });
+                            check(context);
+                            if(roll!="" && name!=""){
+                              if(_validRoll == "true"){
+                                if(_checkPass == true){
+                                  if(bio != "")
+                                  {
+                                    await doRegister(email, password);
+                                    Future.delayed(const Duration(milliseconds: 3000), () async {
+                                      if(registerd == true)
+                                      {
+                                        await FirebaseAuth.instance.signInWithEmailAndPassword(email: email, password: password).then((value) async {
+                                          User? user = FirebaseAuth.instance.currentUser;
+                                          if(user!=null && !user.emailVerified)
+                                          {
+                                            await user.sendEmailVerification();
+                                            ScaffoldMessenger.of(context).showSnackBar(makeBar("Registered Successfully!! 🎉\nVerify your mail by clicking on the link sent to above e-mail before logging in."));
+                                            setState((){
+                                              loading = false;
+                                            });
+                                            FirebaseAuth.instance.signOut();
+                                            Timer(Duration(seconds: 3), (){
+                                              Navigator.pushNamedAndRemoveUntil(context, MyRoutes.loginRoute, (route) => false);
+                                              emailVerified = false;
+                                            });
+                                          }
+                                        });
+                                      }
+                                      else{
+                                        setState((){
+                                          loading = false;
+                                        });
+                                        ScaffoldMessenger.of(context).showSnackBar(makeBar("Something went wrong. Please try again later!"));
+                                      }
+                                    });
+                                  }
+                                  else{
+                                    setState((){
+                                      loading = false;
+                                    });
+                                    ScaffoldMessenger.of(context).showSnackBar(makeBar("Add something to your bio ! "));
+                                  }
                                 }
                                 else{
-                                  ScaffoldMessenger.of(context).showSnackBar(makeBar("Add something to your bio ! "));
+                                  setState((){
+                                    loading = false;
+                                  });
+                                  ScaffoldMessenger.of(context).showSnackBar(makeBar("Please enter a valid password !"));
                                 }
                               }
                               else{
-                                ScaffoldMessenger.of(context).showSnackBar(makeBar("Please enter a valid password !"));
+                                setState((){
+                                  loading = false;
+                                });
+                                ScaffoldMessenger.of(context).showSnackBar(makeBar("Invalid Roll Number !!\nEnter in right format ! (e.g, 19UCS053)"));
                               }
                             }
                             else{
-                              ScaffoldMessenger.of(context).showSnackBar(makeBar("Invalid Roll Number !!\nEnter in right format ! (e.g, 19UCS053)"));
+                              setState((){
+                                loading = false;
+                              });
+                              ScaffoldMessenger.of(context).showSnackBar(makeBar("Name/Roll number missing !!"));
                             }
-                          }
-                          else{
-                            ScaffoldMessenger.of(context).showSnackBar(makeBar("Name/Roll number missing !!"));
                           }
                         },
                         child: AnimatedContainer(
                           duration: Duration(seconds: 1),
-                          width: 130,
+                          width: 170,
                           height: 50,
+                          color: (loading == true)?Colors.grey:Colors.black,
                           alignment: Alignment.center,
                           child: Text(
-                            "Register",
+                            "Verify & Register",
                             style: TextStyle(
                               color: Colors.white, 
                               fontWeight: FontWeight.bold,

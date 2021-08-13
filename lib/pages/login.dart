@@ -179,30 +179,52 @@ class _LoginPageState extends State<LoginPage> {
                             onTap: () async{
                               check(context);
                               if(_check1 == true){
-                                FirebaseAuthException er = FirebaseAuthException(code: "");
-                                String msg = "";
-                                final snackBar;
-                                try {
-                                  await _auth.signInWithEmailAndPassword(email: email, password: password);
-                                } 
-                                on FirebaseAuthException catch (e){
-                                  er = e; 
-                                } 
-                                if(er.code == 'user-not-found'){
-                                  msg = 'No Such User found!';
-                                }else if(er.code == 'wrong-password'){
-                                  msg = 'Incorrect Password !';
-                                }else if(er.code == ""){
-                                  SharedPreferences prefs = await SharedPreferences.getInstance();
-                                  prefs.setString('email', email);
-                                  moveHome(context, er.code);
-                                  msg = 'Loading...';
-                                }
-                                snackBar = makeBar(msg);
-                                ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                                setState(() {
-                                  _check1 = false;
+                                var fl = -1;
+                                await _auth.signInWithEmailAndPassword(email: email, password: password).then((value){
+                                  User? user = FirebaseAuth.instance.currentUser;
+                                  if(user!=null && !user.emailVerified)
+                                  {
+                                    FirebaseAuth.instance.signOut();
+                                    setState(() {
+                                      _check1 = false;
+                                    });
+                                  }
+                                  else{
+                                    fl =1;
+                                  }
                                 });
+                                print(fl);
+                                if(fl==1)
+                                {
+                                  FirebaseAuthException er = FirebaseAuthException(code: "");
+                                  String msg = "";
+                                  final snackBar;
+                                  try {
+                                    await _auth.signInWithEmailAndPassword(email: email, password: password);
+                                  } 
+                                  on FirebaseAuthException catch (e){
+                                    er = e; 
+                                  } 
+                                  if(er.code == 'user-not-found'){
+                                    msg = 'No Such User found!';
+                                  }else if(er.code == 'wrong-password'){
+                                    msg = 'Incorrect Password !';
+                                  }else if(er.code == ""){
+                                    SharedPreferences prefs = await SharedPreferences.getInstance();
+                                    prefs.setString('email', email);
+                                    moveHome(context, er.code);
+                                    msg = 'Loading...';
+                                  }
+                                  snackBar = makeBar(msg);
+                                  ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                                  setState(() {
+                                    _check1 = false;
+                                  });
+                                }
+                                else
+                                {
+                                  ScaffoldMessenger.of(context).showSnackBar(makeBar("Please verify your email first !"));
+                                }
                               }
                             },
                             child: AnimatedContainer(
