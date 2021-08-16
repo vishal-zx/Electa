@@ -26,8 +26,6 @@ class Register extends StatefulWidget {
 }
 
 class _RegisterState extends State<Register> {
-  int _cameraOcr = FlutterMobileVision.CAMERA_BACK;
-  String _textValue = "sample";
   DateTime selectedDate = DateTime.now();
 
   bool loading = false;
@@ -48,51 +46,6 @@ class _RegisterState extends State<Register> {
   int otpFlag = -1;
   int userOTP = 0;
   int sentOTP = 0;
-
-  void sendOtp() async{
-    String otpEmail = 'info.electa.lnm@gmail.com';
-    String otpPass = 'Info@Electa1#';
-
-    final smtpServer = gmail(otpEmail, otpPass);
-
-    Random rnd = new Random();
-    var next = rnd.nextDouble() * 1000000;
-    while (next < 100000) {
-      next *= 10;
-    }
-    sentOTP = next.toInt();
-
-    final msg = Message()
-      ..from = Address(otpEmail, 'Info Electa')
-      ..recipients.add(email)
-      ..subject = 'OTP for Email Verification | Electa'
-      ..text = 'Hello $roll, \nYour OTP for Mail($email) verification is \n$sentOTP\n\nTeam Electa';
-
-    try {
-      await send(msg, smtpServer);
-      ScaffoldMessenger.of(context).showSnackBar(makeBar("OTP successfully sent !"));
-    } on MailerException catch (e) {
-      if(email == ""){
-        ScaffoldMessenger.of(context).showSnackBar(makeBar("Enter Roll Number !"));
-      }
-      else{
-        ScaffoldMessenger.of(context).showSnackBar(makeBar("Problem sending OTP !"));
-      }
-    }
-  }
-
-  int matchOTP(){
-    if(sentOTP == userOTP){
-      return 2;
-    }
-    else if(sentOTP != userOTP){
-      return 1;
-    }
-    else{
-      return 0;
-    }
-  }
-
   bool _checkRoll = true;
   bool _checkPass = true;
 
@@ -137,41 +90,6 @@ class _RegisterState extends State<Register> {
   bool isInitialized = false;
   bool? value = false;
   bool? value2 = false;
-
-  Widget buildcheckbox() => Checkbox(
-    value: value,
-    onChanged: (value) {
-      setState(() {
-        this.value = value;
-      });
-    }
-  );
-
-  Widget buildcheckbox2() => Checkbox(
-    value: value2,
-    onChanged: (value2) {
-      setState(() {
-        this.value2 = value2;
-      });
-    }
-  );
-
-  Future<Null> _read() async {
-    List<OcrText> texts = [];
-    try {
-      texts = await FlutterMobileVision.read(
-        camera: _cameraOcr,
-        waitTap: true,
-      );
-
-      setState(() {
-        _textValue = texts[0].value;
-        texts.add(new OcrText('Failed to recognize text.'));
-      });
-    } on Exception {
-      texts.add(new OcrText('Failed to recognise text.'));
-    }
-  }
 
   void _togglePass(){
     setState(() {

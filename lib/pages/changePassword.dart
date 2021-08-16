@@ -274,7 +274,50 @@ class _ChangePswdState extends State<ChangePswd> {
                     Navigator.pushNamed(context, MyRoutes.hNSRoute);
                   },
                 )
-              )
+              ),
+              Container(
+                padding: EdgeInsets.fromLTRB(0, 0, 0, 10),
+                margin: EdgeInsets.all(0),
+                child: TextButton(
+                  onPressed: () {
+                    FirebaseAuth.instance.sendPasswordResetEmail(email: FirebaseAuth.instance.currentUser!.email!);
+                    showDialog(
+                      context: context,
+                      builder:  (BuildContext context)
+                      {
+                        return AlertDialog(
+                          title: const Text('Reset Password'),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(20),
+                          ),
+                          content: SingleChildScrollView(
+                            child: ListBody(
+                              children: <Widget>[
+                                Text("Password reset link sent successfully !"),
+                              ],
+                            ),
+                          ),
+                          actions: <Widget>[
+                            TextButton(
+                              child: const Text('Close', style: TextStyle(color:Colors.black)),
+                              onPressed: () {
+                                Navigator.of(context).pop();
+                              },
+                            ),
+                          ],
+                        );
+                      },
+                    );
+                  },
+                  child: Text(
+                    "Reset Password",
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 15,
+                    )
+                  ),
+                ),
+              ),
               ],
             ),
           ),
