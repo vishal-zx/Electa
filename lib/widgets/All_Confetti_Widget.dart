@@ -22,7 +22,7 @@ class _AllConfettiWidgetState extends State<AllConfettiWidget> {
   void initState() {
     super.initState();
 
-    controller = ConfettiController(duration: Duration(seconds: 3));
+    controller = ConfettiController(duration: Duration(seconds: 1));
     controller.play();
   }
 
@@ -66,12 +66,14 @@ class _AllConfettiWidgetState extends State<AllConfettiWidget> {
         Colors.pinkAccent,
         Colors.purple,
         Colors.deepOrangeAccent,
+        
       ],
       // blastDirection: blastDirection,
       blastDirectionality: BlastDirectionality.explosive,
       shouldLoop: true,
       emissionFrequency: 0,
       numberOfParticles: 75,
+      gravity: 1,
     ),
   );
 
