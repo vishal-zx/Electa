@@ -63,23 +63,27 @@ Widget _buildTeamRow(BuildContext context, Member person) {
               child: Row(
                 children: [
                   Container(
+                    width: MediaQuery.of(context).size.width*0.61,
                     padding: EdgeInsets.fromLTRB(
-                        MediaQuery.of(context).size.height * 0.11, 10, 0, 10),
+                        MediaQuery.of(context).size.width*0.2, MediaQuery.of(context).size.height*0.01, 0, MediaQuery.of(context).size.height*0.01),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
                           person.name,
                           style: TextStyle(
-                            fontSize: 20,
+                            fontSize: MediaQuery.of(context).size.height*0.0255,
                             color: Colors.white,
                           ),
+                        ),
+                        SizedBox(
+                          height: MediaQuery.of(context).size.height*0.015,
                         ),
                         Text(
                           person.email,
                           style: TextStyle(
-                            fontSize: 16,
+                            fontSize: MediaQuery.of(context).size.height*0.02,
                             color: Colors.grey[400],
                           ),
                         ),
@@ -90,13 +94,14 @@ Widget _buildTeamRow(BuildContext context, Member person) {
                     padding: EdgeInsets.only(
                         left: MediaQuery.of(context).size.height * 0.005),
                     child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         IconButton(
                           icon: Icon(
                             FontAwesomeIcons.linkedin,
                             color: Colors.white,
                           ),
+                          iconSize: 24,
                           padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
                           onPressed: () async {
                             var url = person.sn.linkedin;
@@ -112,6 +117,7 @@ Widget _buildTeamRow(BuildContext context, Member person) {
                             FontAwesomeIcons.instagram,
                             color: Colors.white,
                           ),
+                          iconSize: 24,
                           padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
                           onPressed: () async {
                             var url = person.sn.insta;
@@ -204,7 +210,7 @@ class _HelpNSupportState extends State<HelpNSupport> {
                   Container(
                     width: double.infinity,
                     height: MediaQuery.of(context).size.height * 0.16,
-                    margin: EdgeInsets.fromLTRB(20, 24, 20, 5),
+                    margin: EdgeInsets.fromLTRB(MediaQuery.of(context).size.width*0.055, MediaQuery.of(context).size.height*0.032, MediaQuery.of(context).size.width*0.055, 5),
                     padding: EdgeInsets.only(bottom: 5),
                     decoration: BoxDecoration(
                       border: Border.all(
@@ -213,9 +219,11 @@ class _HelpNSupportState extends State<HelpNSupport> {
                       shape: BoxShape.rectangle,
                     ),
                     child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         Container(
-                          padding: EdgeInsets.fromLTRB(30, 12, 0, 0),
+                          padding: EdgeInsets.only(left: MediaQuery.of(context).size.width*0.08),
                           child: Column(
                             children: [
                               Row(
@@ -290,7 +298,7 @@ class _HelpNSupportState extends State<HelpNSupport> {
                   Container(
                     width: double.infinity,
                     height: MediaQuery.of(context).size.height * 0.645,
-                    margin: EdgeInsets.fromLTRB(20, 24, 20, 20),
+                    margin: EdgeInsets.fromLTRB(MediaQuery.of(context).size.width*0.055, MediaQuery.of(context).size.height*0.032, MediaQuery.of(context).size.width*0.055, 20),
                     // padding: EdgeInsets.only(bottom: 10),
                     decoration: BoxDecoration(
                       border: Border.all(

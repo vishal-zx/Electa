@@ -162,9 +162,10 @@ class _MyAccountState extends State<MyAccount> {
                       ],
                     ),
                     child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
                         Container(
-                          padding: EdgeInsets.fromLTRB(MediaQuery.of(context).size.height*0.025, MediaQuery.of(context).size.height*0.035, 0, MediaQuery.of(context).size.height*0.030),
+                          padding: EdgeInsets.fromLTRB(MediaQuery.of(context).size.height*0.025, MediaQuery.of(context).size.height*0.03, 0, MediaQuery.of(context).size.height*0.010),
                           child: Row(
                             children: [
                               Container(
@@ -187,7 +188,7 @@ class _MyAccountState extends State<MyAccount> {
                               Column(
                                 children: [
                                   Container(
-                                    height: MediaQuery.of(context).size.height*(((userName.length)/16).ceil()*0.038),
+                                    height: MediaQuery.of(context).size.height*(((userName.length)/16).ceil()*0.046),
                                     width: MediaQuery.of(context).size.height*0.28,
                                     child: Align(
                                       alignment: Alignment.bottomCenter,
@@ -195,7 +196,7 @@ class _MyAccountState extends State<MyAccount> {
                                         "$userName",
                                         style: TextStyle(
                                           color: Colors.white,
-                                          fontSize: 27,
+                                          fontSize: MediaQuery.of(context).size.height*0.035,
                                           fontWeight: FontWeight.bold,
                                         ),
                                         textAlign: TextAlign.center,
@@ -225,8 +226,13 @@ class _MyAccountState extends State<MyAccount> {
                             ],
                           ),
                         ),
+                        Divider(
+                          indent: MediaQuery.of(context).size.height*0.02,
+                          endIndent: MediaQuery.of(context).size.height*0.02,
+                          thickness: 2,
+                        ),
                         Container(
-                          padding: EdgeInsets.fromLTRB(25, 0, 25, 0),
+                          padding: EdgeInsets.fromLTRB(MediaQuery.of(context).size.height*0.02, MediaQuery.of(context).size.height*0.010, MediaQuery.of(context).size.height*0.02, MediaQuery.of(context).size.height*0.03),
                           child: Text(
                             userBio.replaceAll('\n', ' '),
                             style: TextStyle(
@@ -237,9 +243,6 @@ class _MyAccountState extends State<MyAccount> {
                             ),
                             textAlign: TextAlign.center,
                           ),
-                        ),
-                        SizedBox(
-                          height: MediaQuery.of(context).size.height*0.035,
                         ),
                       ],
                     ),

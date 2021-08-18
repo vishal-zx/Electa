@@ -110,10 +110,9 @@ class _ChangePswdState extends State<ChangePswd> {
     }
   }
 
-  
-
   @override
   Widget build(BuildContext context) {
+    var mq = MediaQuery.of(context).size;
     return GestureDetector(
       onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
       child: Scaffold(
@@ -130,9 +129,9 @@ class _ChangePswdState extends State<ChangePswd> {
                 children: <Widget>[
                   Container(
                     width: double.infinity,
-                    height: MediaQuery.of(context).size.height*0.52,
-                    margin: EdgeInsets.fromLTRB(20, 24, 20, 10),
-                    padding: EdgeInsets.only(bottom: 10),
+                    height: MediaQuery.of(context).size.height*0.47,
+                    margin: EdgeInsets.fromLTRB(mq.width*0.05, mq.height*0.032, mq.width*0.05, mq.height*0.015),
+                    padding: EdgeInsets.only(bottom: mq.height*0.014),
                     decoration: BoxDecoration(
                       border: Border.all(
                           color: Color.fromARGB(255, 0, 0, 0), width: 2),
@@ -145,7 +144,7 @@ class _ChangePswdState extends State<ChangePswd> {
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [
                           Padding(
-                            padding: const EdgeInsets.fromLTRB(20, 20, 20, 5),
+                            padding: EdgeInsets.fromLTRB(mq.width*0.07, mq.height*0.01, mq.width*0.07, 0),
                             child: TextFormField(
                               obscureText: _showPass1,
                               decoration: InputDecoration(
@@ -167,7 +166,7 @@ class _ChangePswdState extends State<ChangePswd> {
                             ),
                           ),
                           Padding(
-                            padding: const EdgeInsets.fromLTRB(20, 0, 20, 5),
+                            padding: EdgeInsets.fromLTRB(mq.width*0.07, 0, mq.width*0.07, 0),
                             child: TextFormField(
                               obscureText: _showPass2,
                               decoration: InputDecoration(
@@ -189,7 +188,7 @@ class _ChangePswdState extends State<ChangePswd> {
                             ),
                           ),
                           Padding(
-                            padding: const EdgeInsets.fromLTRB(20, 0, 20, 40),
+                            padding: EdgeInsets.fromLTRB(mq.width*0.07, 0, mq.width*0.07, mq.height*0.02),
                             child: TextFormField(
                               obscureText: _showPass3,
                               decoration: InputDecoration(
@@ -246,7 +245,7 @@ class _ChangePswdState extends State<ChangePswd> {
                   ),
                   Positioned(
                     left: MediaQuery.of(context).size.width*0.1,
-                    top: 12,
+                    top: MediaQuery.of(context).size.height*0.015,
                     child: Container(
                       padding: EdgeInsets.only(bottom: 10, left: 10, right: 10),
                       color: Colors.blueGrey[100],
@@ -259,7 +258,7 @@ class _ChangePswdState extends State<ChangePswd> {
                 ],
               ),
               Container(
-                padding: EdgeInsets.fromLTRB(0, 10, 0, 0),
+                padding: EdgeInsets.fromLTRB(0, 5, 0, 0),
                 child: TextButton(
                   child: Text(
                     "Having Problem?  Contact Us",
