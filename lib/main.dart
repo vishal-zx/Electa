@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:electa/pages/addPost.dart';
 import 'package:electa/pages/candidateHome.dart';
 import 'package:electa/pages/changePassword.dart';
 import 'package:electa/pages/editProfile.dart';
@@ -103,6 +104,7 @@ class _MyAppState extends State<MyApp> {
         MyRoutes.registerRoute : (context) => Register(),
         MyRoutes.homeRoute : (context) => Home(),
         MyRoutes.candHomeRoute : (context) => CandidateFeed(),
+        MyRoutes.addPost : (context) => AddPost(),
         MyRoutes.voteRoute : (context) => Vote(),
         MyRoutes.resultRoute : (context) => Result(),
         MyRoutes.myAccountRoute : (context) => MyAccount(),
