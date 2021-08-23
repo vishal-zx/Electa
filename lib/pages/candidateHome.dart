@@ -201,6 +201,4 @@ class _CandidateFeedState extends State<CandidateFeed> {
     SystemNavigator.pop();
     return true;
   }
-
-  add_post() {}
 }
