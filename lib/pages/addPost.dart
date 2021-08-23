@@ -43,7 +43,7 @@ class AddPostState extends State<AddPost> {
     if (permissionStatus.isGranted){
       XFile? picked = await ImagePicker().pickImage(source: ImageSource.gallery);
       if(picked!=null){
-        _cropImage(picked);
+        _cropImage(picked, context);
       }else {
         error = makeBar('No Image Selected');
         ScaffoldMessenger.of(context).showSnackBar(error);
@@ -54,7 +54,9 @@ class AddPostState extends State<AddPost> {
     }
   }
 
-  _cropImage(XFile picked) async{
+  _cropImage(XFile picked, BuildContext context) async{
+    var h = MediaQuery.of(context).size.height*0.63;
+    var w = MediaQuery.of(context).size.width;
     File? cropped = await ImageCropper.cropImage(
       androidUiSettings: AndroidUiSettings(
         statusBarColor: Colors.black,
@@ -62,9 +64,10 @@ class AddPostState extends State<AddPost> {
         toolbarTitle: "Crop Image",
         toolbarWidgetColor: Colors.white,
       ),
+      compressQuality: 50,
       sourcePath: picked.path,
       aspectRatioPresets: [
-          CropAspectRatioPreset.square
+          CropAspectRatioPreset.square,
         ],
         maxWidth: 1200,
     );
@@ -72,6 +75,7 @@ class AddPostState extends State<AddPost> {
       setState(() {
         pickedImage = cropped;
       });
+      upload(pickedImage);
     }
   }
 
@@ -116,63 +120,52 @@ class AddPostState extends State<AddPost> {
             SizedBox(
               height: mq.height*0.02,
             ),
-            Container(
-              width: MediaQuery.of(context).size.width*0.9,
-              height: MediaQuery.of(context).size.height*0.25,
-              child: (imageUrl != "")?Image.network(imageUrl):
-              Image.asset('assets/images/imgbg.png', fit: BoxFit.contain,)
+            Stack(
+              alignment: Alignment.center,
+              children: [
+                Container(
+                  width: MediaQuery.of(context).size.width*0.9,
+                  height: MediaQuery.of(context).size.height*0.25,
+                  child: (imageUrl != "")?Image.network(imageUrl):
+                  Image.asset('assets/images/imgbg.png', fit: BoxFit.contain,)
+                ),
+                Positioned(
+                  left: mq.width*0.318,
+                  right: mq.width*0.288,
+                  child: TextButton(
+                    onPressed: (){
+                      _loadPicker();
+                    },
+                    style: ButtonStyle(
+                      backgroundColor: MaterialStateProperty.all(Colors.black.withOpacity(0.8)),
+                      padding: MaterialStateProperty.all(EdgeInsets.all(10)),
+                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                        RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12.0),
+                          side: BorderSide(color: Colors.black87)
+                        )
+                      )
+                    ),
+                    child: Row(
+                      children: [
+                        Icon(
+                          Icons.add_photo_alternate,
+                          color: Colors.white,
+                        ),
+                        Text(
+                          "  Add Photo",
+                          style: TextStyle(
+                            color: Colors.white,
+                          )
+                        )
+                      ],
+                    )
+                  ),
+                )
+              ],
             ),
             SizedBox(
               height: mq.height*0.02,
-            ),
-            // TextField(
-            //   maxLines: null,
-            //   keyboardType: TextInputType.multiline,
-            // ),
-            ElevatedButton(
-              onPressed: (){
-                _loadPicker();
-              }, 
-              child: Padding(
-                padding: EdgeInsets.fromLTRB(2, 12, 2, 12),
-                child: Text("1.   Select Image",
-                  style: TextStyle(
-                    fontSize: 12
-                  ),
-                ),
-              ),
-              style: ButtonStyle(
-                backgroundColor: MaterialStateProperty.all<Color>(Colors.black87),
-                shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                  RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12.0),
-                    side: BorderSide(color: Colors.black87)
-                  )
-                )
-              ),
-            ),
-            ElevatedButton(
-              onPressed: (){
-                upload(pickedImage);
-              }, 
-              child: Padding(
-                padding: EdgeInsets.fromLTRB(2, 12, 2, 12),
-                child: Text("2.   Upload Image",
-                  style: TextStyle(
-                    fontSize: 12
-                  ),
-                ),
-              ),
-              style: ButtonStyle(
-                backgroundColor: MaterialStateProperty.all<Color>(
-                  (isUploading==true)?Colors.grey:Colors.black),
-                shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                  RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12.0),
-                    side: BorderSide(color: Colors.black)
-                  )
-                )
-              ),
             ),
             ElevatedButton(
               onPressed: (){
