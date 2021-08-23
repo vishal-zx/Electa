@@ -73,7 +73,7 @@ class _CandidateFeedState extends State<CandidateFeed> {
                                       showDialog(
                                         context: context,
                                         builder: (BuildContext context) =>
-                                            userPro(context, "19ucs053"),
+                                            userPro(context, "19UCS053"),
                                       );
                                     },
                                     child: Text("$userName")),
