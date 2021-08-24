@@ -73,7 +73,7 @@ class _CandidateFeedState extends State<CandidateFeed> {
                                       showDialog(
                                         context: context,
                                         builder: (BuildContext context) =>
-                                            userPro(context, "19ucs053"),
+                                            userPro(context, "19UCS053"),
                                       );
                                     },
                                     child: Text("$userName")),
@@ -88,7 +88,7 @@ class _CandidateFeedState extends State<CandidateFeed> {
                       ],
                     ),
                     Container(
-                      height: MediaQuery.of(context).size.height * 0.45,
+                      height: MediaQuery.of(context).size.width * 0.9,
                       width: MediaQuery.of(context).size.width * 0.9,
                       decoration: BoxDecoration(
                           border:
@@ -201,6 +201,4 @@ class _CandidateFeedState extends State<CandidateFeed> {
     SystemNavigator.pop();
     return true;
   }
-
-  add_post() {}
 }

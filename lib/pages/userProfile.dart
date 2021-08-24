@@ -79,7 +79,7 @@ Widget userPro(BuildContext context, String roll) {
           Map<String, dynamic> data = snapshot.data!.data() as Map<String, dynamic>;
           String userName = data['Name'];
           String userEmail = roll.toLowerCase()+"@lnmiit.ac.in";
-          final userBio = data['Bio'];
+          String userBio = data['Bio'];
           String userImageUrl = data['imageUrl'];
 
           return BackdropFilter(
@@ -89,7 +89,9 @@ Widget userPro(BuildContext context, String roll) {
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     Container(
-                      height: mQ.height*0.345,
+                      height: 
+                      (userBio.length > 76)?
+                      mQ.height*0.342:((userBio.length > 41)?mQ.height*0.31:mQ.height*0.28),
                       width: mQ.height*0.54,
                       margin: EdgeInsets.symmetric(horizontal: mQ.width*0.08, vertical: mQ.height*0.05),
                       decoration: BoxDecoration(

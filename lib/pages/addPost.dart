@@ -1,8 +1,11 @@
 import 'dart:io';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -15,6 +18,7 @@ class AddPost extends StatefulWidget {
 }
 
 class AddPostState extends State<AddPost> {
+  var roll = FirebaseAuth.instance.currentUser!.email!.substring(0,8).toUpperCase();
 
   SnackBar makeBar(String text){
     final snackBar = SnackBar(
@@ -34,8 +38,9 @@ class AddPostState extends State<AddPost> {
 
   File pickedImage = new File("");
   bool isUploading = false;
-  bool _rollPresent = false;
-  String imageUrl="";
+  bool isUploaded = false; 
+  bool isPosting = false; 
+  String comment = ""; 
 
   _loadPicker() async{
     await Permission.photos.request();
@@ -43,7 +48,7 @@ class AddPostState extends State<AddPost> {
     if (permissionStatus.isGranted){
       XFile? picked = await ImagePicker().pickImage(source: ImageSource.gallery);
       if(picked!=null){
-        _cropImage(picked);
+        _cropImage(picked, context);
       }else {
         error = makeBar('No Image Selected');
         ScaffoldMessenger.of(context).showSnackBar(error);
@@ -54,7 +59,7 @@ class AddPostState extends State<AddPost> {
     }
   }
 
-  _cropImage(XFile picked) async{
+  _cropImage(XFile picked, BuildContext context) async{
     File? cropped = await ImageCropper.cropImage(
       androidUiSettings: AndroidUiSettings(
         statusBarColor: Colors.black,
@@ -62,9 +67,10 @@ class AddPostState extends State<AddPost> {
         toolbarTitle: "Crop Image",
         toolbarWidgetColor: Colors.white,
       ),
+      compressQuality: 50,
       sourcePath: picked.path,
       aspectRatioPresets: [
-          CropAspectRatioPreset.square
+          CropAspectRatioPreset.square,
         ],
         maxWidth: 1200,
     );
@@ -77,14 +83,40 @@ class AddPostState extends State<AddPost> {
 
   void upload(File pickedImg) async{
     if(pickedImg.path!=""){
-      final _firebaseStorage = FirebaseStorage.instance;
-      isUploading = true;
-      UploadTask uploadTask = _firebaseStorage.ref().child('userImages/a.png').putFile(pickedImg);
-      var downloadUrl = await (await uploadTask.whenComplete(() => null)).ref.getDownloadURL();
-
       setState(() {
-        imageUrl = downloadUrl;
-        isUploading = false;
+        isUploading = true;
+        isUploaded = true;
+      });
+      final _firebaseStorage = FirebaseStorage.instance;
+      QuerySnapshot querySnapshot = await FirebaseFirestore.instance.collection('posts').get();
+      var postNo = querySnapshot.docs.length + 1;
+      isUploading = true;
+      UploadTask uploadTask = _firebaseStorage.ref().child('postImages/$postNo.png').putFile(pickedImg);
+      var downloadUrl = await (await uploadTask.whenComplete(() => null)).ref.getDownloadURL();
+      setState(() {      
+        DateTime currentDate = DateTime.now();
+        FirebaseFirestore.instance.collection('posts').add({
+          'img_url' : downloadUrl,
+          'comment' : comment,
+          'user' : roll,
+          'time' : currentDate,
+        }).then((value){
+          isUploading = false;
+          isPosting = false;
+        });
+        Future.delayed(const Duration(milliseconds: 1000), (){
+          ScaffoldMessenger.of(context).showSnackBar(makeBar("Posting ..."));
+        });
+      });
+      Future.delayed(const Duration(milliseconds: 3000), (){
+        ScaffoldMessenger.of(context).showSnackBar(makeBar("Post Added !! 🔥"));
+        setState(() {
+          isUploading = false;
+          isPosting = false;
+        });
+        Future.delayed(const Duration(milliseconds: 4000), (){
+          Navigator.of(context).pop();
+        });
       });
     }
     else{
@@ -100,87 +132,156 @@ class AddPostState extends State<AddPost> {
       appBar: AppBar(
         title: Text("New Post"),
       ),
-      body: Container(
-        height: mq.height*0.7,
-        padding: EdgeInsets.symmetric(vertical: mq.height*0.03, horizontal: mq.width*0.05),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              "Select Image",
-              style: TextStyle(
-                fontSize: 20,
-              )
-            ),
-            SizedBox(
-              height: mq.height*0.02,
-            ),
-            Container(
-              width: MediaQuery.of(context).size.width*0.9,
-              height: MediaQuery.of(context).size.height*0.25,
-              child: (imageUrl != "")?Image.network(imageUrl):
-              Image.asset('assets/images/imgbg.png', fit: BoxFit.contain,)
-            ),
-            SizedBox(
-              height: mq.height*0.02,
-            ),
-            // TextField(
-            //   maxLines: null,
-            //   keyboardType: TextInputType.multiline,
-            // ),
-            ElevatedButton(
-              onPressed: (){
-                _loadPicker();
-              }, 
-              child: Padding(
-                padding: EdgeInsets.fromLTRB(2, 12, 2, 12),
-                child: Text("1.   Select Image",
-                  style: TextStyle(
-                    fontSize: 12
+      body: SingleChildScrollView(
+        child: Container(
+          // height: mq.height,
+          padding: EdgeInsets.symmetric(vertical: mq.height*0.03, horizontal: mq.width*0.05),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                "Select Image",
+                style: TextStyle(
+                  fontSize: 20,
+                )
+              ),
+              SizedBox(
+                height: mq.height*0.02,
+              ),
+              Stack(
+                alignment: Alignment.center,
+                children: [
+                  Container(
+                    width: MediaQuery.of(context).size.width*0.9,
+                    height: MediaQuery.of(context).size.width*((pickedImage.path!="")?0.9:0.5),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(12),
+                      image: DecorationImage(
+                        image: (pickedImage.path!="")?Image.file(pickedImage).image:Image.asset('assets/images/imgbg.png').image,
+                      )
+                    ),
+                  ),
+                  if(pickedImage.path=="")
+                    Positioned(
+                      left: mq.width*0.318,
+                      right: mq.width*0.288,
+                      child: TextButton(
+                        onPressed: (){
+                          _loadPicker();
+                        },
+                        style: ButtonStyle(
+                          backgroundColor: MaterialStateProperty.all(Colors.black.withOpacity(0.8)),
+                          padding: MaterialStateProperty.all(EdgeInsets.all(10)),
+                          shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                            RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(12.0),
+                              side: BorderSide(color: Colors.black87)
+                            )
+                          )
+                        ),
+                        child: Row(
+                          children: [
+                            Icon(
+                              Icons.add_photo_alternate,
+                              color: Colors.white,
+                            ),
+                            Text(
+                              "  Add Photo",
+                              style: TextStyle(
+                                color: Colors.white,
+                              )
+                            )
+                          ],
+                        )
+                      ),
+                    ),
+                  if(isUploading == true)
+                    SpinKitCircle(
+                      color: Colors.black,
+                      size: 50.0,
+                      duration: Duration(seconds: 5), 
+                    ),
+                ],
+              ),
+              if(pickedImage.path!="")
+                Container(
+                  width: MediaQuery.of(context).size.width,
+                  alignment: Alignment.centerRight,
+                  child: TextButton(
+                    style: TextButton.styleFrom(
+                      padding: EdgeInsets.zero,
+                    ),
+                    onPressed: () {
+                      setState(() {
+                        isUploading = false;
+                        isUploaded = false;
+                        pickedImage = new File("");
+                      });
+                    },
+                    child: Text(
+                      "Remove Image",
+                      style: TextStyle(
+                        color: Colors.red,
+                      )
+                    ),
+                  ),
+                ),
+              if(pickedImage.path=="")
+                SizedBox(
+                  height: MediaQuery.of(context).size.height*0.01,
+                ),
+              Divider(
+                thickness: 2,
+              ),
+              SizedBox(
+                height: mq.height*0.03,
+              ),
+              Text(
+                "Add a caption",
+                style: TextStyle(
+                  fontSize: 20,
+                )
+              ),
+              SizedBox(
+                height: mq.height*0.02,
+              ),
+              TextField(
+                maxLines: 3,
+                maxLength: 100,
+                decoration: InputDecoration.collapsed(hintText: "Something about your post ..."),
+                onChanged: (value){
+                  comment = value;
+                  if(value == "") comment = "";
+                },
+              ),
+              Divider(
+                thickness: 2,
+              ),
+              SizedBox(
+                height: mq.height*0.02,
+              ),
+              Center(
+                child: ElevatedButton(
+                  onPressed: (){
+                    if(isPosting == false) {
+                      isPosting = true;
+                      upload(pickedImage);}
+                  }, 
+                  child: Text("Post"),
+                  style: ButtonStyle(
+                    backgroundColor: MaterialStateProperty.all((isPosting==true)?Colors.black54:Colors.black),
+                    padding: MaterialStateProperty.all(EdgeInsets.all(10)),
+                    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                      RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12.0),
+                      )
+                    ),
                   ),
                 ),
               ),
-              style: ButtonStyle(
-                backgroundColor: MaterialStateProperty.all<Color>(Colors.black87),
-                shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                  RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12.0),
-                    side: BorderSide(color: Colors.black87)
-                  )
-                )
-              ),
-            ),
-            ElevatedButton(
-              onPressed: (){
-                upload(pickedImage);
-              }, 
-              child: Padding(
-                padding: EdgeInsets.fromLTRB(2, 12, 2, 12),
-                child: Text("2.   Upload Image",
-                  style: TextStyle(
-                    fontSize: 12
-                  ),
-                ),
-              ),
-              style: ButtonStyle(
-                backgroundColor: MaterialStateProperty.all<Color>(
-                  (isUploading==true)?Colors.grey:Colors.black),
-                shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                  RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12.0),
-                    side: BorderSide(color: Colors.black)
-                  )
-                )
-              ),
-            ),
-            ElevatedButton(
-              onPressed: (){
-
-              }, 
-              child: Text("Post")
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
