@@ -22,12 +22,21 @@ class _HomeState extends State<Home> {
     return true;
   }
 
-  @override
-  Widget build(BuildContext context) {
+  Future<Widget> main(BuildContext context) async {
     FirebaseFirestore firestore = FirebaseFirestore.instance;
-    CollectionReference posts = firestore.collection('posts');
+    // CollectionReference posts = firestore.collection('posts');
 
-    var total_posts = 10;
+    final QuerySnapshot posts =
+        firestore.collection('posts').get() as QuerySnapshot<Object?>;
+
+    final List<DocumentSnapshot> documents = posts.docs;
+    final allPosts = posts.docs.map((doc) => doc.data()).toList();
+    var postImage = "";
+    var userName = "";
+    var postComment = "";
+    var userImage = "";
+
+    var total_posts = allPosts.length;
     return Scaffold(
       appBar: AppBar(
         title: Text("Electa"),
@@ -38,12 +47,6 @@ class _HomeState extends State<Home> {
         child: ListView.builder(
             itemCount: total_posts,
             itemBuilder: (BuildContext context, int index) {
-              var postImage = "https://picsum.photos/200";
-              var userName = "Poojan Gadhiya";
-              var postComment =
-                  "If You Want To Save Water, Then Start from your house. Irrlevent";
-              var userImage =
-                  "https://firebasestorage.googleapis.com/v0/b/electa-e343d.appspot.com/o/userImages%2F19ucs245.png?alt=media&token=12f17277-c8f3-4011-a92a-44ed968dec7d";
               return Container(
                 height: MediaQuery.of(context).size.height * 0.63,
                 width: MediaQuery.of(context).size.width,
@@ -343,4 +346,10 @@ class _HomeState extends State<Home> {
   buildWidget({required String icon}) {}
 
   buildWidgetPreview({required String icon}) {}
+
+  @override
+  Widget build(BuildContext context) {
+    // TODO: implement build
+    throw UnimplementedError();
+  }
 }
