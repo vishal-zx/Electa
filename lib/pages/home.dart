@@ -279,7 +279,7 @@ class _HomeState extends State<Home> {
                     "Loading Data ...",
                     style: TextStyle(
                       fontSize: 19,
-                      color: Colors.white
+                      color: Colors.black,
                     )
                   ),
                 ],

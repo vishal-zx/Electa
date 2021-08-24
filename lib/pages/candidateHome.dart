@@ -277,7 +277,7 @@ class _CandidateFeedState extends State<CandidateFeed> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   SpinKitRotatingPlain(
-                    color: Colors.grey,
+                    color: Colors.black,
                     size: 50.0,
                     duration: Duration(seconds: 2),
                   ),
@@ -288,7 +288,7 @@ class _CandidateFeedState extends State<CandidateFeed> {
                     "Loading Data ...",
                     style: TextStyle(
                       fontSize: 19,
-                      color: Colors.white
+                      color: Colors.grey
                     )
                   ),
                 ],
