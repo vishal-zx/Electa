@@ -152,7 +152,7 @@ class _RegisterState extends State<Register> {
     }
   }
 
-  void upload(File pickedImg) async{
+  Future<void> upload(File pickedImg) async{
     if(pickedImg.path!=""){
       final _firebaseStorage = FirebaseStorage.instance;
       isUploading = true;
@@ -446,7 +446,7 @@ class _RegisterState extends State<Register> {
                                         Radius.circular(15),
                                       ),
                                     ),
-                                    child: (imageUrl != "")?Image.network(imageUrl):
+                                    child: (pickedImage.path!="")?Image.file(pickedImage):
                                     Image.asset('assets/images/imgbg.png', fit: BoxFit.contain,)
                                   ),
                                   Column(
@@ -457,7 +457,7 @@ class _RegisterState extends State<Register> {
                                         }, 
                                         child: Padding(
                                           padding: EdgeInsets.fromLTRB(2, 12, 2, 12),
-                                          child: Text("1.   Select Image",
+                                          child: Text("Select Image",
                                             style: TextStyle(
                                               fontSize: 12
                                             ),
@@ -469,29 +469,6 @@ class _RegisterState extends State<Register> {
                                             RoundedRectangleBorder(
                                               borderRadius: BorderRadius.circular(12.0),
                                               side: BorderSide(color: Colors.black87)
-                                            )
-                                          )
-                                        ),
-                                      ),
-                                      ElevatedButton(
-                                        onPressed: (){
-                                          upload(pickedImage);
-                                        }, 
-                                        child: Padding(
-                                          padding: EdgeInsets.fromLTRB(2, 12, 2, 12),
-                                          child: Text("2.   Upload Image",
-                                            style: TextStyle(
-                                              fontSize: 12
-                                            ),
-                                          ),
-                                        ),
-                                        style: ButtonStyle(
-                                          backgroundColor: MaterialStateProperty.all<Color>(
-                                            (isUploading==true)?Colors.grey:Colors.black),
-                                          shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                                            RoundedRectangleBorder(
-                                              borderRadius: BorderRadius.circular(12.0),
-                                              side: BorderSide(color: Colors.black)
                                             )
                                           )
                                         ),
@@ -523,34 +500,36 @@ class _RegisterState extends State<Register> {
                                 if(_checkPass == true){
                                   if(bio != "")
                                   {
-                                    await doRegister(email, password);
-                                    Future.delayed(const Duration(milliseconds: 3000), () async {
-                                      if(registerd == true)
-                                      {
-                                        await FirebaseAuth.instance.signInWithEmailAndPassword(email: email, password: password).then((value) async {
-                                          User? user = FirebaseAuth.instance.currentUser;
-                                          if(user!=null && !user.emailVerified)
-                                          {
-                                            await user.sendEmailVerification();
-                                            ScaffoldMessenger.of(context).showSnackBar(makeBar("Registered Successfully!! 🎉\nVerify your mail by clicking on the link sent to above e-mail before logging in."));
-                                            setState((){
-                                              loading = false;
-                                            });
-                                            FirebaseAuth.instance.signOut();
-                                            Timer(Duration(seconds: 3), (){
-                                              Navigator.pushNamedAndRemoveUntil(context, MyRoutes.loginRoute, (route) => false);
-                                              emailVerified = false;
-                                            });
-                                          }
-                                        });
-                                      }
-                                      else{
-                                        setState((){
-                                          loading = false;
-                                        });
-                                        ScaffoldMessenger.of(context).showSnackBar(makeBar("Something went wrong. Please try again later!"));
-                                      }
-                                    });
+                                    await upload(pickedImage).then((val)async{
+                                      await doRegister(email, password);
+                                      Future.delayed(const Duration(milliseconds: 3000), () async {
+                                        if(registerd == true)
+                                        {
+                                          await FirebaseAuth.instance.signInWithEmailAndPassword(email: email, password: password).then((value) async {
+                                            User? user = FirebaseAuth.instance.currentUser;
+                                            if(user!=null && !user.emailVerified)
+                                            {
+                                              await user.sendEmailVerification();
+                                              ScaffoldMessenger.of(context).showSnackBar(makeBar("Registered Successfully!! 🎉\nVerify your mail by clicking on the link sent to above e-mail before logging in."));
+                                              setState((){
+                                                loading = false;
+                                              });
+                                              FirebaseAuth.instance.signOut();
+                                              Timer(Duration(seconds: 3), (){
+                                                Navigator.pushNamedAndRemoveUntil(context, MyRoutes.loginRoute, (route) => false);
+                                                emailVerified = false;
+                                              });
+                                            }
+                                          });
+                                        }
+                                        else{
+                                          setState((){
+                                            loading = false;
+                                          });
+                                          ScaffoldMessenger.of(context).showSnackBar(makeBar("Something went wrong. Please try again later!"));
+                                        }
+                                      });
+                                    }); 
                                   }
                                   else{
                                     setState((){
