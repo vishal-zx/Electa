@@ -220,8 +220,6 @@ class _ResultState extends State<Result> {
                             children: <Widget>[
                               SizedBox(height: 70),
                               SlimyCard(
-                                
-
                                 topCardWidget: topCardWidget(i),
                                 bottomCardWidget: bottomCardWidget(),
                               ),
@@ -325,7 +323,8 @@ class _ResultState extends State<Result> {
           ),
           SizedBox(height: 15),
           Expanded(
-            child: Text(
+            child: PieChart(dataMap: dataMap,),
+            /*child: Text(
               'FlutterDevs specializes in creating cost-effective and efficient '
                   'applications with our perfectly crafted,creative and leading-edge '
                   'flutter app development solutions for customers all around the globe.',
@@ -335,7 +334,8 @@ class _ResultState extends State<Result> {
                 fontWeight: FontWeight.w500,
               ),
               textAlign: TextAlign.center,
-            ),
+            ),*/
+
           ),
 
         ],
@@ -343,3 +343,7 @@ class _ResultState extends State<Result> {
     );
   }
 }
+Map<String, double> dataMap = {
+    "Manya Sharma": 5,
+    "Saumitra Vyas": 2,
+  };
