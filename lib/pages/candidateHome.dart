@@ -220,6 +220,7 @@ class _CandidateFeedState extends State<CandidateFeed> {
   }
 
   Future<void> getPosts() async{
+    postArray.clear();
     QuerySnapshot qs = await FirebaseFirestore.instance.collection('posts').orderBy('time', descending: true).get();
     var posts = qs.docs;
     for(var post in posts){
@@ -258,8 +259,17 @@ class _CandidateFeedState extends State<CandidateFeed> {
           elevation: 10,
           actions: [
             IconButton(
-              onPressed: () {
-                Navigator.pushNamed(context, MyRoutes.addPost).then((_) => setState(() {}));
+              onPressed: () {   
+                Navigator.pushNamed(context, MyRoutes.addPost).then((_){setState(() {
+                  setState((){
+                    allRight = false;
+                  });
+                  getPosts().then((val){
+                  setState((){
+                    allRight = true;
+                  });
+                });
+                });});
               }, 
               icon: Icon(Icons.add_a_photo_outlined)
             ),
