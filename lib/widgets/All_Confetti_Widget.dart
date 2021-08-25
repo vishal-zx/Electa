@@ -22,7 +22,7 @@ class _AllConfettiWidgetState extends State<AllConfettiWidget> {
   void initState() {
     super.initState();
 
-    controller = ConfettiController(duration: Duration(seconds: 1));
+    controller = ConfettiController(duration: Duration(seconds: 3));
     controller.play();
   }
 

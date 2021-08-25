@@ -120,7 +120,7 @@ class _ResultState extends State<Result> {
   UserCandidate findWinner(List<UserCandidate> cans) {
     int mx=0, j=-1;
     for(int i=0;i<cans.length;i++){
-      if(cans[i].counter >= mx){
+      if(cans[i].counter != "0" && cans[i].counter >= mx){
         mx = cans[i].counter;
         j=i;
       }
@@ -168,7 +168,7 @@ class _ResultState extends State<Result> {
               child: Center(
                 child: FittedBox(
                   fit: BoxFit.fitWidth,
-                  child: Text("Congratulation! to all the selected candidates \nAll the best for your upcoming responsibilities.",
+                  child: Text("Congratulations! to all the selected candidates \nAll the best for your upcoming responsibilities.",
                     style: TextStyle(
                       fontSize: 25,
                       color: Colors.black,
@@ -202,6 +202,7 @@ class _ResultState extends State<Result> {
               ):SizedBox(
               height: MediaQuery.of(context).size.height * 0.6,
               child: Container(
+                
                 child: PageView.builder(
                   itemCount: positions.length,
                   controller: PageController(viewportFraction: 0.75),
@@ -219,7 +220,8 @@ class _ResultState extends State<Result> {
                             children: <Widget>[
                               SizedBox(height: 70),
                               SlimyCard(
-                                color: Colors.indigo[300],
+                                
+
                                 topCardWidget: topCardWidget(i),
                                 bottomCardWidget: bottomCardWidget(),
                               ),
@@ -242,6 +244,13 @@ class _ResultState extends State<Result> {
 
   topCardWidget(int i) {
     return Container(
+      decoration: BoxDecoration(
+           gradient: LinearGradient(
+                begin: Alignment.topRight,
+                end: Alignment.bottomLeft,
+                colors: [Color(0xff63717e), Color(0xff4d6277), Color(0xff2d5173), Color(0xff003f6b), Color(0xff003b6d)]
+                ),            
+                 ),
       padding: EdgeInsets.only(top:MediaQuery.of(context).size.height*0.01),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
@@ -294,33 +303,43 @@ class _ResultState extends State<Result> {
   }
 
   bottomCardWidget() {
-    return Column(
-      children: [
-        Text(
-          'Saumitra Vyas V/S Manya Sharma',
-          style: TextStyle(
-            color: Colors.white,
-            fontSize: 16,
-            fontWeight: FontWeight.w500,
+    return Container(
+      decoration: BoxDecoration(
+          gradient: LinearGradient(
+          begin: Alignment.topRight,
+          end: Alignment.bottomLeft,
+          colors: [Color(0xff63717e), Color(0xff4d6277), Color(0xff2d5173), Color(0xff003f6b), Color(0xff003b6d)]
           ),
-          textAlign: TextAlign.center,
-        ),
-        SizedBox(height: 15),
-        Expanded(
-          child: Text(
-            'FlutterDevs specializes in creating cost-effective and efficient '
-                'applications with our perfectly crafted,creative and leading-edge '
-                'flutter app development solutions for customers all around the globe.',
+          ),
+      child: Column(
+        
+        children: [
+          Text(
+            'Saumitra Vyas V/S Manya Sharma',
             style: TextStyle(
               color: Colors.white,
-              fontSize: 12,
+              fontSize: 16,
               fontWeight: FontWeight.w500,
             ),
             textAlign: TextAlign.center,
           ),
-        ),
+          SizedBox(height: 15),
+          Expanded(
+            child: Text(
+              'FlutterDevs specializes in creating cost-effective and efficient '
+                  'applications with our perfectly crafted,creative and leading-edge '
+                  'flutter app development solutions for customers all around the globe.',
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 12,
+                fontWeight: FontWeight.w500,
+              ),
+              textAlign: TextAlign.center,
+            ),
+          ),
 
-      ],
+        ],
+      ),
     );
   }
 }
