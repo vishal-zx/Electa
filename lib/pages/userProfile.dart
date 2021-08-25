@@ -79,124 +79,132 @@ Widget userPro(BuildContext context, String roll) {
           Map<String, dynamic> data = snapshot.data!.data() as Map<String, dynamic>;
           String userName = data['Name'];
           String userEmail = roll.toLowerCase()+"@lnmiit.ac.in";
-          final userBio = data['Bio'];
+          String userBio = data['Bio'];
           String userImageUrl = data['imageUrl'];
 
           return BackdropFilter(
             filter: ImageFilter.blur(sigmaX: 3, sigmaY: 3),
-            child: Container(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    Container(
-                      height: mQ.height*0.345,
-                      width: mQ.height*0.54,
-                      margin: EdgeInsets.symmetric(horizontal: mQ.width*0.08, vertical: mQ.height*0.05),
-                      decoration: BoxDecoration(
-                        gradient: LinearGradient(
-                          begin: Alignment.topRight,
-                          end: Alignment.bottomLeft,
-                          colors: [
-                            Color(0xff546e7a),
-                            Colors.blueGrey,
-                            Color(0xff616161),
-                            Color(0xff757575),
+            child: DefaultTextStyle(
+              style: TextStyle(decoration: TextDecoration.none), 
+              child: Container(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Container(
+                        height: 
+                        (userBio.length > 76)?
+                        mQ.height*0.342:((userBio.length > 41)?mQ.height*0.31:mQ.height*0.28),
+                        width: mQ.height*0.54,
+                        margin: EdgeInsets.symmetric(horizontal: mQ.width*0.07, vertical: mQ.height*0.05),
+                        decoration: BoxDecoration(
+                          gradient: LinearGradient(
+                            begin: Alignment.topRight,
+                            end: Alignment.bottomLeft,
+                            colors: [
+                              Color(0xff546e7a),
+                              Colors.blueGrey,
+                              Color(0xff616161),
+                              Color(0xff757575),
+                            ],
+                          ),
+                          shape: BoxShape.rectangle,
+                          borderRadius: BorderRadius.all(Radius.circular(20)),
+                          boxShadow: <BoxShadow>[
+                            BoxShadow(  
+                              color: Colors.black26,
+                              blurRadius: 15.0,
+                              offset: Offset(0.0, 15.0),
+                            ),
                           ],
                         ),
-                        shape: BoxShape.rectangle,
-                        borderRadius: BorderRadius.all(Radius.circular(20)),
-                        boxShadow: <BoxShadow>[
-                          BoxShadow(  
-                            color: Colors.black26,
-                            blurRadius: 15.0,
-                            offset: Offset(0.0, 15.0),
-                          ),
-                        ],
-                      ),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          Container(
-                            padding: EdgeInsets.fromLTRB(mQ.width*0.04, mQ.height*0.03, mQ.width*0.04, mQ.height*0.01),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                Container(
-                                  width: mQ.height*0.15,
-                                  height: mQ.height*0.15,
-                                  child: ClipRRect(
-                                    borderRadius: BorderRadius.circular(100),
-                                    child: CachedNetworkImage(
-                                      fit: BoxFit.fill,
-                                      imageUrl: userImageUrl,
-                                      progressIndicatorBuilder: (context, url, downloadProgress) => 
-                                              CircularProgressIndicator(value: downloadProgress.progress),
-                                      errorWidget: (context, url, error) => Image(image: AssetImage("assets/images/u1.png")),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Container(
+                              padding: EdgeInsets.fromLTRB(mQ.width*0.03, mQ.height*0.03, mQ.width*0.03, mQ.height*0.01),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Container(
+                                    width: mQ.height*0.135,
+                                    height: mQ.height*0.135,
+                                    child: ClipRRect(
+                                      borderRadius: BorderRadius.circular(100),
+                                      child: CachedNetworkImage(
+                                        fit: BoxFit.fill,
+                                        imageUrl: userImageUrl,
+                                        progressIndicatorBuilder: (context, url, downloadProgress) => 
+                                                CircularProgressIndicator(value: downloadProgress.progress),
+                                        errorWidget: (context, url, error) => Image(image: AssetImage("assets/images/u1.png")),
+                                      ),
                                     ),
                                   ),
-                                ),
-                                SizedBox(
-                                  width: mQ.width*0.01,
-                                ),
-                                Column(
-                                  children: [
-                                    Container(
-                                      width: mQ.width*0.45,
-                                      child: Align(
-                                        alignment: Alignment.bottomCenter,
+                                  SizedBox(
+                                    width: mQ.width*0.01,
+                                  ),
+                                  Column(
+                                    children: [
+                                      Container(
+                                        width: mQ.width*0.46,
+                                        child: Align(
+                                          alignment: Alignment.bottomCenter,
+                                          child: Text(
+                                            "$userName",
+                                            style: TextStyle(
+                                              color: Colors.white,
+                                              fontSize: 25,
+                                              fontWeight: FontWeight.bold,
+                                              fontFamily: 'Lato'
+                                            ),
+                                            textAlign: TextAlign.center,
+                                          ),
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        height: mQ.height*0.01,
+                                      ),
+                                      Container(
                                         child: Text(
-                                          "$userName",
+                                          "$userEmail",
                                           style: TextStyle(
                                             color: Colors.white,
-                                            fontSize: 25,
-                                            fontWeight: FontWeight.bold,
+                                            fontSize: 15,
+                                            fontWeight: FontWeight.w500,
+                                            fontFamily: 'Lato'
                                           ),
-                                          textAlign: TextAlign.center,
+                                          textAlign: TextAlign.left,
                                         ),
                                       ),
-                                    ),
-                                    SizedBox(
-                                      height: mQ.height*0.01,
-                                    ),
-                                    Container(
-                                      child: Text(
-                                        "$userEmail",
-                                        style: TextStyle(
-                                          color: Colors.white,
-                                          fontSize: 15,
-                                          fontWeight: FontWeight.w500,
-                                        ),
-                                        textAlign: TextAlign.left,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ],
-                            ),
-                          ),
-                          Divider(
-                            thickness: 2,
-                          ),
-                          Container(
-                            padding: EdgeInsets.fromLTRB(20, 10, 20, 10),
-                            child: Text(
-                              "$userBio",
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 16,
-                                fontWeight: FontWeight.w500,
-                                height: 1.4 
+                                    ],
+                                  ),
+                                ],
                               ),
-                              textAlign: TextAlign.center,
                             ),
-                          ),
-                        ],
+                            Divider(
+                              thickness: 2,
+                            ),
+                            Container(
+                              padding: EdgeInsets.fromLTRB(20, 10, 20, 10),
+                              child: Text(
+                                "$userBio",
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w500,
+                                  height: 1.4,
+                                  fontFamily: 'Lato'
+                                ),
+                                textAlign: TextAlign.center,
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
-              ),
+            ),
           );
       }
       return BackdropFilter(

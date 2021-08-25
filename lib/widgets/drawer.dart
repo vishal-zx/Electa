@@ -8,6 +8,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+bool isCandidate = false;
 
 void doRoute(BuildContext context, String nextRoute)
 {
@@ -97,15 +98,16 @@ Widget electaDrawer(BuildContext context, String userName, String userEmail, Str
               height: 20,
             ),
             ListTile(
-              leading: Icon(CupertinoIcons.today, color: (page == '/home')?Colors.blue:Colors.white,),
+              leading: Icon(CupertinoIcons.today, color: (page == '/home' || page == '/candidateHome')?Colors.blue:Colors.white,),
               title: Text("Feed", 
               textScaleFactor: 1.3,
               style: TextStyle(
-                color: (page == '/home')?Colors.blue:Colors.white,
+                color: (page == '/home' || page == '/candidateHome')?Colors.blue:Colors.white,
               ),),
               onTap: (){
                 Navigator.pop(context);
-                doRoute(context, MyRoutes.homeRoute);
+                if(isCandidate == true) doRoute(context, MyRoutes.candHomeRoute);
+                else doRoute(context, MyRoutes.homeRoute);
               },
             ),
             ListTile(
@@ -162,18 +164,37 @@ Widget electaDrawer(BuildContext context, String userName, String userEmail, Str
   );
 }
 
-class MyDrawer extends StatelessWidget {
+class MyDrawer extends StatefulWidget {
   MyDrawer({ Key? key }) : super(key: key);
+
+  @override
+  _MyDrawerState createState() => _MyDrawerState();
+}
+
+class _MyDrawerState extends State<MyDrawer> {
   
   static String userName = "";
   static String userEmail = "";
   static String userImageUrl = "";
+  static String page = "";
 
   final roll = FirebaseAuth.instance.currentUser!.email!.substring(0,8);
-  static String page = "";
+
+  Future<void> checkCandidate(String email) async {
+    QuerySnapshot querySnapshot = await FirebaseFirestore.instance.collection('candidates').where('Roll', isEqualTo: email.substring(0,8).toUpperCase()).get();
+    var cans = querySnapshot.docs;
+    if(cans.length != 0) {
+      isCandidate = true;
+    }
+  }
+
+  @override
+  void initState() {
+    checkCandidate(roll);
+  }
+
   @override
   Widget build(BuildContext context) {
-    // FirebaseFirestore.instance.enablePersistence();
     CollectionReference users = FirebaseFirestore.instance.collection('users');
     return FutureBuilder<DocumentSnapshot>(
       future: users.doc(roll.toUpperCase()).get(GetOptions(source: Source.serverAndCache)),
