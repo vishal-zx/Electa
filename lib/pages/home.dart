@@ -1,6 +1,4 @@
 // ignore: import_of_legacy_library_into_null_safe
-import 'package:circular_profile_avatar/circular_profile_avatar.dart';
-// ignore: import_of_legacy_library_into_null_safe
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:electa/pages/userProfile.dart';
 import 'package:electa/widgets/drawer.dart';

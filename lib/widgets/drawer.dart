@@ -191,6 +191,7 @@ class _MyDrawerState extends State<MyDrawer> {
   @override
   void initState() {
     checkCandidate(roll);
+    super.initState();
   }
 
   @override
