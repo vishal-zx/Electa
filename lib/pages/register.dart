@@ -1,11 +1,13 @@
 import 'dart:async';
 import 'dart:io';
+import 'dart:ui';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:electa/utils/routes.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'dart:core';
 import 'package:image_picker/image_picker.dart';
 import 'package:image_cropper/image_cropper.dart';
@@ -183,16 +185,21 @@ class _RegisterState extends State<Register> {
           {
             error = makeBar('The account already exists for that roll number.');
             fl=1;
+            setState((){
+              loading = false;
+            });
             ScaffoldMessenger.of(context).showSnackBar(error);
           }
         }
         if(fl==0){
           try{
-            FirebaseAuth.instance.createUserWithEmailAndPassword(email: email, password: password).then((value)async{
-              await FirebaseFirestore.instance.collection('users').doc(roll.toUpperCase()).
-              set({'Name' : name, 'Roll' : roll.toUpperCase(), 'Bio' : bio, 'imageUrl' : imageUrl, 'isVoted' : isVoted}).then((value){
-                setState((){
-                  registerd = true;
+            await upload(pickedImage).then((val)async{
+              FirebaseAuth.instance.createUserWithEmailAndPassword(email: email, password: password).then((value)async{
+                await FirebaseFirestore.instance.collection('users').doc(roll.toUpperCase()).
+                set({'Name' : name, 'Roll' : roll.toUpperCase(), 'Bio' : bio, 'imageUrl' : imageUrl, 'isVoted' : isVoted}).then((value){
+                  setState((){
+                    registerd = true;
+                  });
                 });
               });
             });
@@ -202,6 +209,9 @@ class _RegisterState extends State<Register> {
               error = makeBar('The password provided is too weak.');
               ScaffoldMessenger.of(context).showSnackBar(error);
             } else if (e.code == 'email-already-in-use') {
+              setState((){
+                loading = false;
+              });
               error = makeBar('The account already exists for that roll number.');
               ScaffoldMessenger.of(context).showSnackBar(error);
             }
@@ -213,6 +223,238 @@ class _RegisterState extends State<Register> {
         ScaffoldMessenger.of(context).showSnackBar(error);
       }
     }
+  }
+
+  Widget finalPopup(String role){
+    return BackdropFilter(
+      filter: ImageFilter.blur(sigmaX: 3, sigmaY: 3),
+      child: new AlertDialog(
+        elevation: 5,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(20),
+        ),
+        backgroundColor: Colors.blueGrey[100],
+        title: Container(
+          height: MediaQuery.of(context).size.height*0.14,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Icon(Icons.verified, size:50),
+              SizedBox(height: 10),
+              Text("You are successfully registerd as a $role.",
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                fontSize: 19
+              )),
+            ]
+          ),
+        ),
+        actions:<Widget>[
+          new TextButton(
+            onPressed: () {
+              FirebaseAuth.instance.signOut();
+              Timer(Duration(seconds: 1), (){
+                Navigator.pushNamedAndRemoveUntil(context, MyRoutes.loginRoute, (route) => false);
+              });
+            },
+            child: const Text('Login',
+              style: TextStyle(
+                color: Colors.black,
+                fontSize: 20,
+              ),
+            ),
+          ),
+        ]
+      ),
+    );
+  }
+
+  Widget prefBox(){
+    FirebaseFirestore firestore = FirebaseFirestore.instance;
+    CollectionReference cans = firestore.collection('candidates');
+
+    return FutureBuilder<DocumentSnapshot>(
+      future: cans.doc(roll.toUpperCase()).get(),
+      builder: (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot){
+        if (snapshot.hasError) {
+          return BackdropFilter(
+            filter: ImageFilter.blur(sigmaX: 3, sigmaY: 3),
+            child: new AlertDialog(
+              elevation: 5,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(20),
+              ),
+              backgroundColor: Colors.blueGrey[100],
+              content: Container(
+                height: MediaQuery.of(context).size.height*0.10,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text("Something went wrong. Please try again.",
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: 19
+                    )),
+                  ]
+                ),
+              ),
+            ),
+          );
+        }
+
+        if (snapshot.hasData && !snapshot.data!.exists) {
+          return finalPopup("Voter");
+        }
+        
+        if (snapshot.connectionState == ConnectionState.done){
+          return BackdropFilter(
+            filter: ImageFilter.blur(sigmaX: 3, sigmaY: 3),
+            child: new AlertDialog(
+              elevation: 5,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(20),
+              ),
+              backgroundColor: Colors.blueGrey[100],
+              title: Text("Select the role you want to continue as:", textAlign: TextAlign.center,),
+              actions: <Widget>[
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    TextButton(
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                        showDialog(
+                          barrierDismissible: false,
+                          context: context,
+                          builder: (BuildContext context){
+                            return finalPopup("Candidate");
+                          }
+                        );
+                      },
+                      child: const Text('Candidate',
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 21,
+                        ),
+                      ),
+                    ),
+                    Container(
+                      width: 1,
+                      height: 30,
+                      color: Colors.black,
+                    ),
+                    TextButton(
+                      onPressed: () {
+                        CollectionReference u = FirebaseFirestore.instance.collection('candidates');
+                        u.doc(roll.toUpperCase()).delete().then((value){                          
+                          Navigator.of(context).pop();
+                          showDialog(
+                            barrierDismissible: false,
+                            context: context,
+                            builder: (BuildContext context){
+                              return finalPopup("Voter");
+                            }
+                          );
+                        });
+                      },
+                      child: const Text('Voter',
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 21,
+                        ),
+                      ),
+                    ),
+                  ]
+                ),
+              ]
+            ),
+          );
+        }
+
+        return BackdropFilter(
+          filter: ImageFilter.blur(sigmaX: 3, sigmaY: 3),
+          child: new AlertDialog(
+            elevation: 5,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(20),
+            ),
+            backgroundColor: Colors.blueGrey[100],
+            content: Container(
+              height: MediaQuery.of(context).size.height*0.10,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  SpinKitCircle(
+                    color: Colors.black,
+                    size: 50.0,
+                    duration: Duration(seconds: 5), 
+                  ),
+                ]
+              ),
+            ),
+          ),
+        );
+      }
+    );
+    
+  }
+
+  final auth = FirebaseAuth.instance;
+  late User us;
+  late Timer timer;
+
+  @override
+  void dispose() {
+    timer.cancel();
+    super.dispose();
+  }
+
+  Future<void> checkEmailVerified()async{
+    User us = FirebaseAuth.instance.currentUser!;
+    print(us);
+    await us.reload();
+    if(us.emailVerified){
+      timer.cancel();
+      Navigator.of(context).pop();
+      showDialog(
+        barrierDismissible: false,
+        context: context, 
+        builder: (BuildContext context){
+          return prefBox();
+        }
+      );
+    }
+  }
+
+  Widget verifyEmailPopup(User u){
+    return BackdropFilter(
+      filter: ImageFilter.blur(sigmaX: 3, sigmaY: 3),
+      child: new AlertDialog(
+        elevation: 5,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(20),
+        ),
+        backgroundColor: Colors.blueGrey[100],
+        content: Container(
+          height: MediaQuery.of(context).size.height*0.15,
+          child: Column(
+            children: [
+              Text("An Email has been sent to ${u.email}. \nPlease first verify email to continue.",
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                fontSize: 17
+              )),
+              SizedBox(height:15),
+              SpinKitCircle(
+                color: Colors.black,
+                size: 40.0,
+                duration: Duration(seconds: 5), 
+              ),
+            ]
+          ),
+        ),
+      ),
+    );
   }
 
   @override
@@ -500,8 +742,7 @@ class _RegisterState extends State<Register> {
                                 if(_checkPass == true){
                                   if(bio != "")
                                   {
-                                    await upload(pickedImage).then((val)async{
-                                      await doRegister(email, password);
+                                    await doRegister(email, password).then((val)async{
                                       Future.delayed(const Duration(milliseconds: 3000), () async {
                                         if(registerd == true)
                                         {
@@ -510,14 +751,21 @@ class _RegisterState extends State<Register> {
                                             if(user!=null && !user.emailVerified)
                                             {
                                               await user.sendEmailVerification();
-                                              ScaffoldMessenger.of(context).showSnackBar(makeBar("Registered Successfully!! 🎉\nVerify your mail by clicking on the link sent to above e-mail before logging in."));
+                                              ScaffoldMessenger.of(context).showSnackBar(makeBar("Registered Successfully!! 🎉"));
                                               setState((){
                                                 loading = false;
                                               });
-                                              FirebaseAuth.instance.signOut();
-                                              Timer(Duration(seconds: 3), (){
-                                                Navigator.pushNamedAndRemoveUntil(context, MyRoutes.loginRoute, (route) => false);
-                                                emailVerified = false;
+                                              Timer(Duration(milliseconds: 1200), (){
+                                                showDialog(
+                                                  barrierDismissible: false,
+                                                  context: context, 
+                                                  builder: (BuildContext context){
+                                                    timer = Timer.periodic(Duration(seconds: 4), (timer) {
+                                                      checkEmailVerified();
+                                                    });
+                                                    return verifyEmailPopup(user);
+                                                  }
+                                                );
                                               });
                                             }
                                           });
@@ -578,6 +826,18 @@ class _RegisterState extends State<Register> {
                       ),
                     ),
                   ),
+                  TextButton(
+                    onPressed: () {
+                      showDialog(
+                        barrierDismissible: false,
+                        context: context, 
+                        builder: (BuildContext context){
+                          return prefBox();
+                        }
+                      );
+                    },
+                    child:Text("nkisjrbng")
+                  )
                 ],
               ),
             ),
