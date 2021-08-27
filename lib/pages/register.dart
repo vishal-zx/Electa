@@ -826,18 +826,6 @@ class _RegisterState extends State<Register> {
                       ),
                     ),
                   ),
-                  TextButton(
-                    onPressed: () {
-                      showDialog(
-                        barrierDismissible: false,
-                        context: context, 
-                        builder: (BuildContext context){
-                          return prefBox();
-                        }
-                      );
-                    },
-                    child:Text("nkisjrbng")
-                  )
                 ],
               ),
             ),
