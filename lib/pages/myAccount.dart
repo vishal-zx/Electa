@@ -22,11 +22,12 @@ Widget _logoutPopup(BuildContext context) {
         textAlign: TextAlign.center,
         style: TextStyle(fontWeight: FontWeight.bold),
       ),
-      content: Container(
-        height: MediaQuery.of(context).size.height*0.05,
-        child: Row(
+      titlePadding: EdgeInsets.symmetric(horizontal: 15, vertical: 2),
+      actionsPadding: EdgeInsets.symmetric(horizontal: 5, vertical: 0),
+      actions: <Widget>[
+        Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             TextButton(
               child: Text(
@@ -43,12 +44,9 @@ Widget _logoutPopup(BuildContext context) {
                 Navigator.pushNamedAndRemoveUntil(context, MyRoutes.loginRoute, (route) => false);
               },
             ),
-            // VerticalDivider(
-            //   color: Colors.black,
-            // ),
             Container(
               width: 1,
-              height: 40,
+              height: 25,
               color: Colors.black,
             ),
             TextButton(
@@ -65,7 +63,7 @@ Widget _logoutPopup(BuildContext context) {
             )
           ],
         ),
-      ),
+      ]
     )
   );
 }
