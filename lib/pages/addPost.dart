@@ -100,6 +100,8 @@ class AddPostState extends State<AddPost> {
           'comment' : comment,
           'user' : roll,
           'time' : currentDate,
+          'reactions' : {},
+          'likes' : 0,
         }).then((value){
           isUploading = false;
           isPosting = false;

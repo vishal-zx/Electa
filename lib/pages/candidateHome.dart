@@ -3,11 +3,11 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:electa/pages/userProfile.dart';
 import 'package:electa/utils/routes.dart';
 import 'package:electa/widgets/drawer.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_reaction_button/flutter_reaction_button.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 
@@ -19,14 +19,17 @@ class CandidateFeed extends StatefulWidget {
 }
 
 class Post{
+  var totLikes;
+  var postId;
   var userImg;
   var userRoll;
   var userName;
   var postImg;
   var caption;
   var time;
+  var isLiked;
 
-  Post(this.userImg, this.userName, this.userRoll, this.postImg, this.caption, this.time);
+  Post(this.postId, this.totLikes, this.userImg, this.userName, this.userRoll, this.postImg, this.caption, this.time, this.isLiked);
 }
 
 
@@ -148,60 +151,31 @@ class _CandidateFeedState extends State<CandidateFeed> {
           Row(
             mainAxisAlignment: MainAxisAlignment.start,
             children: <Widget>[
-              FlutterReactionButtonCheck(
-                onReactionChanged: (reaction, index, isChecked) {
-                },
-                boxPosition: Position.BOTTOM,
-                boxItemsSpacing: 20,
-                boxAlignment: Alignment.topLeft,
-                boxRadius: 40,
-                reactions: <Reaction>[
-                  Reaction(
-                    previewIcon: Icon(
-                      CupertinoIcons.hand_thumbsup,
-                      color: Colors.black,
-                      size: 30,
-                    ),
-                    icon: Icon(
-                      CupertinoIcons.hand_thumbsup_fill,
-                      color: Colors.red.shade500,
-                      size: 30,
-                    ),
-                  ),
-                  Reaction(
-                    previewIcon: Icon(
-                      CupertinoIcons.smiley,
-                      color: Colors.black,
-                      size: 30,
-                    ),
-                    icon: Icon(CupertinoIcons.smiley,
-                        color: Colors.red.shade900, size: 30),
-                  ),
-                  Reaction(
-                      previewIcon: Icon(
-                        CupertinoIcons.hand_thumbsdown,
-                        color: Colors.black,
-                        size: 30,
-                      ),
-                      icon: Icon(
-                        CupertinoIcons.hand_thumbsdown_fill,
-                        color: Colors.red.shade500,
-                        size: 30,
-                      )),
-                ],
-                initialReaction: Reaction(
-                  icon: Icon(
-                    Icons.favorite_outline,
-                    size: 30,
-                  ),
+              IconButton(
+                icon: (p.isLiked == true)?Icon(
+                  Icons.favorite,
+                  color: Colors.red,
+                  size: 30,
+                ):Icon(
+                  Icons.favorite_outline,
+                  size: 30,
                 ),
-                selectedReaction: Reaction(
-                  icon: Icon(
-                    Icons.favorite,
-                    color: Colors.red,
-                    size: 30,
-                  ),
-                ),
+                onPressed: (){
+                  setState(() {
+                    if(p.isLiked == true) p.isLiked = false;
+                    else p.isLiked = true;
+                    print(p.postId);
+                    var userRoll = FirebaseAuth.instance.currentUser!.email!.substring(0,8).toUpperCase();
+                    (p.isLiked)?p.totLikes++:p.totLikes--;
+                    FirebaseFirestore.instance.collection('posts').doc(p.postId).set({
+                      'reactions':{userRoll : p.isLiked}, 
+                      'likes' : p.totLikes
+                    }, SetOptions(merge: true),);
+                  });
+                }
+              ),
+              Text(
+                (p.totLikes!=1)?"${p.totLikes} likes":"${p.totLikes} like"
               )
             ],
           )
@@ -223,10 +197,16 @@ class _CandidateFeedState extends State<CandidateFeed> {
     var posts = qs.docs;
     for(var post in posts){
       Map<String, dynamic> data = post.data() as Map<String, dynamic>;
+      Map<String, dynamic> likedData = data['reactions'] as Map<String, dynamic>;
+      final userRoll = FirebaseAuth.instance.currentUser!.email!.substring(0,8).toUpperCase();
+      var userLiked=false;
+      if(likedData.length!=0 && likedData.containsKey(userRoll)){
+        userLiked=likedData[userRoll]; 
+      }
       QuerySnapshot userqs = await FirebaseFirestore.instance.collection('users').where('Roll', isEqualTo: data['user'].toUpperCase()).get();
       var user = userqs.docs[0];
        Map<String, dynamic> userInfo = user.data() as Map<String, dynamic>;
-      Post p = new Post(userInfo['imageUrl'], userInfo['Name'], userInfo['Roll'].toUpperCase(),  data['img_url'], data['comment'], data['time']);
+      Post p = new Post(post.id, data['likes'], userInfo['imageUrl'], userInfo['Name'], userInfo['Roll'].toUpperCase(),  data['img_url'], data['comment'], data['time'], userLiked);
       postArray.add(p);
     }
   }
@@ -285,7 +265,7 @@ class _CandidateFeedState extends State<CandidateFeed> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   SpinKitRotatingPlain(
-                    color: Colors.black,
+                    color: Colors.grey,
                     size: 50.0,
                     duration: Duration(seconds: 2),
                   ),
@@ -296,7 +276,7 @@ class _CandidateFeedState extends State<CandidateFeed> {
                     "Loading Data ...",
                     style: TextStyle(
                       fontSize: 19,
-                      color: Colors.grey
+                      color: Colors.black,
                     )
                   ),
                 ],
