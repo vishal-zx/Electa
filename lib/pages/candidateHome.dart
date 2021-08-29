@@ -6,6 +6,7 @@ import 'package:electa/pages/userProfile.dart';
 import 'package:electa/utils/routes.dart';
 import 'package:electa/widgets/drawer.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -156,16 +157,19 @@ class _CandidateFeedState extends State<CandidateFeed> {
                                                       ),
                                                     ),
                                                     onPressed: () async {
-                                                      await FirebaseFirestore.instance.collection('posts').doc(p.postId).delete().then((_){
-                                                        Navigator.of(context).pop();
-                                                        Navigator.of(context).pop();
-                                                        setState(() {
-                                                          setState((){
-                                                            allRight = false;
-                                                          });
-                                                          getPosts().then((val){
+                                                      var imgName = p.userRoll+"-"+datTim.toString()+".png";
+                                                      await FirebaseFirestore.instance.collection('posts').doc(p.postId).delete().then((_)async{
+                                                        await FirebaseStorage.instance.ref('postImages/$imgName').delete().then((_){
+                                                          Navigator.of(context).pop();
+                                                          Navigator.of(context).pop();
+                                                          setState(() {
                                                             setState((){
-                                                              allRight = true;
+                                                              allRight = false;
+                                                            });
+                                                            getPosts().then((val){
+                                                              setState((){
+                                                                allRight = true;
+                                                              });
                                                             });
                                                           });
                                                         });

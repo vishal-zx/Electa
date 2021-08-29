@@ -88,18 +88,17 @@ class AddPostState extends State<AddPost> {
         isUploaded = true;
       });
       final _firebaseStorage = FirebaseStorage.instance;
-      QuerySnapshot querySnapshot = await FirebaseFirestore.instance.collection('posts').get();
-      var postNo = querySnapshot.docs.length + 1;
+      var time = DateTime.now();
+      var imgName = roll+"-"+time.toString().substring(0,20)+"000";
       isUploading = true;
-      UploadTask uploadTask = _firebaseStorage.ref().child('postImages/$postNo.png').putFile(pickedImg);
+      UploadTask uploadTask = _firebaseStorage.ref().child('postImages/$imgName.png').putFile(pickedImg);
       var downloadUrl = await (await uploadTask.whenComplete(() => null)).ref.getDownloadURL();
       setState(() {      
-        DateTime currentDate = DateTime.now();
         FirebaseFirestore.instance.collection('posts').add({
           'img_url' : downloadUrl,
           'comment' : comment,
           'user' : roll,
-          'time' : currentDate,
+          'time' : time,
           'reactions' : {},
           'likes' : 0,
         }).then((value){
