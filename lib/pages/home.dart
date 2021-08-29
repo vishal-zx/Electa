@@ -82,7 +82,8 @@ class _HomeState extends State<Home> {
                     child: Text(
                       p.userName,
                       style:TextStyle(
-                        fontSize:18,
+                        fontSize:17,
+                        color: Colors.black,
                       )
                     )
                   ),
@@ -90,7 +91,7 @@ class _HomeState extends State<Home> {
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.end,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Text(
                     "at ${datTim.hour.toString().padLeft(2,'0')}:${datTim.minute.toString().padLeft(2,'0')}, ${datTim.day.toString().padLeft(2,'0')}/${datTim.month.toString().padLeft(2,'0')}/${datTim.year.toString()}",

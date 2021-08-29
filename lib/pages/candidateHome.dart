@@ -1,4 +1,6 @@
 // ignore: import_of_legacy_library_into_null_safe
+import 'dart:ui';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:electa/pages/userProfile.dart';
 import 'package:electa/utils/routes.dart';
@@ -83,7 +85,8 @@ class _CandidateFeedState extends State<CandidateFeed> {
                     child: Text(
                       p.userName,
                       style:TextStyle(
-                        fontSize:18,
+                        fontSize:17,
+                        color: Colors.black,
                       )
                     )
                   ),
@@ -91,18 +94,123 @@ class _CandidateFeedState extends State<CandidateFeed> {
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.end,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Text(
                     "at ${datTim.hour.toString().padLeft(2,'0')}:${datTim.minute.toString().padLeft(2,'0')}, ${datTim.day.toString().padLeft(2,'0')}/${datTim.month.toString().padLeft(2,'0')}/${datTim.year.toString()}",
-                    // p.time.toString(),
                     style:TextStyle(
                       fontSize:12,
                       color:Colors.black,
                     )
                   ),
                   SizedBox(
-                    width: MediaQuery.of(context).size.width*0.02,
+                    width: MediaQuery.of(context).size.width*0.02
+                  ),
+                  ConstrainedBox(
+                    constraints: new BoxConstraints(
+                      maxHeight: 30.0,
+                      maxWidth: 20.0,
+                    ),
+                    child: PopupMenuButton<Container>(
+                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(8))),
+                      enabled: userRoll == p.userRoll,
+                      padding: EdgeInsets.only(right: 0),
+                      itemBuilder: (BuildContext context) => <PopupMenuEntry<Container>>[
+                        PopupMenuItem<Container>(
+                          child: Container(
+                            padding: EdgeInsets.all(0),
+                            width: MediaQuery.of(context).size.width*0.25,
+                            child: Column(
+                              children: [
+                                TextButton(
+                                  onPressed: (){
+                                    showDialog(
+                                      context: context, 
+                                      builder: (BuildContext context) {
+                                        return BackdropFilter(
+                                          filter: ImageFilter.blur(sigmaX: 3, sigmaY: 3),
+                                          child: AlertDialog(
+                                            elevation: 5,
+                                            shape: RoundedRectangleBorder(
+                                              borderRadius: BorderRadius.circular(20),
+                                            ),
+                                            backgroundColor: Colors.blueGrey[100],
+                                            title: const Text('Are you sure to delete this post?',
+                                              textAlign: TextAlign.center,
+                                              style: TextStyle(fontWeight: FontWeight.bold),
+                                            ),
+                                            titlePadding: EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+                                            actionsPadding: EdgeInsets.symmetric(horizontal: 5, vertical: 0),
+                                            actions: <Widget>[
+                                              Row(
+                                                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                                crossAxisAlignment: CrossAxisAlignment.center,
+                                                children: [
+                                                  TextButton(
+                                                    child: Text(
+                                                      "Delete",
+                                                      key: UniqueKey(),
+                                                      style: TextStyle(
+                                                        fontSize: 20,
+                                                        color: Colors.black
+                                                      ),
+                                                    ),
+                                                    onPressed: () async {
+                                                      await FirebaseFirestore.instance.collection('posts').doc(p.postId).delete().then((_){
+                                                        Navigator.of(context).pop();
+                                                        Navigator.of(context).pop();
+                                                        setState(() {
+                                                          setState((){
+                                                            allRight = false;
+                                                          });
+                                                          getPosts().then((val){
+                                                            setState((){
+                                                              allRight = true;
+                                                            });
+                                                          });
+                                                        });
+                                                      });
+                                                    },
+                                                  ),
+                                                  Container(
+                                                    width: 1,
+                                                    height: 25,
+                                                    color: Colors.black,
+                                                  ),
+                                                  TextButton(
+                                                    child: Text(
+                                                      "Cancel",
+                                                      style: TextStyle(
+                                                        fontSize: 20,
+                                                        color: Colors.black
+                                                      ),
+                                                    ),
+                                                    onPressed: () {
+                                                      Navigator.of(context).pop();
+                                                    },
+                                                  )
+                                                ],
+                                              ),
+                                            ]
+                                          )
+                                        );
+                                      }
+                                    );
+                                  }, 
+                                  child: Text(
+                                    "Delete Post",
+                                    style: TextStyle(
+                                      color:Colors.black,
+                                      fontSize:16
+                                    ),
+                                  )
+                                ),
+                              ],
+                            ),
+                          )
+                        ),
+                      ]
+                    ),
                   ),
                 ],
               ),
@@ -191,6 +299,9 @@ class _CandidateFeedState extends State<CandidateFeed> {
     return true;
   }
 
+  
+  final userRoll = FirebaseAuth.instance.currentUser!.email!.substring(0,8).toUpperCase();
+
   Future<void> getPosts() async{
     postArray.clear();
     QuerySnapshot qs = await FirebaseFirestore.instance.collection('posts').orderBy('time', descending: true).get();
@@ -198,7 +309,6 @@ class _CandidateFeedState extends State<CandidateFeed> {
     for(var post in posts){
       Map<String, dynamic> data = post.data() as Map<String, dynamic>;
       Map<String, dynamic> likedData = data['reactions'] as Map<String, dynamic>;
-      final userRoll = FirebaseAuth.instance.currentUser!.email!.substring(0,8).toUpperCase();
       var userLiked=false;
       if(likedData.length!=0 && likedData.containsKey(userRoll)){
         userLiked=likedData[userRoll]; 

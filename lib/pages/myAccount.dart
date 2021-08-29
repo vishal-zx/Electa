@@ -22,7 +22,7 @@ Widget _logoutPopup(BuildContext context) {
         textAlign: TextAlign.center,
         style: TextStyle(fontWeight: FontWeight.bold),
       ),
-      titlePadding: EdgeInsets.symmetric(horizontal: 15, vertical: 2),
+      titlePadding: EdgeInsets.symmetric(horizontal: 20, vertical: 12),
       actionsPadding: EdgeInsets.symmetric(horizontal: 5, vertical: 0),
       actions: <Widget>[
         Row(
