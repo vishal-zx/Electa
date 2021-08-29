@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:electa/widgets/drawer.dart';
 import 'package:electa/widgets/All_Confetti_Widget.dart';
@@ -238,12 +240,14 @@ class _ResultState extends State<Result> {
                                     setState(() => _index = index),
                                 itemBuilder: (_, i) {
                                   return Transform.scale(
-                                    scale: i == _index ? 1 : 0.8,
+                                    scale: i == _index ? 1 : 0.8, 
                                     child: StreamBuilder(
                                       initialData: false,
                                       stream: slimyCard.stream,
                                       builder: ((BuildContext context,
                                           AsyncSnapshot snapshot) {
+                                        int j=0;
+                                        
                                         return ListView(
                                           padding: EdgeInsets.zero,
                                           children: <Widget>[
@@ -251,8 +255,7 @@ class _ResultState extends State<Result> {
                                             SlimyCard(
                                               color: Colors.blueGrey,
                                               topCardWidget: topCardWidget(i),
-                                              bottomCardWidget:
-                                                  bottomCardWidget(),
+                                              bottomCardWidget: bottomCardWidget(i,j),
                                             ),
                                           ],
                                         );
@@ -264,8 +267,8 @@ class _ResultState extends State<Result> {
                             ),
                           ))
                     ])),
-    );
-  }
+                  );
+         }
 
   topCardWidget(int i) {
     return Container(
@@ -336,7 +339,7 @@ class _ResultState extends State<Result> {
     );
   }
 
-  bottomCardWidget() {
+  bottomCardWidget(int i, int j) {
     return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(20),
@@ -354,7 +357,7 @@ class _ResultState extends State<Result> {
       child: Column(
         children: [
           Text(
-            'Saumitra Vyas V/S Manya Sharma',
+            allCans[i][j].name + " V/S " + allCans[i][j+1].name,
             style: TextStyle(
               color: Colors.white,
               fontSize: 16,
@@ -362,10 +365,25 @@ class _ResultState extends State<Result> {
             ),
             textAlign: TextAlign.center,
           ),
+
           SizedBox(height: 15),
           Expanded(
             child: PieChart(
               dataMap: dataMap,
+              animationDuration: Duration(milliseconds: 800),
+              chartType: ChartType.ring,
+              chartValuesOptions: ChartValuesOptions(
+              decimalPlaces: 0,
+              ),
+              legendOptions: LegendOptions(
+                legendPosition: LegendPosition.right,
+                showLegends: true,
+                legendTextStyle: TextStyle(
+                fontWeight: FontWeight.bold,
+                color: Colors.white,
+                ),
+
+              ),
             ),
             /*child: Text(
               'FlutterDevs specializes in creating cost-effective and efficient '
@@ -389,3 +407,12 @@ Map<String, double> dataMap = {
   "Manya Sharma": 5,
   "Saumitra Vyas": 2,
 };
+List<Color> colors = <Color>[
+      const Color.fromRGBO(75, 135, 185, 1),
+      const Color.fromRGBO(192, 108, 132, 1),
+      const Color.fromRGBO(246, 114, 128, 1),
+      const Color.fromRGBO(248, 177, 149, 1),
+      const Color.fromRGBO(116, 180, 155, 1)
+    ];
+
+
