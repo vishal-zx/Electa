@@ -252,7 +252,7 @@ class AddPostState extends State<AddPost> {
                 maxLength: 100,
                 decoration: InputDecoration.collapsed(hintText: "Something about your post ..."),
                 onChanged: (value){
-                  comment = value;
+                  comment = value.replaceAll('\n', '');
                   if(value == "") comment = "";
                 },
               ),
