@@ -78,6 +78,27 @@ class _ResultState extends State<Result> {
     return cans[j];
   }
 
+  bool isTimeOkay = false;
+  var datTim;
+
+  void checkTime()async{
+    await FirebaseFirestore.instance
+    .collection('tools')
+    .doc('resultTime')
+    .get()
+    .then((DocumentSnapshot documentSnapshot) {
+      if (documentSnapshot.exists) {
+        Map<String, dynamic> data = documentSnapshot.data() as Map<String, dynamic>;
+        datTim = DateTime.fromMillisecondsSinceEpoch(data['dateTime'].seconds * 1000);
+        if(datTim.compareTo(DateTime.now()) < 0){        
+          setState(() {
+            isTimeOkay = true;
+          });
+        }
+      }
+    });
+  }
+
   bool allRight = false;
   @override
   void initState() {
@@ -90,6 +111,7 @@ class _ResultState extends State<Result> {
     } else {
       allRight = true;
     }
+    checkTime();
     super.initState();
   }
 
@@ -123,7 +145,27 @@ class _ResultState extends State<Result> {
             ],
           ),
         )
-        :Column(
+        :(isTimeOkay==false)?
+        Center(
+          heightFactor: 9.0,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                "Adding Suspense !! 🪄",
+                style: TextStyle(fontSize: 19, color: Colors.black)
+              ),
+              SizedBox(
+                height: MediaQuery.of(context).size.height * 0.01,
+              ),
+              Text(
+                "You can see the result only after \n${datTim.day.toString().padLeft(2,'0')}/${datTim.month.toString().padLeft(2,'0')}/${datTim.year.toString()} - ${datTim.hour.toString().padLeft(2,'0')}:${datTim.minute.toString().padLeft(2,'0')}",
+                style: TextStyle(fontSize: 17, color: Colors.black), textAlign: TextAlign.center,
+              ),
+            ],
+          ),
+        ):
+        Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
