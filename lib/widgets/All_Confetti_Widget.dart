@@ -17,12 +17,12 @@ class AllConfettiWidget extends StatefulWidget {
 }
 
 class _AllConfettiWidgetState extends State<AllConfettiWidget> {
-  ConfettiController controller = ConfettiController(duration: Duration(seconds: 3));
+  ConfettiController controller = ConfettiController(duration: Duration(seconds: 15));
   @override
   void initState() {
     super.initState();
 
-    controller = ConfettiController(duration: Duration(seconds: 3));
+    controller = ConfettiController(duration: Duration(seconds: 15));
     controller.play();
   }
 
@@ -70,7 +70,7 @@ class _AllConfettiWidgetState extends State<AllConfettiWidget> {
       ],
       // blastDirection: blastDirection,
       blastDirectionality: BlastDirectionality.explosive,
-      shouldLoop: true,
+      shouldLoop: false,
       emissionFrequency: 0,
       numberOfParticles: 75,
       gravity: 1,
