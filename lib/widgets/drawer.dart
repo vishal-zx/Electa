@@ -38,6 +38,7 @@ Widget errorProfile(String error){
 }
 
 Widget electaDrawer(BuildContext context, String userName, String userEmail, String userImageUrl, String page){
+  var roll = userEmail.substring(0,8).toUpperCase();
   return SafeArea(
     child: BackdropFilter(
       filter: ImageFilter.blur(sigmaX: 3.5, sigmaY: 3.5),
@@ -149,6 +150,20 @@ Widget electaDrawer(BuildContext context, String userName, String userEmail, Str
                 doRoute(context, MyRoutes.myAccountRoute);
               },
             ),
+            if(roll == '19UCS053' || roll == '19UCC066' || roll == '19UCS252' || roll == '19UCS245')
+              ListTile(
+                leading: Icon(Icons.admin_panel_settings_outlined, color: (page == '/adminPage')?Colors.blue:Colors.white,),
+                title: Text("Admin Page", 
+                  textScaleFactor: 1.3,
+                  style: TextStyle(
+                    color: (page == '/adminPage')?Colors.blue:Colors.white,
+                  ),
+                ),
+                onTap: (){
+                  Navigator.pop(context);
+                  doRoute(context, MyRoutes.adminPageRoute);
+                },
+              ),
           ],
         ),
         decoration: BoxDecoration(

@@ -11,4 +11,5 @@ class MyRoutes {
   static String hNSRoute = "/HNS";
   static String editProfileRoute = "/EditProfile";
   static String userProfileRoute = "/UserProfile";
+  static String adminPageRoute = "/adminPage";
 }

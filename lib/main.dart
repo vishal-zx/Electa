@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:electa/pages/addPost.dart';
+import 'package:electa/pages/adminPage.dart';
 import 'package:electa/pages/candidateHome.dart';
 import 'package:electa/pages/changePassword.dart';
 import 'package:electa/pages/editProfile.dart';
@@ -111,6 +112,7 @@ class _MyAppState extends State<MyApp> {
         MyRoutes.changePswdRoute : (context) => ChangePswd(),
         MyRoutes.hNSRoute : (context) => HelpNSupport(),
         MyRoutes.editProfileRoute : (context) => EditProfile(),
+        MyRoutes.adminPageRoute : (context) => AdminPage(),
       },
     );
   }
