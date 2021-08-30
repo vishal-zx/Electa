@@ -84,12 +84,12 @@ class _ResultState extends State<Result> {
   void checkTime()async{
     await FirebaseFirestore.instance
     .collection('tools')
-    .doc('resultTime')
+    .doc('time')
     .get()
     .then((DocumentSnapshot documentSnapshot) {
       if (documentSnapshot.exists) {
         Map<String, dynamic> data = documentSnapshot.data() as Map<String, dynamic>;
-        datTim = DateTime.fromMillisecondsSinceEpoch(data['dateTime'].seconds * 1000);
+        datTim = DateTime.fromMillisecondsSinceEpoch(data['result'].seconds * 1000);
         if(datTim.compareTo(DateTime.now()) < 0){        
           setState(() {
             isTimeOkay = true;

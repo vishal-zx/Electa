@@ -15,220 +15,6 @@ class Vote extends StatefulWidget {
   _VoteState createState() => _VoteState();
 }
 
-Future<void> checkVoteDone() async
-{
-  var roll = FirebaseAuth.instance.currentUser!.email!.substring(0,8);
-  QuerySnapshot querySnapshot = await _collectionRef.where('Roll', isEqualTo: roll.toUpperCase()).get();
-  var cans = querySnapshot.docs;
-  for(var can in cans){
-    Map<String, dynamic> data = can.data() as Map<String, dynamic>;
-    isVoted = data['isVoted'];
-  }
-}
-
-Widget _buildCandidateRow(BuildContext context, UserCandidate candidate, List<dynamic> isVoted){
-  return Row(
-    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-    children: [
-      Container(
-        width: MediaQuery.of(context).size.height*0.09,
-        height: MediaQuery.of(context).size.height*0.09,
-        child: ClipRRect(
-          borderRadius: BorderRadius.circular(50),
-          child: CachedNetworkImage(
-            fit: BoxFit.fill,
-            imageUrl: candidate.imageUrl,
-            progressIndicatorBuilder: (context, url, downloadProgress) => 
-                    CircularProgressIndicator(value: downloadProgress.progress),
-            errorWidget: (context, url, error) => Image(image: AssetImage("assets/images/u1.png")),
-          ),
-        ),
-      ),
-      SizedBox(
-        width: MediaQuery.of(context).size.width*0.35,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            FittedBox(
-                fit: BoxFit.fitWidth,
-                child: Text("${candidate.name}",
-                  style: TextStyle(
-                    fontSize: 20,
-                    color: Colors.white,
-                  ),
-                ),
-              ),
-            SizedBox(
-              height: 5,
-            ),
-            FittedBox(
-              fit: BoxFit.fitWidth,
-              child: Text("${candidate.rollNo}",
-                style: TextStyle(
-                  fontSize: 16,
-                  color: Colors.white,
-                ),
-              ),
-            ), 
-          ],
-        ),
-      ),
-      IconButton(
-        icon: Icon(
-          Icons.arrow_forward_ios,
-          size: 25,
-          color: Colors.white,
-        ),
-        onPressed: (){
-          ScaffoldMessenger.of(context).hideCurrentSnackBar();
-          if(isVoted[positions.indexOf(candidate.title)] == true){
-            String msg = "Hold it Sparky!\nYou already cast the vote for this position !!";
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-                duration: Duration(milliseconds: 5000),
-                content: Text('$msg', textAlign: TextAlign.center, 
-                  style: TextStyle(fontSize: 16),
-                ),
-                backgroundColor: Colors.red[900]!.withOpacity(1),
-                elevation: 3,
-                behavior: SnackBarBehavior.floating,
-                padding: EdgeInsets.all(5),
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(20))),
-              )
-            );
-          }
-          else{
-            showDialog(
-              context: context,
-              builder: (BuildContext context) => _buildPopupDialog(context, candidate),
-            );
-          }
-        },
-      ),
-    ],
-  );
-}
-
-SnackBar makeBar(String text){
-    final snackBar = SnackBar(
-      duration: Duration(milliseconds: 3000),
-      content: Text('$text', textAlign: TextAlign.center, 
-        style: TextStyle(fontSize: 15),
-      ),
-      backgroundColor: Colors.black87.withOpacity(1),
-      elevation: 3,
-      padding: EdgeInsets.all(5),
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.only(topLeft: Radius.circular(50), topRight: Radius.circular(50))),
-    );
-    return snackBar;
-  }
-
-  
-CollectionReference _collectionRef = FirebaseFirestore.instance.collection('users');
-List<dynamic> isVoted = [];
-var positions = ["President", "Vice-President", "G-Sec Science", "G-Sec Cultural", "G-Sec Sports", "AG-Sec Science", "AG-Sec Cultural", "AG-Sec Sports"];
-
-Widget _buildPopupDialog(BuildContext context, UserCandidate cand) {
-  return BackdropFilter(
-    filter: ImageFilter.blur(sigmaX: 3, sigmaY: 3),
-      child: new AlertDialog(
-        elevation: 5,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(20),
-        ),
-        backgroundColor: Colors.blueGrey[100],
-        title: Column(
-          children: [
-            Text('Confirm Your Vote !',
-              textAlign: TextAlign.center,
-              style: TextStyle(fontWeight: FontWeight.bold),
-            ),
-            SizedBox(
-              height:5
-            ),
-            Divider(
-              color: Colors.black,
-              thickness: 2,
-              indent: 25,
-              endIndent: 25,
-            ),
-          ]
-        ),
-        content: Container(
-          height: MediaQuery.of(context).size.height*0.20,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              Column(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                crossAxisAlignment: CrossAxisAlignment.center,          
-                children: [
-                  Image.asset(
-                    "assets/images/gi.gif",
-                    height: 80,
-                    width: 80,
-                  ),
-                ],
-              ),
-              Column(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [  
-                  FittedBox(
-                    fit: BoxFit.fitHeight,
-                    child: Text("Position : ${cand.title}",
-                      textAlign: TextAlign.start,
-                    ),
-                  ),
-                  FittedBox(
-                    fit: BoxFit.fitHeight,
-                    child: Text("Candidate : ${cand.name}",
-                      textAlign: TextAlign.start,
-                    ),
-                  ),
-                ],
-              ),
-            ],
-          ),
-        ),
-        actions: <Widget>[
-          new TextButton(
-            onPressed: () {
-              cand.counter++;
-              FirebaseFirestore.instance.collection('candidates').doc(cand.rollNo).update({'counter':cand.counter}).then((value) {
-                String msg = "Your Vote Is Successfully Submitted !! 🔥";
-                isVoted[positions.indexOf(cand.title)] = true;
-                var roll = FirebaseAuth.instance.currentUser!.email!.substring(0,8).toUpperCase();
-                _collectionRef.doc(roll).update({'isVoted' : isVoted});
-                ScaffoldMessenger.of(context).showSnackBar(makeBar(msg));
-                Future.delayed(const Duration(milliseconds: 700), () {
-                  Navigator.of(context).pop();
-                });
-              });
-            },
-            child: const Text('Confirm',
-              style: TextStyle(
-                color: Colors.black,
-                fontSize: 16,
-              ),
-            ),
-          ),
-          new TextButton(
-            onPressed: () {
-              Navigator.of(context).pop();
-            },
-            child: const Text('Close',
-              style: TextStyle(
-                color: Colors.black,
-                fontSize: 16,
-              ),
-            ),
-          ),
-        ],
-      ),
-  );
-}
-
 class UserCandidate{
   var name;
   var rollNo;
@@ -247,6 +33,30 @@ class _VoteState extends State<Vote> {
 
   final List<List<UserCandidate>> allCans = [];
   bool allRight = false;
+
+  bool isTimeOkay = false;
+  var datTim;
+  var datTim2;
+
+  void checkTime()async{
+    await FirebaseFirestore.instance
+    .collection('tools')
+    .doc('time')
+    .get()
+    .then((DocumentSnapshot documentSnapshot) {
+      if (documentSnapshot.exists) {
+        Map<String, dynamic> data = documentSnapshot.data() as Map<String, dynamic>;
+        datTim = DateTime.fromMillisecondsSinceEpoch(data['votingStart'].seconds * 1000);
+        datTim2 = DateTime.fromMillisecondsSinceEpoch(data['votingClose'].seconds * 1000);
+        if(datTim.compareTo(DateTime.now()) < 0 && datTim2.compareTo(DateTime.now()) > 0){        
+          setState(() {
+            isTimeOkay = true;
+          });
+        }
+      }
+    });
+  }
+
   @override 
   void initState(){
     checkVoteDone();
@@ -260,6 +70,7 @@ class _VoteState extends State<Vote> {
     else{
       allRight = true;
     }
+    checkTime();
     super.initState();
   }
 
@@ -277,6 +88,246 @@ class _VoteState extends State<Vote> {
       }
       allCans.add(temp);
     }
+  }
+
+  Future<void> checkVoteDone() async
+  {
+    var roll = FirebaseAuth.instance.currentUser!.email!.substring(0,8);
+    QuerySnapshot querySnapshot = await _collectionRefUsers.where('Roll', isEqualTo: roll.toUpperCase()).get();
+    var cans = querySnapshot.docs;
+    for(var can in cans){
+      Map<String, dynamic> data = can.data() as Map<String, dynamic>;
+      isVoted = data['isVoted'];
+    }
+  }
+
+  String toDate(DateTime dT){
+    return dT.day.toString().padLeft(2,'0') + "/"+ dT.month.toString().padLeft(2,'0') + "/"+ dT.year.toString()+" - "+dT.hour.toString().padLeft(2,'0')+":"+dT.minute.toString().padLeft(2,'0');
+  }
+
+  Widget _buildCandidateRow(BuildContext context, UserCandidate candidate, List<dynamic> isVoted){
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      children: [
+        Container(
+          width: MediaQuery.of(context).size.height*0.09,
+          height: MediaQuery.of(context).size.height*0.09,
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(50),
+            child: CachedNetworkImage(
+              fit: BoxFit.fill,
+              imageUrl: candidate.imageUrl,
+              progressIndicatorBuilder: (context, url, downloadProgress) => 
+                      CircularProgressIndicator(value: downloadProgress.progress),
+              errorWidget: (context, url, error) => Image(image: AssetImage("assets/images/u1.png")),
+            ),
+          ),
+        ),
+        SizedBox(
+          width: MediaQuery.of(context).size.width*0.35,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              FittedBox(
+                  fit: BoxFit.fitWidth,
+                  child: Text("${candidate.name}",
+                    style: TextStyle(
+                      fontSize: 20,
+                      color: Colors.white,
+                    ),
+                  ),
+                ),
+              SizedBox(
+                height: 5,
+              ),
+              FittedBox(
+                fit: BoxFit.fitWidth,
+                child: Text("${candidate.rollNo}",
+                  style: TextStyle(
+                    fontSize: 16,
+                    color: Colors.white,
+                  ),
+                ),
+              ), 
+            ],
+          ),
+        ),
+        IconButton(
+          icon: Icon(
+            Icons.arrow_forward_ios,
+            size: 25,
+            color: Colors.white,
+          ),
+          onPressed: (){
+            if(datTim.compareTo(DateTime.now()) < 0 && datTim2.compareTo(DateTime.now()) > 0){        
+              setState(() {
+                isTimeOkay = true;
+              });
+              ScaffoldMessenger.of(context).hideCurrentSnackBar();
+              if(isVoted[positions.indexOf(candidate.title)] == true){
+                String msg = "Hold it Sparky!\nYou already cast the vote for this position !!";
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    duration: Duration(milliseconds: 5000),
+                    content: Text('$msg', textAlign: TextAlign.center, 
+                      style: TextStyle(fontSize: 16),
+                    ),
+                    backgroundColor: Colors.red[900]!.withOpacity(1),
+                    elevation: 3,
+                    behavior: SnackBarBehavior.floating,
+                    padding: EdgeInsets.all(5),
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(20))),
+                  )
+                );
+              }
+              else{
+                showDialog(
+                  context: context,
+                  builder: (BuildContext context) => _buildPopupDialog(context, candidate),
+                );
+              }
+            }
+            else{
+              String d1 = toDate(datTim);
+              String d2 = toDate(datTim2);
+              String msg = "You "+((datTim2.compareTo(DateTime.now()) < 0)?"could":"can")+" only vote between \n$d1 to $d2 !!";
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  duration: Duration(milliseconds: 5000),
+                  content: Text('$msg', textAlign: TextAlign.center, 
+                    style: TextStyle(fontSize: 16),
+                  ),
+                  backgroundColor: Colors.red[900]!.withOpacity(1),
+                  elevation: 3,
+                  behavior: SnackBarBehavior.floating,
+                  padding: EdgeInsets.all(5),
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(20))),
+                )
+              );
+            }
+          },
+        ),
+      ],
+    );
+  }
+
+  SnackBar makeBar(String text){
+      final snackBar = SnackBar(
+        duration: Duration(milliseconds: 3000),
+        content: Text('$text', textAlign: TextAlign.center, 
+          style: TextStyle(fontSize: 15),
+        ),
+        backgroundColor: Colors.black87.withOpacity(1),
+        elevation: 3,
+        padding: EdgeInsets.all(5),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.only(topLeft: Radius.circular(50), topRight: Radius.circular(50))),
+      );
+      return snackBar;
+    }
+
+    
+  CollectionReference _collectionRefUsers = FirebaseFirestore.instance.collection('users');
+  List<dynamic> isVoted = [];
+
+  Widget _buildPopupDialog(BuildContext context, UserCandidate cand) {
+    return BackdropFilter(
+      filter: ImageFilter.blur(sigmaX: 3, sigmaY: 3),
+        child: new AlertDialog(
+          elevation: 5,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(20),
+          ),
+          backgroundColor: Colors.blueGrey[100],
+          title: Column(
+            children: [
+              Text('Confirm Your Vote !',
+                textAlign: TextAlign.center,
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ),
+              SizedBox(
+                height:5
+              ),
+              Divider(
+                color: Colors.black,
+                thickness: 2,
+                indent: 25,
+                endIndent: 25,
+              ),
+            ]
+          ),
+          content: Container(
+            height: MediaQuery.of(context).size.height*0.20,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  crossAxisAlignment: CrossAxisAlignment.center,          
+                  children: [
+                    Image.asset(
+                      "assets/images/gi.gif",
+                      height: 80,
+                      width: 80,
+                    ),
+                  ],
+                ),
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [  
+                    FittedBox(
+                      fit: BoxFit.fitHeight,
+                      child: Text("Position : ${cand.title}",
+                        textAlign: TextAlign.start,
+                      ),
+                    ),
+                    FittedBox(
+                      fit: BoxFit.fitHeight,
+                      child: Text("Candidate : ${cand.name}",
+                        textAlign: TextAlign.start,
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            new TextButton(
+              onPressed: () {
+                cand.counter++;
+                FirebaseFirestore.instance.collection('candidates').doc(cand.rollNo).update({'counter':cand.counter}).then((value) {
+                  String msg = "Your Vote Is Successfully Submitted !! 🔥";
+                  isVoted[positions.indexOf(cand.title)] = true;
+                  var roll = FirebaseAuth.instance.currentUser!.email!.substring(0,8).toUpperCase();
+                  _collectionRefUsers.doc(roll).update({'isVoted' : isVoted});
+                  ScaffoldMessenger.of(context).showSnackBar(makeBar(msg));
+                  Future.delayed(const Duration(milliseconds: 700), () {
+                    Navigator.of(context).pop();
+                  });
+                });
+              },
+              child: const Text('Confirm',
+                style: TextStyle(
+                  color: Colors.black,
+                  fontSize: 16,
+                ),
+              ),
+            ),
+            new TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: const Text('Close',
+                style: TextStyle(
+                  color: Colors.black,
+                  fontSize: 16,
+                ),
+              ),
+            ),
+          ],
+        ),
+    );
   }
   
   @override
