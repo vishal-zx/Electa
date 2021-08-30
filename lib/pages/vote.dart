@@ -198,7 +198,7 @@ Widget _buildPopupDialog(BuildContext context, UserCandidate cand) {
               FirebaseFirestore.instance.collection('candidates').doc(cand.rollNo).update({'counter':cand.counter}).then((value) {
                 String msg = "Your Vote Is Successfully Submitted !! 🔥";
                 isVoted[positions.indexOf(cand.title)] = true;
-                var roll = FirebaseAuth.instance.currentUser!.email!.substring(0,8);
+                var roll = FirebaseAuth.instance.currentUser!.email!.substring(0,8).toUpperCase();
                 _collectionRef.doc(roll).update({'isVoted' : isVoted});
                 ScaffoldMessenger.of(context).showSnackBar(makeBar(msg));
                 Future.delayed(const Duration(milliseconds: 700), () {
