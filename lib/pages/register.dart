@@ -472,7 +472,7 @@ class _RegisterState extends State<Register> {
               style: TextStyle(
                 fontSize: 17
               )),
-              Text("An Email has been sent to 19ucs053@lnmiit.ac.in. \nPlease first verify email to continue.",
+              Text("An Email has been sent to ${u.email} .\nPlease first verify email to continue.",
               textAlign: TextAlign.center,
               style: TextStyle(
                 fontSize: 15
