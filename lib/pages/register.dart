@@ -192,6 +192,40 @@ class _RegisterState extends State<Register> {
           }
         }
         if(fl==0){
+          showDialog(
+            barrierDismissible: false,
+            context: context, 
+            builder: (BuildContext context){
+              return BackdropFilter(
+                filter: ImageFilter.blur(sigmaX: 3, sigmaY: 3),
+                child: new AlertDialog(
+                  elevation: 5,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  backgroundColor: Colors.blueGrey[100],
+                  content: Container(
+                    height: MediaQuery.of(context).size.height*0.125,
+                    child: Column(
+                      children: [
+                        Text("Registering your account ...\nPlease wait...",
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          fontSize: 17
+                        )),
+                        SizedBox(height:15),
+                        SpinKitCircle(
+                          color: Colors.black,
+                          size: 40.0,
+                          duration: Duration(seconds: 5), 
+                        ),
+                      ]
+                    ),
+                  ),
+                ),
+              );
+            }
+          );
           try{
             await upload(pickedImage).then((val)async{
               FirebaseAuth.instance.createUserWithEmailAndPassword(email: email, password: password).then((value)async{
@@ -207,12 +241,6 @@ class _RegisterState extends State<Register> {
           {
             if (e.code == 'weak-password') {
               error = makeBar('The password provided is too weak.');
-              ScaffoldMessenger.of(context).showSnackBar(error);
-            } else if (e.code == 'email-already-in-use') {
-              setState((){
-                loading = false;
-              });
-              error = makeBar('The account already exists for that roll number.');
               ScaffoldMessenger.of(context).showSnackBar(error);
             }
           }
@@ -395,8 +423,7 @@ class _RegisterState extends State<Register> {
           ),
         );
       }
-    );
-    
+    );  
   }
 
   final auth = FirebaseAuth.instance;
@@ -436,18 +463,24 @@ class _RegisterState extends State<Register> {
         ),
         backgroundColor: Colors.blueGrey[100],
         content: Container(
-          height: MediaQuery.of(context).size.height*0.15,
+          height: MediaQuery.of(context).size.height*0.165,
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              Text("An Email has been sent to ${u.email}. \nPlease first verify email to continue.",
+              Text("Registered Successfully!! 🎉",
               textAlign: TextAlign.center,
               style: TextStyle(
                 fontSize: 17
               )),
+              Text("An Email has been sent to 19ucs053@lnmiit.ac.in. \nPlease first verify email to continue.",
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                fontSize: 15
+              )),
               SizedBox(height:15),
               SpinKitCircle(
                 color: Colors.black,
-                size: 40.0,
+                size: 38.0,
                 duration: Duration(seconds: 5), 
               ),
             ]
@@ -751,16 +784,16 @@ class _RegisterState extends State<Register> {
                                             if(user!=null && !user.emailVerified)
                                             {
                                               await user.sendEmailVerification();
-                                              ScaffoldMessenger.of(context).showSnackBar(makeBar("Registered Successfully!! 🎉"));
                                               setState((){
                                                 loading = false;
                                               });
-                                              Timer(Duration(milliseconds: 1200), (){
+                                              Timer(Duration(milliseconds: 0), (){
+                                                Navigator.of(context).pop();
                                                 showDialog(
                                                   barrierDismissible: false,
                                                   context: context, 
                                                   builder: (BuildContext context){
-                                                    timer = Timer.periodic(Duration(seconds: 4), (timer) {
+                                                    timer = Timer.periodic(Duration(seconds: 2), (timer) {
                                                       checkEmailVerified();
                                                     });
                                                     return verifyEmailPopup(user);
