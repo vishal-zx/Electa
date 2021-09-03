@@ -67,7 +67,7 @@ class AddPostState extends State<AddPost> {
         toolbarTitle: "Crop Image",
         toolbarWidgetColor: Colors.white,
       ),
-      compressQuality: 50,
+      compressQuality: 40,
       sourcePath: picked.path,
       aspectRatioPresets: [
           CropAspectRatioPreset.square,

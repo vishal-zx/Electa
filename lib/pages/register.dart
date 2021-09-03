@@ -146,6 +146,7 @@ class _RegisterState extends State<Register> {
           CropAspectRatioPreset.square
         ],
         maxWidth: 800,
+      compressQuality: 40,
     );
     if(cropped !=null){
       setState(() {
